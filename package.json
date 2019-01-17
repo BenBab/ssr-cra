@@ -1,6 +1,6 @@
 {
   "name": "cra-ssr",
-  "homepage": "https://cra-ssr.herokuapp.com",
+  "homepage": "https://staging-infinity.herokuapp.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -45,6 +45,7 @@
     "styled-components": "^4.1.1"
   },
   "scripts": {
+    "dev": "react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

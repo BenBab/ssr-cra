@@ -6,7 +6,7 @@ import logo from "../../assets/logo.jpg";
 const SITE_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : "https://cra-ssr.herokuapp.com";
+    : "https://staging-infinity.herokuapp.com/";
 
 const FACEBOOK_APP_ID = "XXXXXXXXX";
 
