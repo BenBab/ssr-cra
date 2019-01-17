@@ -14,7 +14,7 @@ const defaultTitle = "My Website";
 const defaultDescription =
   "This is a really awesome website where we can render on the server. Supa cool.";
 const defaultImage = `${SITE_URL}${logo}`;
-const defaultTwitter = "@cereallarceny";
+const defaultTwitter = "";
 const defaultSep = " | ";
 
 class Page extends Component {
