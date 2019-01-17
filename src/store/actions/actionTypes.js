@@ -1,0 +1,22 @@
+//mainState actions
+export const SETDATA = "SETDATA";
+export const CHECK_STATE_BACKUP = "CHECK_STATE_BACKUP";
+export const CHANGE_PAGE_DATA = "CHANGE_PAGE_DATA";
+export const CHANGE_TEMPLATE_STATE = "CHANGE_TEMPLATE_STATE";
+export const CHANGE_HOME_STATE = "CHANGE_HOME_STATE";
+export const REVERT_STATE_CHANGE = "REVERT_STATE_CHANGE";
+
+//auth actions
+export const AUTH_START = "AUTH_START";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+export const AUTH_FAILED = "AUTH_FAILED";
+export const AUTH_LOGOUT = "AUTH_LOGOUT";
+
+//admin actions
+export const UPDATE_PAGE_START = "UPDATE_PAGE_START";
+export const UPDATE_PAGE_SUCCESS = "UPDATE_PAGE_SUCCESS";
+export const UPDATE_PAGE_FAIL = "UPDATE_PAGE_FAIL";
+export const RESET_UPDATE_TOAST = "RESET_UPDATE_TOAST";
+export const REMOVE_STATE_BACKUP = "REMOVE_STATE_BACKUP";
+
+export const STORE_PAGE_ROUTES = "STORE_PAGE_ROUTES";
