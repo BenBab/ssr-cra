@@ -18,10 +18,10 @@ const About = Loadable({
   modules: ["about"]
 });
 
-const Dashboard = Loadable({
-  loader: () => import(/* webpackChunkName: "dashboard" */ "./dashboard"),
+const MyProfile = Loadable({
+  loader: () => import(/* webpackChunkName: "myProfile" */ "./myProfile"),
   loading: () => null,
-  modules: ["dashboard"]
+  modules: ["myProfile"]
 });
 
 const Login = Loadable({
@@ -45,10 +45,7 @@ const Profile = Loadable({
 export default props => {
   console.log("route props", props);
 
-  const currentRoute = props.current;
   let routesState = [{ value: "/" }];
-  let pageInfo = null;
-
   let dynamicRoutes = [];
 
   const { navigationItems } = props.data;
@@ -63,7 +60,7 @@ export default props => {
           <Route
             key={i}
             path={"/" + item.route}
-            render={props => <Homepage pageInfo={item} />}
+            render={() => <Homepage pageInfo={item} />}
           />
         );
       } else {
@@ -85,10 +82,6 @@ export default props => {
     });
   }
 
-  // if (props.template){
-  //   theme = Object.assign({}, mainTheme, {'navLightTheme': props.template.navLightTheme } )
-  // }
-
   return (
     <Switch>
       <Route
@@ -103,7 +96,7 @@ export default props => {
 
       <Route exact path="/profile/:id" component={Profile} />
 
-      <AuthenticatedRoute exact path="/dashboard" component={Dashboard} />
+      <AuthenticatedRoute exact path="/myProfile" component={MyProfile} />
 
       <UnauthenticatedRoute exact path="/login" component={Login} />
       <AuthenticatedRoute exact path="/logout" component={Logout} />

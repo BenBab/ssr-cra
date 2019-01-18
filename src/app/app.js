@@ -3,16 +3,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withRouter } from "react-router";
+import { ThemeProvider } from "styled-components";
+import { mainTheme } from "./styles/theme";
 
 // Action creators and helpers
 import { establishCurrentUser } from "../modules/auth";
 import { isServer } from "../store";
 import * as actions from "../store/actions/index";
 
+import Layout from "./components/Layout/Layout";
 import Header from "./header";
 import Routes from "./routes";
 
-import "./app.css";
+import "./styles/app.css";
 
 class App extends Component {
   componentWillMount() {
@@ -32,20 +35,28 @@ class App extends Component {
     );
     console.log("app Props", this.props);
 
+    let theme = mainTheme;
+
+    if (this.props.template) {
+      theme = Object.assign({}, mainTheme, {
+        navLightTheme: this.props.template.navLightTheme
+      });
+    }
+
     return (
-      <div id="app">
-        <Header
-          isAuthenticated={this.props.isAuthenticated}
-          current={this.props.location.pathname}
-        />
-        <div id="content">
+      <ThemeProvider theme={theme}>
+        {/* <Header
+            isAuthenticated={this.props.isAuthenticated}
+            current={this.props.location.pathname}
+          /> */}
+        <Layout template={this.props.template}>
           <Routes
             data={this.props}
             current={this.props.location.pathname}
             storeRoutes={this.props.onStoreRoutes}
           />
-        </div>
-      </div>
+        </Layout>
+      </ThemeProvider>
     );
   }
 }
