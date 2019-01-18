@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { siteName } from "../../../App_config";
+import { siteName } from "../../../../App_config";
 import styled from "styled-components";
 
 import Input from "../../../components/UI/Input";

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { siteName } from "../../../App_config";
+import { siteName } from "../../../../App_config";
 
 import Input from "../../../components/UI/Input";
 import Button from "../../../components/UI/Buttons/Button";

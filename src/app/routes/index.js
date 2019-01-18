@@ -12,6 +12,24 @@ const Homepage = Loadable({
   modules: ["homepage"]
 });
 
+const Auth_Admin = Loadable({
+  loader: () => import(/* webpackChunkName: "authAdmin" */ "./authAdmin"),
+  loading: () => null,
+  modules: ["authAdmin"]
+});
+
+const Admin = Loadable({
+  loader: () => import(/* webpackChunkName: "admin" */ "./admin"),
+  loading: () => null,
+  modules: ["admin"]
+});
+
+const Admin_TEST = Loadable({
+  loader: () => import(/* webpackChunkName: "admin" */ "./adminTest"),
+  loading: () => null,
+  modules: ["adminTest"]
+});
+
 const About = Loadable({
   loader: () => import(/* webpackChunkName: "about" */ "./about"),
   loading: () => null,
@@ -80,6 +98,8 @@ export default props => {
         });
       }
     });
+
+    props.storeRoutes(routesState);
   }
 
   return (
@@ -89,7 +109,7 @@ export default props => {
         path="/"
         render={() => <Homepage pageInfo={props.data.home} />}
       />
-      <Route exact path="/admin" component={About} />
+      <Route exact path="/admin" component={Admin_TEST} />
       <Route exact path="/about" component={About} />
 
       {dynamicRoutes}

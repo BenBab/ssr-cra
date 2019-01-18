@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import Dropzone from "react-dropzone";
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 
-import { siteName } from "../../../App_config";
-import { storageRef } from "../../../index";
+import { siteName } from "../../../../App_config";
+import { storageRef } from "../../../../index";
 import classNames from "classnames";
 
 import styled from "styled-components";
@@ -129,7 +131,7 @@ class Media extends Component {
     var newPostKey = firebase
       .database()
       .ref()
-      .child(`${siteName}/images`)
+      .child(`${siteName}/site/images`)
       .push().key;
     var updates = { [newPostKey]: file.name };
     const that = this;
