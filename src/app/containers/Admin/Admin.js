@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../store/actions/index";
-import { siteName } from "../../App_config";
-import firebase from "firebase";
+import * as actions from "../../../store/actions/index";
+import { siteName } from "../../../App_config";
+
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
+
 import styled from "styled-components";
 
 import Accordian from "../../components/UI/Accordian";
