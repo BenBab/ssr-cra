@@ -21,7 +21,7 @@ _SSR with all the goodies, without ejecting._
 
 - Multiple pages (`/`, `/about`)
 - **User-specific pages with preloaded data** set on a timeout to fake an API call (`/profile/1`, `/profile/2`)
-- **Basic authentication with cookie storage** (`/login`, `/dashboard`, `/logout`)
+- **Basic authentication with cookie storage** (`/login`, `/myProfile`, `/logout`)
 - Not found (404, etc.) page
 
 ## Installation
