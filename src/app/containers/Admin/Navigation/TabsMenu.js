@@ -101,7 +101,7 @@ export default class TabMenu extends Component {
             <Tabs
               value={value}
               onChange={this.handleChange}
-              scrollable
+              variant="scrollable"
               scrollButtons="auto"
             >
               {tabLabels}
