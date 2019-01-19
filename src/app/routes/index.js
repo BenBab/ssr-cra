@@ -12,16 +12,34 @@ const Homepage = Loadable({
   modules: ["homepage"]
 });
 
+const Auth_Admin = Loadable({
+  loader: () => import(/* webpackChunkName: "authAdmin" */ "./authAdmin"),
+  loading: () => null,
+  modules: ["authAdmin"]
+});
+
+const Admin = Loadable({
+  loader: () => import(/* webpackChunkName: "admin" */ "./admin"),
+  loading: () => null,
+  modules: ["admin"]
+});
+
+const Admin_TEST = Loadable({
+  loader: () => import(/* webpackChunkName: "admin" */ "./adminTest"),
+  loading: () => null,
+  modules: ["adminTest"]
+});
+
 const About = Loadable({
   loader: () => import(/* webpackChunkName: "about" */ "./about"),
   loading: () => null,
   modules: ["about"]
 });
 
-const Dashboard = Loadable({
-  loader: () => import(/* webpackChunkName: "dashboard" */ "./dashboard"),
+const MyProfile = Loadable({
+  loader: () => import(/* webpackChunkName: "myProfile" */ "./myProfile"),
   loading: () => null,
-  modules: ["dashboard"]
+  modules: ["myProfile"]
 });
 
 const Login = Loadable({
@@ -45,10 +63,7 @@ const Profile = Loadable({
 export default props => {
   console.log("route props", props);
 
-  const currentRoute = props.current;
   let routesState = [{ value: "/" }];
-  let pageInfo = null;
-
   let dynamicRoutes = [];
 
   const { navigationItems } = props.data;
@@ -63,7 +78,7 @@ export default props => {
           <Route
             key={i}
             path={"/" + item.route}
-            render={props => <Homepage pageInfo={item} />}
+            render={() => <Homepage pageInfo={item} />}
           />
         );
       } else {
@@ -83,11 +98,9 @@ export default props => {
         });
       }
     });
-  }
 
-  // if (props.template){
-  //   theme = Object.assign({}, mainTheme, {'navLightTheme': props.template.navLightTheme } )
-  // }
+    props.storeRoutes(routesState);
+  }
 
   return (
     <Switch>
@@ -96,14 +109,14 @@ export default props => {
         path="/"
         render={() => <Homepage pageInfo={props.data.home} />}
       />
-      <Route exact path="/admin" component={About} />
+      <Route exact path="/admin" component={Admin_TEST} />
       <Route exact path="/about" component={About} />
 
       {dynamicRoutes}
 
       <Route exact path="/profile/:id" component={Profile} />
 
-      <AuthenticatedRoute exact path="/dashboard" component={Dashboard} />
+      <AuthenticatedRoute exact path="/myProfile" component={MyProfile} />
 
       <UnauthenticatedRoute exact path="/login" component={Login} />
       <AuthenticatedRoute exact path="/logout" component={Logout} />

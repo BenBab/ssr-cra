@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 
 import styled from "styled-components";
 
-// import BannerFullwidth from '../../components/UI/Banners/Banner_fullWidth';
-// import BannerHalfwidth from '../../components/UI/Banners/Banner_halfwidth';
-// import MainBanner from '../../components/UI/Banners/Main_Banner';
+import BannerFullwidth from "../../components/UI/Banners/Banner_fullWidth";
+import BannerHalfwidth from "../../components/UI/Banners/Banner_halfwidth";
+import MainBanner from "../../components/UI/Banners/Main_Banner";
 
 import ContactUs from "./Plugins/ContactUs";
 class Dashboard extends Component {
@@ -20,64 +20,160 @@ class Dashboard extends Component {
       return <div>No page content available</div>;
     }
 
-    //   const {
-    //     topBanner, topBannerHalfwidth, topBannerImgSize, topBannerHWbackImg, topBannerHWBackColour, topBannerTxtRightSide, topBannerTxtLightTheme, topBannerLogo, topBannerfade, topBannerTitle, topBannerSubtitle, topBannerDescription, topBannerBtnText, topBannerLink,
-    //     midBanner, midBannerHalfwidth, midBannerImgSize, midBannerHWbackImg, midBannerHWBackColour, midBannerTxtRightSide, midBannerTxtLightTheme, midBannerLogo, midBannerfade, midBannerTitle, midBannerSubtitle, midBannerDescription, midBannerBtnText, midBannerLink,
-    //     mainText, mainTextPosition, mainTextCenterTitle, mainTextRightSide, mainTextBackColour, mainTextImg, mainTextImgAlign, mainTextImgWidth, mainTextImgHeight
-    // } = this.props.pageInfo.content
+    const {
+      topBanner,
+      topBannerHalfwidth,
+      topBannerImgSize,
+      topBannerHWbackImg,
+      topBannerHWBackColour,
+      topBannerTxtRightSide,
+      topBannerTxtLightTheme,
+      topBannerLogo,
+      topBannerfade,
+      topBannerTitle,
+      topBannerSubtitle,
+      topBannerDescription,
+      topBannerBtnText,
+      topBannerLink,
+      midBanner,
+      midBannerHalfwidth,
+      midBannerImgSize,
+      midBannerHWbackImg,
+      midBannerHWBackColour,
+      midBannerTxtRightSide,
+      midBannerTxtLightTheme,
+      midBannerLogo,
+      midBannerfade,
+      midBannerTitle,
+      midBannerSubtitle,
+      midBannerDescription,
+      midBannerBtnText,
+      midBannerLink,
+      mainText,
+      mainTextPosition,
+      mainTextCenterTitle,
+      mainTextRightSide,
+      mainTextBackColour,
+      mainTextImg,
+      mainTextImgAlign,
+      mainTextImgWidth,
+      mainTextImgHeight
+    } = this.props.pageInfo.content;
 
-    //   const topBannerObj = { img: topBanner, halfwidth: topBannerHalfwidth, hwBannerImgSize: topBannerImgSize, hwBannerBackGroundImg: topBannerHWbackImg, backGroundColour: topBannerHWBackColour, textRightSide: topBannerTxtRightSide, lightTheme: topBannerTxtLightTheme, isLogo: topBannerLogo, fadeContent: topBannerfade, title: topBannerTitle, subTitle: topBannerSubtitle, description: topBannerDescription, btnText: topBannerBtnText, btnLink: topBannerLink }
-    //   const midBannerObj = { img: midBanner, halfwidth: midBannerHalfwidth, hwBannerImgSize: midBannerImgSize, hwBannerBackGroundImg: midBannerHWbackImg, backGroundColour: midBannerHWBackColour, textRightSide: midBannerTxtRightSide, lightTheme: midBannerTxtLightTheme, isLogo: midBannerLogo, fadeContent: midBannerfade, title: midBannerTitle, subTitle: midBannerSubtitle, description: midBannerDescription, btnText: midBannerBtnText, btnLink: midBannerLink }
+    const topBannerObj = {
+      img: topBanner,
+      halfwidth: topBannerHalfwidth,
+      hwBannerImgSize: topBannerImgSize,
+      hwBannerBackGroundImg: topBannerHWbackImg,
+      backGroundColour: topBannerHWBackColour,
+      textRightSide: topBannerTxtRightSide,
+      lightTheme: topBannerTxtLightTheme,
+      isLogo: topBannerLogo,
+      fadeContent: topBannerfade,
+      title: topBannerTitle,
+      subTitle: topBannerSubtitle,
+      description: topBannerDescription,
+      btnText: topBannerBtnText,
+      btnLink: topBannerLink
+    };
+    const midBannerObj = {
+      img: midBanner,
+      halfwidth: midBannerHalfwidth,
+      hwBannerImgSize: midBannerImgSize,
+      hwBannerBackGroundImg: midBannerHWbackImg,
+      backGroundColour: midBannerHWBackColour,
+      textRightSide: midBannerTxtRightSide,
+      lightTheme: midBannerTxtLightTheme,
+      isLogo: midBannerLogo,
+      fadeContent: midBannerfade,
+      title: midBannerTitle,
+      subTitle: midBannerSubtitle,
+      description: midBannerDescription,
+      btnText: midBannerBtnText,
+      btnLink: midBannerLink
+    };
 
-    //   const mainTextBannerObj = { mainText, position: mainTextPosition, centerTitle: mainTextCenterTitle, alignTextRight: mainTextRightSide, backgroundColour: mainTextBackColour, img: mainTextImg, imgAlign: mainTextImgAlign, imgWidth: mainTextImgWidth, imgHeight: mainTextImgHeight }
-    //   const mainPosition = (mainTextPosition === undefined ? 'Top' : mainTextPosition);
+    const mainTextBannerObj = {
+      mainText,
+      position: mainTextPosition,
+      centerTitle: mainTextCenterTitle,
+      alignTextRight: mainTextRightSide,
+      backgroundColour: mainTextBackColour,
+      img: mainTextImg,
+      imgAlign: mainTextImgAlign,
+      imgWidth: mainTextImgWidth,
+      imgHeight: mainTextImgHeight
+    };
+    const mainPosition =
+      mainTextPosition === undefined ? "Top" : mainTextPosition;
 
-    //   //PLUGINS
-    //   let contactUs = null;
-    //   if(plugins && plugins.contactUs && plugins.contactUs.contactUsPages){
+    //PLUGINS
+    let contactUs = null;
+    if (plugins && plugins.contactUs && plugins.contactUs.contactUsPages) {
+      contactUs = plugins.contactUs.contactUsPages.find(p => {
+        if (p === "All Pages") return true;
+        const page = p === "home" ? "/" : p;
 
-    //     contactUs = plugins.contactUs.contactUsPages.find( p => {
-    //       if (p === 'All Pages') return true
-    //       const page = (p === 'home') ? '/' : p ;
-
-    //       return pageInfo.route === page
-    //     })
-    //   }
+        return pageInfo.route === page;
+      });
+    }
 
     return (
       <>
         {overlayBlocker && <OverlayBlocker />}
-        {/* <StyledDashboard transparentHeader={this.props.template.transparentHeader} topBanner={topBanner ? true : false}> */}
-        <StyledDashboard>
-          {pageInfo.title}
-          {/* {topBanner &&
-          <>
-          {topBannerHalfwidth
-            ? ( <BannerHalfwidth bannerData={topBannerObj} history={this.props.history} template={this.props.template} position='top'/> )
-            : ( <BannerFullwidth bannerData={topBannerObj} history={this.props.history} template={this.props.template} position='top'/> )
-          }
-          </>
-        }
+        <StyledDashboard
+          transparentHeader={this.props.template.transparentHeader}
+          topBanner={topBanner ? true : false}
+        >
+          {topBanner && (
+            <>
+              {topBannerHalfwidth ? (
+                <BannerHalfwidth
+                  bannerData={topBannerObj}
+                  history={this.props.history}
+                  template={this.props.template}
+                  position="top"
+                />
+              ) : (
+                <BannerFullwidth
+                  bannerData={topBannerObj}
+                  history={this.props.history}
+                  template={this.props.template}
+                  position="top"
+                />
+              )}
+            </>
+          )}
 
-        {mainPosition === 'Top' &&
-          <MainBanner bannerData={mainTextBannerObj}/>
-        }
-        
-        {contactUs &&  <ContactUs pluginOptions={plugins.contactUs}/> }
+          {mainPosition === "Top" && (
+            <MainBanner bannerData={mainTextBannerObj} />
+          )}
 
+          {contactUs && <ContactUs pluginOptions={plugins.contactUs} />}
 
-        {midBanner &&
-          <>
-          { midBannerHalfwidth === true
-          ? ( <BannerHalfwidth bannerData={midBannerObj} history={this.props.history} template={this.props.template} position='mid'/> )
-          : ( <BannerFullwidth bannerData={midBannerObj} history={this.props.history} template={this.props.template} position='mid'/> )
-          }
-          </>
-        }
-        
-        {mainPosition === 'Middle' &&
-          <MainBanner bannerData={mainTextBannerObj} />
-        } */}
+          {midBanner && (
+            <>
+              {midBannerHalfwidth === true ? (
+                <BannerHalfwidth
+                  bannerData={midBannerObj}
+                  history={this.props.history}
+                  template={this.props.template}
+                  position="mid"
+                />
+              ) : (
+                <BannerFullwidth
+                  bannerData={midBannerObj}
+                  history={this.props.history}
+                  template={this.props.template}
+                  position="mid"
+                />
+              )}
+            </>
+          )}
+
+          {mainPosition === "Middle" && (
+            <MainBanner bannerData={mainTextBannerObj} />
+          )}
         </StyledDashboard>
       </>
     );
@@ -97,19 +193,16 @@ const OverlayBlocker = styled.div`
   background-color: transparent;
 `;
 
-// const mapStateToProps = state => ({
-//   isAuthenticated: state.auth.isAuthenticated,
-//   home: state.mainState.home,
-//   navigationItems: state.mainState.navigationItems,
-//   template: state.mainState.template,
-//   plugins: state.mainState.plugins,
-// });
+const mapStateToProps = state => ({
+  template: state.mainState.template,
+  plugins: state.mainState.plugins
+});
 
-// export default withRouter(
-//   connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-//   )(App)
-// );
+export default withRouter(
+  connect(
+    mapStateToProps,
+    null
+  )(Dashboard)
+);
 
-export default Dashboard;
+// export default Dashboard;
