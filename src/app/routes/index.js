@@ -109,6 +109,7 @@ export default props => {
         path="/"
         render={() => <Homepage pageInfo={props.data.home} />}
       />
+      <Route exact path="/authenticate-admin" component={Auth_Admin} />
       <Route exact path="/admin" component={Admin_TEST} />
       <Route exact path="/about" component={About} />
 

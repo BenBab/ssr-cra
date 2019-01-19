@@ -7,7 +7,7 @@ import { ThemeProvider } from "styled-components";
 import { mainTheme } from "./styles/theme";
 
 // Action creators and helpers
-import { establishCurrentUser } from "../modules/auth";
+//import { establishCurrentUser } from "../modules/auth";
 import { isServer } from "../store";
 import * as actions from "../store/actions/index";
 
@@ -24,7 +24,7 @@ firebase.initializeApp(fireBaseConfig);
 class App extends Component {
   componentWillMount() {
     if (!isServer) {
-      this.props.onEstablishCurrentUser();
+      // this.props.onEstablishCurrentUser();
     }
   }
 
@@ -77,8 +77,6 @@ const mapDispatchToProps = dispatch => {
   return {
     onInitWebsiteState: () => dispatch(actions.initWebsiteState()),
     onStoreRoutes: routesState => dispatch(actions.storeRoutes(routesState)),
-
-    onEstablishCurrentUser: () => dispatch(establishCurrentUser())
   };
 };
 // bindActionCreators({ establishCurrentUser }, dispatch)

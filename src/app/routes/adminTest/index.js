@@ -7,7 +7,7 @@ const Admin_TEST = props => {
   console.log("admin_TEST.props", props);
   return (
     <Page id="admin" title="Admin" noCrawl>
-      <Admin />
+      <Admin {...props}/>
     </Page>
   );
 };
