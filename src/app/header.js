@@ -28,8 +28,8 @@ const links = [
     auth: false
   },
   {
-    to: "/dashboard",
-    text: "Dashboard",
+    to: "/myProfile",
+    text: "myProfile",
     auth: true
   },
   {
