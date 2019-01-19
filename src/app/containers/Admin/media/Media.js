@@ -203,7 +203,7 @@ class Media extends Component {
     firebase
       .database()
       .ref()
-      .child(`${siteName}/images/${img.key}`)
+      .child(`${siteName}/site/images/${img.key}`)
       .remove()
       .then(() => {
         console.log("db delete succeeded!");
