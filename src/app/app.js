@@ -16,7 +16,11 @@ import Header from "./header";
 import Routes from "./routes";
 
 import "./styles/app.css";
+import { fireBaseConfig } from "../App_config";
+import firebase from "firebase/app";
+import "firebase/storage";
 
+firebase.initializeApp(fireBaseConfig);
 class App extends Component {
   componentWillMount() {
     if (!isServer) {
