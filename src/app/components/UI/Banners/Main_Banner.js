@@ -58,7 +58,7 @@ export class Main_Banner extends Component {
 }
 
 const StyledMainBanner = styled.div`
-  padding: 40px 10%;
+  padding: 8% 10%;
   background-color: ${props => props.backgroundColour || "#FFFFFF"};
 
   .mainText {
