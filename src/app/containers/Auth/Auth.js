@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../store/actions/index";
+import { withRouter } from "react-router";
+import * as actions from "../../../store/actions/index";
+
+import styled from 'styled-components';
 
 import Spinner from "../../components/UI/Spinner";
+import Button from '../../components/UI/Buttons/Button';
+import Input from '../../components/UI/Input';
 
 class Auth extends Component {
   state = {
@@ -51,29 +56,35 @@ class Auth extends Component {
     }
 
     return (
-      <div>
+      <StyledAuthPage>
         <div>Administrator Login</div>
         <form onSubmit={this.submitHandler}>
-          <input
+          <Input
+            inputtype={'input'}
             placeholder="email"
             name="email"
             value={this.state.email}
             onChange={this.onFormChange}
           />
-          <input
+          <Input
+            inputtype={'input'}
             placeholder="password"
             name="password"
             value={this.state.password}
             onChange={this.onFormChange}
           />
-          <button>Submit</button>
+          <Button type={'submit'}>Submit</Button>
           {errorMessage}
         </form>
         {this.props.loading && <Spinner />}
-      </div>
+      </StyledAuthPage>
     );
   }
 }
+
+const StyledAuthPage = styled.div`
+  padding: 10%;
+`;
 
 const mapStateToProps = state => {
   return {
@@ -91,7 +102,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
+export default withRouter(
+connect(
   mapStateToProps,
   mapDispatchToProps
-)(Auth);
+)(Auth)
+);
