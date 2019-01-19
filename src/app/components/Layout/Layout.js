@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
+
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
+import Logo from '../Logo/Logo'
+import NavigationItems from '../Navigation/NavigationItems/NavigationItems'
+import Flex from '../UI/Wrappers/Flex'
 
 class Layout extends Component {
   state = {
@@ -30,6 +34,10 @@ class Layout extends Component {
   };
 
   render() {
+    const footerlogo = this.props.template
+        ? this.props.template.siteLogo
+        : null
+
     return (
       <SiteWrapper>
         <SiteContent>
@@ -45,11 +53,10 @@ class Layout extends Component {
           />
           <main>{this.props.children}</main>
           <footer>
-            <p>Posted by: Hege Refsnes</p>
-            <p>
-              Contact information:{" "}
-              <a href="mailto:someone@example.com">someone@example.com</a>.
-            </p>
+            <Flex>
+              <Logo siteLogo={footerlogo} width={'50%'}/>
+              <NavigationItems/>
+            </Flex>
           </footer>
         </SiteContent>
       </SiteWrapper>
@@ -75,8 +82,11 @@ const SiteContent = styled.div`
   }
 
   footer {
-    padding: 20px;
+    padding: 8%;
     background-color: ${props => props.theme.websiteFooterColour};
+
+
+    
   }
 
   /* div:nth-child(0){
