@@ -139,7 +139,7 @@ class Media extends Component {
     return firebase
       .database()
       .ref()
-      .child(`${siteName}/images`)
+      .child(`${siteName}/site/images`)
       .update(updates, function(error) {
         if (error) {
           // The write failed...
