@@ -42,10 +42,10 @@ class Admin extends Component {
     error: null
   };
 
-  componentDidMount() {
-    // if (!this.props.isAuthenticated){
-    //   this.props.history.push('/authenticate-admin')
-    // }
+  componentWillMount() {
+    if (!this.props.isAuthenticated && process.env.NODE_ENV === "production"){
+      this.props.history.push('/authenticate-admin')
+    }
 
     const user = firebase.auth().currentUser;
 
@@ -64,11 +64,11 @@ class Admin extends Component {
     }
   }
 
-  // componentDidUpdate(prevProps){
-  //   if (prevProps.isAuthenticated && !this.props.isAuthenticated ){
-  //     this.props.history.push('/authenticate-admin')
-  //   }
-  // }
+  componentDidUpdate(prevProps){
+    if (prevProps.isAuthenticated && !this.props.isAuthenticated && process.env.NODE_ENV === "production"){
+      this.props.history.push('/authenticate-admin')
+    }
+  }
 
   logoutHandler = () => {
     firebase

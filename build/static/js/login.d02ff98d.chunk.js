@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[8],{818:function(n,t,e){"use strict";e.r(t);var o=e(0),i=e.n(o),c=e(27),r=e(35),u=e(110),l=e(65);t.default=Object(c.connect)(null,function(n){return Object(r.b)({loginUser:l.c},n)})(function(n){return i.a.createElement(u.a,{id:"login",title:"Login",description:"We need to log in to stuff."},i.a.createElement("button",{onClick:function(){return n.loginUser("user@mydomain.com","password123")}},"Click the button..."))})}}]);
-//# sourceMappingURL=login.d02ff98d.chunk.js.map
