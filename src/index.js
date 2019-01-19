@@ -6,18 +6,14 @@ import { Frontload } from "react-frontload";
 import { ConnectedRouter } from "connected-react-router";
 import createStore from "./store";
 
-import { fireBaseConfig } from "./App_config";
-import firebase from "firebase/app";
-import "firebase/storage";
-
 import App from "./app/app";
 import "./index.css";
 
 // Create a store and get back itself and its history object
 const { store, history } = createStore();
 
-firebase.initializeApp(fireBaseConfig);
-export var storageRef = firebase.storage().ref();
+// firebase.initializeApp(fireBaseConfig);
+// // export var storageRef = firebase.storage().ref();
 
 // Running locally, we should run on a <ConnectedRouter /> rather than on a <StaticRouter /> like on the server
 // Let's also let React Frontload explicitly know we're not rendering on the server here

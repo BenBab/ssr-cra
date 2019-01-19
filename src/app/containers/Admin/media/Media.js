@@ -3,9 +3,9 @@ import Dropzone from "react-dropzone";
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
+import "firebase/storage";
 
 import { siteName } from "../../../../App_config";
-import { storageRef } from "../../../../index";
 import classNames from "classnames";
 
 import styled from "styled-components";
@@ -54,6 +54,8 @@ class Media extends Component {
     let imageCount = Object.keys(this.props.currentImages).length;
     let returnedCount = 0;
 
+    let storageRef = firebase.storage().ref();
+
     Object.keys(this.props.currentImages).map((key, i) => {
       const img = this.props.currentImages[key];
       return storageRef
@@ -95,8 +97,9 @@ class Media extends Component {
         });
         return;
       }
-
-      storageRef
+      firebase
+        .storage()
+        .ref()
         .child(`${siteName}/${file.name}`)
         .put(file)
         .then(snapshot => {
@@ -194,6 +197,8 @@ class Media extends Component {
     const img = this.props.imageURLs.find(
       img => img.title === this.state.selectedName
     );
+    let storageRef = firebase.storage().ref();
+
     console.log("pre delete");
     firebase
       .database()
