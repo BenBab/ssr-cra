@@ -23,7 +23,7 @@ class ContactUs extends Component {
   // handleSubmit = this.handleSubmit.bind(this);
 
   handlechange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value, disableButton: false });
   };
 
   async handleSubmit(e) {
@@ -106,7 +106,7 @@ class ContactUs extends Component {
 }
 
 const ContactForm = styled.div`
-  padding: 20px 10%;
+  padding: 40px 10%;
 `;
 
 export default ContactUs;
