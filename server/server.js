@@ -8,6 +8,9 @@ import path from "path";
 import Loadable from "react-loadable";
 import cookieParser from "cookie-parser";
 
+//nodemailer for sending contact info
+import serverMailer from "./mailer/serverMailer"
+
 // Our loader - this basically acts as the entry point for each page load
 import loader from "./loader";
 
@@ -41,6 +44,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 app.use(cookieParser());
 
+app.post('/api/mailer', (req, res) => {
+  console.log('hello')
+  serverMailer(req, res)
+})
+
 // Set up homepage, static assets, and capture everything else
 app.use(express.Router().get("/", loader));
 app.use(express.static(path.resolve(__dirname, "../build")));
@@ -50,6 +58,7 @@ app.use(loader);
 Loadable.preloadAll().then(() => {
   app.listen(PORT, console.log(`App listening on port ${PORT}!`));
 });
+
 
 // Handle the bugs somehow
 app.on("error", error => {

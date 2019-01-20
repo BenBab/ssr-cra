@@ -53,7 +53,7 @@ class Layout extends Component {
           />
           <main>{this.props.children}</main>
           <footer>
-            <Flex>
+            <Flex justifyContent={'space-around'}>
               <Logo siteLogo={footerlogo} width={'50%'}/>
               <NavigationItems/>
             </Flex>
@@ -74,8 +74,7 @@ const SiteWrapper = styled.div`
 const SiteContent = styled.div`
   max-width: 1500px;
   margin: 0 auto 0 auto;
-  padding-bottom: 70px;
-  min-height: 1500px;
+  /* min-height: 1500px; */
 
   main {
     background-color: ${props => props.theme.websiteMainColour};
@@ -85,8 +84,10 @@ const SiteContent = styled.div`
     padding: 8%;
     background-color: ${props => props.theme.websiteFooterColour};
 
+  }
 
-    
+  @media (min-width: 1500px) {
+    padding-bottom: 70px;
   }
 
   /* div:nth-child(0){
