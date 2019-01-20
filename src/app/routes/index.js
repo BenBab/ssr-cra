@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import AuthenticatedRoute from "../components/authenticated-route";
 import UnauthenticatedRoute from "../components/unauthenticated-route";
@@ -60,73 +60,90 @@ const Profile = Loadable({
   modules: ["profile"]
 });
 
-export default props => {
-  console.log("route props", props);
+export default class Routes extends Component {
 
-  let routesState = [{ value: "/" }];
-  let dynamicRoutes = [];
+  state ={
+    dynamicRoutes: []
+  }
 
-  const { navigationItems } = props.data;
+  componentDidUpdate(prevProps){
+    const { navigationItems } = this.props.data;
 
-  if (navigationItems) {
-    dynamicRoutes = Object.keys(navigationItems).map((key, i) => {
-      const item = navigationItems[key];
+    if (navigationItems !== prevProps.data.navigationItems){
+      this.updateDynamicRoutes()
+    }
+  }
 
-      if (!item.dropdownPages) {
-        routesState = [...routesState, { value: "/" + item.route }];
-        return (
-          <Route
-            key={i}
-            path={"/" + item.route}
-            render={() => <Homepage pageInfo={item} />}
-          />
-        );
-      } else {
-        return Object.keys(item.dropdownPages).map((key, i) => {
-          const dropDownItem = item.dropdownPages[key];
-          routesState = [
-            ...routesState,
-            { value: "/pages/" + dropDownItem.route }
-          ];
+  updateDynamicRoutes = () => {
+    let routesState = [{ value: "/" }];
+    let dynamicRoutes = [];
+
+    const { navigationItems } = this.props.data;
+
+    if (navigationItems) {
+      dynamicRoutes = Object.keys(navigationItems).map((key, i) => {
+        const item = navigationItems[key];
+
+        if (!item.dropdownPages) {
+          routesState = [...routesState, { value: "/" + item.route }];
           return (
             <Route
               key={i}
-              path={"/pages/" + dropDownItem.route}
-              render={props => <Homepage pageInfo={dropDownItem} />}
+              path={"/" + item.route}
+              render={() => <Homepage pageInfo={item} />}
             />
           );
-        });
-      }
+        } else {
+          return Object.keys(item.dropdownPages).map((key, i) => {
+            const dropDownItem = item.dropdownPages[key];
+            routesState = [
+              ...routesState,
+              { value: "/pages/" + dropDownItem.route }
+            ];
+            return (
+              <Route
+                key={i}
+                path={"/pages/" + dropDownItem.route}
+                render={() => <Homepage pageInfo={dropDownItem} />}
+              />
+            );
+          });
+        }
     });
-
-    props.storeRoutes(routesState);
+    this.props.storeRoutes(routesState);
+    this.setState({ dynamicRoutes })
+    }
   }
 
-  return (
-    <Switch>
-      <Route
-        exact
-        path="/"
-        render={() => <Homepage pageInfo={props.data.home} />}
-      />
-      <Route exact path="/authenticate-admin" component={Auth_Admin} />
-      <Route exact path="/admin" component={Admin_TEST} />
-      <Route exact path="/about" component={About} />
 
-      {dynamicRoutes}
+  render(){
+  console.log("route this.props", this.props);
 
-      <Route exact path="/profile/:id" component={Profile} />
+    return (
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={() => <Homepage pageInfo={this.props.data.home} />}
+        />
+        <Route exact path="/authenticate-admin" component={Auth_Admin} />
+        <Route exact path="/admin" component={Admin_TEST} />
+        <Route exact path="/about" component={About} />
 
-      <AuthenticatedRoute exact path="/myProfile" component={MyProfile} />
+        {this.state.dynamicRoutes}
 
-      <UnauthenticatedRoute exact path="/login" component={Login} />
-      <AuthenticatedRoute exact path="/logout" component={Logout} />
+        <Route exact path="/profile/:id" component={Profile} />
 
-      <Route component={NotFound} />
-    </Switch>
-  );
+        <AuthenticatedRoute exact path="/myProfile" component={MyProfile} />
+
+        <UnauthenticatedRoute exact path="/login" component={Login} />
+        <AuthenticatedRoute exact path="/logout" component={Logout} />
+
+        <Route component={NotFound} />
+      </Switch>
+    );
+  };
 };
-
 // <Route exact path="/:id" component={Homepage} pageInfo={'props.data'}/>
 // <Route exact path="/pages/:id" component={Homepage} pageInfo={props.data}/>
 

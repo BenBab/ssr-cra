@@ -45,7 +45,6 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 
 app.post('/api/mailer', (req, res) => {
-  console.log('hello')
   serverMailer(req, res)
 })
 
