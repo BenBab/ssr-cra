@@ -11,7 +11,7 @@ function serverMailer(req, res){
         service: 'gmail',
         auth: {
           user: 'workingforfamiliesnz@gmail.com',
-          pass: '84people6'
+          pass: '?Ue!q4AjF{(usoZ'
         }
     });
 
