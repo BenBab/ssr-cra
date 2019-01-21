@@ -14,7 +14,7 @@ import ContactUs from "./Plugins/ContactUs";
 class Dashboard extends Component {
   render() {
     console.log("dashboard props", this.props);
-    console.log(process.env.SITENAME, process.env)
+
     const { pageInfo, plugins, overlayBlocker } = this.props;
     if (!pageInfo) {
       return <div> loading...</div>;

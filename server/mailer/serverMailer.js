@@ -10,14 +10,14 @@ function serverMailer(req, res){
     var smtpTransport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: process.env.NODEMAILER_EMAIL,
-          pass: process.env.NODEMAILER_PASS
+          user: process.env.REACT_APP_NODEMAILER_EMAIL,
+          pass: process.env.REACT_APP_NODEMAILER_PASS
         }
     });
 
     var mailOptions = {
         to: emailTo,
-        from: process.env.NODEMAILER_EMAIL_ADDRESS,
+        from: email,
         subject: `Contact request from ${name}`, 
         html: `
             <h2>Contact Us Request</h2>
