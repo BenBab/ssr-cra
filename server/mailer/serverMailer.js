@@ -10,14 +10,14 @@ function serverMailer(req, res){
     var smtpTransport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'workingforfamiliesnz@gmail.com',
-          pass: '?Ue!q4AjF{(usoZ'
+          user: process.env.NODEMAILER_EMAIL,
+          pass: process.env.NODEMAILER_PASS
         }
     });
 
     var mailOptions = {
         to: emailTo,
-        from: email,
+        from: process.env.NODEMAILER_EMAIL_ADDRESS,
         subject: `Contact request from ${name}`, 
         html: `
             <h2>Contact Us Request</h2>

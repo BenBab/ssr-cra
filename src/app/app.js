@@ -19,8 +19,12 @@ import "./styles/app.css";
 import { fireBaseConfig } from "../App_config";
 import firebase from "firebase/app";
 import "firebase/storage";
+require('dotenv').config()
+
+console.log('SiteName', process.env.REACT_APP_SITENAME)
 
 firebase.initializeApp(fireBaseConfig);
+
 class App extends Component {
   componentWillMount() {
     if (!isServer) {
