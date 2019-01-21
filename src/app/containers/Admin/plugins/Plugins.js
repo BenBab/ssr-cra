@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { siteName } from "../../../../App_config";
+
 import styled from "styled-components";
 
 import Spinner from "../../../components/UI/Spinner";
@@ -33,6 +33,8 @@ class Plugins extends Component {
 
   handlesubmit = event => {
     event.preventDefault();
+    const siteName = process.env.REACT_APP_SITENAME;
+
     const url = `/${siteName}/site/plugins`;
     this.props.pluginsChangeSubmit(url, this.props.plugins);
   };

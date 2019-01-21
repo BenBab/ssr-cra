@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { siteName } from "../../../../App_config";
 
 import Input from "../../../components/UI/Input";
 import Button from "../../../components/UI/Buttons/Button";
@@ -17,6 +16,8 @@ class Template extends Component {
 
   handlesubmit = event => {
     event.preventDefault();
+    const siteName = process.env.REACT_APP_SITENAME;
+
     const url = `/${siteName}/site/template`;
     this.props.templateChangeSubmit(url, this.props.template);
   };

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
-import { siteName } from "../../../App_config";
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -112,6 +111,7 @@ class Admin extends Component {
     console.log("newPage_State", newPage_State);
     const { title, checked, selectVal } = newPage_State;
     const { navigationItems } = this.props;
+    const siteName = process.env.REACT_APP_SITENAME
 
     const route = title.replace(/ /g, "-").toLowerCase();
 
@@ -216,6 +216,8 @@ class Admin extends Component {
     console.log(this.state.pageToDelete);
     const that = this;
     const { id, parentId } = this.state.pageToDelete;
+    const siteName = process.env.REACT_APP_SITENAME;
+
     let url = `/${siteName}/site/navigationItems/${id}`;
 
     if (parentId) {
@@ -243,6 +245,7 @@ class Admin extends Component {
 
   updatePageSubmit = (pageInfo, key, parentKey) => {
     console.log(pageInfo, key, parentKey);
+    const siteName = process.env.REACT_APP_SITENAME;
 
     const URL = !parentKey
       ? `/${siteName}/site/navigationItems/${key}/content`
