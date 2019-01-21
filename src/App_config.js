@@ -1,12 +1,11 @@
 export const URL_PREFIX = "https://react-boiler-5ecbd.firebaseio.com";
-export const siteName = "djHire";
-export const imageLimit = 6; //maybe should be in database
+export const siteName = process.env.REACT_APP_SITENAME;
 
 export const fireBaseConfig = {
-  apiKey: "AIzaSyCDGAU3I4HyqS9641CCDLCLphNxjCBcC8U",
-  authDomain: "react-boiler-5ecbd.firebaseapp.com",
-  databaseURL: "https://react-boiler-5ecbd.firebaseio.com",
-  projectId: "react-boiler-5ecbd",
-  storageBucket: "react-boiler-5ecbd.appspot.com",
-  messagingSenderId: "613732878059"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId:process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSANGEING_ID
 };
