@@ -5,7 +5,6 @@ import "firebase/auth";
 import "firebase/database";
 import "firebase/storage";
 
-import { siteName } from "../../../../App_config";
 import classNames from "classnames";
 
 import styled from "styled-components";
@@ -53,6 +52,7 @@ class Media extends Component {
     let imageContainer = [];
     let imageCount = Object.keys(this.props.currentImages).length;
     let returnedCount = 0;
+    const siteName = process.env.REACT_APP_SITENAME;
 
     let storageRef = firebase.storage().ref();
 
@@ -84,8 +84,9 @@ class Media extends Component {
       this.setState({ error: "Rejected upload, incompatable file detected" });
       return;
     }
-
+    const siteName = process.env.REACT_APP_SITENAME;
     const user = firebase.auth().currentUser;
+
     if (user) {
       console.log("user is signed in");
       const file = acceptedFiles[0];
@@ -120,6 +121,8 @@ class Media extends Component {
   checkFileAlreadyExists = file => {
     if (this.props.currentImages === null) return;
 
+    
+
     const findImageRef = Object.keys(this.props.currentImages).filter(
       (key, i) => {
         const img = this.props.currentImages[key];
@@ -129,8 +132,11 @@ class Media extends Component {
 
     return !findImageRef.length ? false : true;
   };
+  
 
   addImageRefToDb = file => {
+    const siteName = process.env.REACT_APP_SITENAME;
+
     var newPostKey = firebase
       .database()
       .ref()
@@ -194,6 +200,8 @@ class Media extends Component {
   confirmDelete = () => {
     console.log(this.state, this.props);
     const that = this;
+    const siteName = process.env.REACT_APP_SITENAME;
+
     const img = this.props.imageURLs.find(
       img => img.title === this.state.selectedName
     );
