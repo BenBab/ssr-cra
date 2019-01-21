@@ -1,6 +1,5 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
-import { siteName } from "../../App_config";
 
 export const setDataStore = data => {
   return {
@@ -10,6 +9,8 @@ export const setDataStore = data => {
 };
 
 export const initWebsiteState = () => {
+  const siteName = process.env.REACT_APP_SITENAME;
+
   const URL = `https://react-boiler-5ecbd.firebaseio.com/${siteName}/site.json`;
 
   return dispatch => {
