@@ -43,6 +43,7 @@ class Admin extends Component {
   };
 
   componentWillMount() {
+    console.log(process.env.SITENAME)
     if (!this.props.isAuthenticated && process.env.NODE_ENV === "production"){
       this.props.history.push('/authenticate-admin')
     }
