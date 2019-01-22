@@ -9,6 +9,7 @@ import BannerHalfwidth from "../../components/UI/Banners/Banner_halfwidth";
 import MainBanner from "../../components/UI/Banners/Main_Banner";
 
 import ContactUs from "./Plugins/ContactUs";
+import Booking from './Plugins/Booking';
 
 
 class Dashboard extends Component {
@@ -112,8 +113,19 @@ class Dashboard extends Component {
 
     //PLUGINS
     let contactUs = null;
+    let booking = null;
+
     if (plugins && plugins.contactUs && plugins.contactUs.contactUsPages) {
       contactUs = plugins.contactUs.contactUsPages.find(p => {
+        if (p === "All Pages") return true;
+        const page = p === "home" ? "/" : p;
+
+        return pageInfo.route === page;
+      });
+    }
+
+    if (plugins && plugins.booking && plugins.booking.bookingPages) {
+      booking = plugins.booking.bookingPages.find(p => {
         if (p === "All Pages") return true;
         const page = p === "home" ? "/" : p;
 
@@ -152,7 +164,11 @@ class Dashboard extends Component {
             <MainBanner bannerData={mainTextBannerObj} />
           )}
 
+          {booking && <Booking pluginOptions={plugins.booking} />}
+          
           {contactUs && <ContactUs pluginOptions={plugins.contactUs} />}
+
+
 
           {midBanner && (
             <>
