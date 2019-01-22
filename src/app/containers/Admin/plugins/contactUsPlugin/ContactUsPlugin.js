@@ -5,7 +5,7 @@ import Flex from "../../../../components/UI/Wrappers/Flex";
 
 import MultiSelect from "../../../../components/UI/MultiSelect";
 
-const ContactUsSettings = props => {
+const ContactUsPlugin = props => {
   if (!props.plugin) return <div />;
 
   const { contactUsActive, contactUsPages, contactUsEmail } = props.plugin;
@@ -38,7 +38,7 @@ const ContactUsSettings = props => {
           <div>
             <Input
               inputtype="input"
-              label="Enter Business email where emails are received"
+              label="Enter Business email where contact requests are received"
               parentObj={props.parentObj}
               name="contactUsEmail"
               value={contactUsEmail}
@@ -51,4 +51,4 @@ const ContactUsSettings = props => {
   );
 };
 
-export default ContactUsSettings;
+export default ContactUsPlugin;
