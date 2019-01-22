@@ -25,11 +25,13 @@
     "ignore-styles": "^5.0.1",
     "js-cookie": "^2.2.0",
     "md5-file": "^4.0.0",
+    "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "nodemailer": "^5.1.1",
     "nodemon": "^1.18.9",
     "query-string": "^6.2.0",
     "react": "^16.6.3",
+    "react-big-calendar": "^0.20.3",
     "react-color": "^2.17.0",
     "react-dom": "^16.6.3",
     "react-dropzone": "^8.0.1",
@@ -62,9 +64,7 @@
   ],
   "devDependencies": {
     "husky": "^1.1.0",
-    "moment": "^2.24.0",
     "prettier": "1.14.3",
-    "pretty-quick": "^1.7.0",
-    "react-big-calendar": "^0.20.3"
+    "pretty-quick": "^1.7.0"
   }
 }
