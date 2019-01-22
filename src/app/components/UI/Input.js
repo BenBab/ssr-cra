@@ -97,7 +97,7 @@ const Input = props => {
       break;
     case "checkbox":
       inputElement = (
-        <Flex>
+        <Flex margin={'initial'}>
           <Checkbox
             name={props.name}
             checked={props.checked}

@@ -6,7 +6,8 @@ import Spinner from "../../../components/UI/Spinner";
 import Flex from "../../../components/UI/Wrappers/Flex";
 import Button from "../../../components/UI/Buttons/Button";
 
-import ContactUsSettings from "./contactUsSettings/ContactUsSettings";
+import ContactUsPlugin from "./contactUsPlugin/ContactUsPlugin";
+import BookingPlugin from "./bookingPlugin/BookingPlugin";
 
 class Plugins extends Component {
   state = {
@@ -60,7 +61,7 @@ class Plugins extends Component {
     return (
       <div>
         <StyledPlugins>
-          <ContactUsSettings
+          <ContactUsPlugin
             plugin={this.props.plugins.contactUs}
             name={"contactUsPlugin"}
             parentObj="contactUs"
@@ -68,6 +69,16 @@ class Plugins extends Component {
             accordianClick={this.accordianClick}
             handleCheckbox={this.handleCheckbox}
             handleChange={e => this.handleChange(e, "contactUs")}
+          />
+          <br/><br/>
+          <BookingPlugin
+            plugin={this.props.plugins.booking}
+            name={"bookingPlugin"}
+            parentObj="booking"
+            availableRoutes={availableRoutes}
+            accordianClick={this.accordianClick}
+            handleCheckbox={this.handleCheckbox}
+            handleChange={e => this.handleChange(e, "booking")}
           />
         </StyledPlugins>
         <Flex justifyContent="flex-start">
