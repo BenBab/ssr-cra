@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{927:function(e,n,a){"use strict";a.r(n);var o=a(0),p=a.n(o),t=a(108),c=a(475);n.default=function(e){return console.log("homepage.props",e),p.a.createElement(t.a,{id:"homepage"},p.a.createElement(c.a,{pageInfo:e.pageInfo}))}}}]);
-//# sourceMappingURL=homepage.6cb59aaf.chunk.js.map
