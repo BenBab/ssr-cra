@@ -8,7 +8,7 @@ import MultiSelect from "../../../../components/UI/MultiSelect";
 const BookingPlugin = props => {
     if (!props.plugin) return <div />;
 
-    const { bookingActive, bookingPages, bookingEmail, bookingForm, bookingCalendarID, bookingApiKey } = props.plugin;
+    const { bookingActive, bookingPages, bookingEmail, bookingForm, bookingCalendarID, bookingApiKey, bookingTimeSlotsAvailable, bookingTimeSlots, bookingSessions } = props.plugin;
     console.log("booking settings props", props);
     return (
         <div>
@@ -54,7 +54,7 @@ const BookingPlugin = props => {
                         />
                         <Input
                             inputtype="input"
-                            label="Gmail Calendar Id"
+                            label="Google Calendar Id"
                             parentObj={props.parentObj}
                             name="bookingCalendarID"
                             value={bookingCalendarID}
@@ -62,12 +62,45 @@ const BookingPlugin = props => {
                         />
                         <Input
                             inputtype="input"
-                            label="Gmail Api Key"
+                            label="Google Calendar Api Key"
                             parentObj={props.parentObj}
                             name="bookingApiKey"
                             value={bookingApiKey}
                             onChange={props.handleChange}
                         />
+                        <br/>
+                        <Input
+                            inputtype="checkbox"
+                            sideLabel="Timeslots available (leave unticked if booking times do not repeat)"
+                            parentObj={props.parentObj}
+                            name="bookingTimeSlotsAvailable"
+                            checked={bookingTimeSlotsAvailable}
+                            handleChange={props.handleCheckbox}
+                        />
+                        { bookingTimeSlotsAvailable &&
+                        <Input
+                            inputtype="input"
+                            label="Enter the timeslots when events can be booked on a daily bases"
+                            parentObj={props.parentObj}
+                            name="bookingTimeSlots"
+                            value={bookingTimeSlots}
+                            placeholder={'eg 24 hour format..  09:30-10:00, 10:00-10:30, 14:30-15:00'}
+                            onChange={props.handleChange}
+                        />
+                        }
+
+                        <Input
+                            inputtype="input"
+                            type="number"
+                            label={bookingTimeSlotsAvailable ? 'Booking sessions available per timeslot' : 'Booking sessions available per day'}
+                            parentObj={props.parentObj}
+                            name="bookingSessions"
+                            value={bookingSessions}
+                            placeholder={bookingTimeSlotsAvailable ? 'eg. Entering "6" will allow 6 bookings per timeslot' : 'eg. Entering "6" will allow 6 bookings per day'}
+                            onChange={props.handleChange}
+                        />
+
+
                     </div>
                 </Minimizer>
             )}
