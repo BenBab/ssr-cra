@@ -69,7 +69,7 @@ class ContactUs extends Component {
 
     return (
       <ContactForm>
-        <h1>Contact Us</h1>
+        <h1 ref={this.props.refProp}>{this.props.booking ? 'Booking Form' :'Contact Us'}</h1>
 
         <form onSubmit={this.handleSubmit.bind(this)}>
           <Input
