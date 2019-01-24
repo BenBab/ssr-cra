@@ -5,6 +5,7 @@ import axios from "axios";
 
 import styled from 'styled-components'
 
+import ContactForm from './ContactUs'
 
 require('react-big-calendar/lib/css/react-big-calendar.css')
 
@@ -14,16 +15,22 @@ const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer
 
 
 class Booking extends Component {
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+  }
 
   state = {
     setupIncomplete: false,
     events: []
   }
 
+  bookings = []
+  
   componentDidMount(){
     const { bookingApiKey, bookingCalendarID } = this.props.pluginOptions
-    const timeMin = (new Date(Date.parse("2019-01-22"))).toISOString()
-    const timeMax = (new Date(Date.parse("2019-02-27"))).toISOString()
+    const timeMin = (new Date(Date.parse("2019-01-23"))).toISOString()
+    const timeMax = (new Date(Date.parse("2019-02-15"))).toISOString()
 
     if ( !bookingApiKey || !bookingCalendarID) {
       return this.setState({ setupIncomplete: true })
@@ -35,7 +42,7 @@ class Booking extends Component {
         .get(url)
         .then(response => {
           console.log("request data success", response);
-          this.handleEvents(response.data)
+          this.handleEvents(response.data,)
 
         })
         .catch(error => {
@@ -46,31 +53,101 @@ class Booking extends Component {
   }
 
   handleEvents = (data) => {
-    let events = []
+    const { bookingTimeSlotsAvailable, bookingTimeSlots, bookingSessions } = this.props.pluginOptions
+    let bookings = []
     const slotsPerSection = 2
     
     
     data.items.map( event => {
       console.log(event)
 
-      const start = event.start.date || event.start.dateTime
-      const end = event.end.date || event.end.dateTime
+      const start = event.start.date || moment(event.start.dateTime).format('YYYY-MM-DD');
+      const startTime = event.start.dateTime ? moment(event.start.dateTime).format('HH:mm:ss') : 'allDay';
+      const end = event.end.date || moment(event.end.dateTime).format('YYYY-MM-DD');
+      const endtime = event.end.dateTime ? moment(event.end.dateTime).format('HH:mm:ss') : 'allDay';
 
+      let booking = {}
+      let bookingIndex = 0
+      const reduceAvailability = event.summary.includes('slots=') || event.summary.includes('subtract_slots=') ? Number(event.summary.split('slots=').pop()) : 1
+      const increaseSlots = event.summary.includes('add_slots=') ? Number(event.summary.split('add_slots=').pop()) : 0
+      const isMain = event.summary.toUpperCase().includes('BOOKING AVAILABLE')
+      const isBookedOut = event.summary.toUpperCase().includes('BOOKED OUT')
       
-      events.push({
-        start,
-        end,
-        title: event.summary,
-        rgbaColor: 'rgba(225, 0, 0, 0.8)'
-      })
+      if (!bookingTimeSlotsAvailable){
+        booking = bookings.find( (e, index) => {
+           bookingIndex = index 
+           return e.start === start 
+        })
+        
+        if ( !booking ){
+
+          let sessionCount = Number(bookingSessions) - reduceAvailability + increaseSlots
+          if (isMain) sessionCount++
+          if (isBookedOut) sessionCount = 0
+             
+          const eventBubble = this.setEventBubble(sessionCount, Number(bookingSessions))
+
+          bookings.push({
+            start,
+            end,
+            title: eventBubble[0],
+            sessionCount,
+            rgbaColor: eventBubble[1]
+          })
+
+          console.log('bookings', bookings)
+
+        }else {
+
+          let currentSessionCount = bookings[bookingIndex].sessionCount - reduceAvailability + increaseSlots
+          if (isMain) currentSessionCount++
+          if (isBookedOut) currentSessionCount = 0
+
+          const eventBubble = this.setEventBubble(currentSessionCount, Number(bookingSessions))
+          
+          bookings[bookingIndex] = {
+            start,
+            end,
+            title: eventBubble[0],
+            sessionCount: currentSessionCount,
+            rgbaColor: eventBubble[1]
+          }
+
+          console.log('bookings', bookings)
+                            
+        }
+        
+        
+      }
+
+      else{
+        console.log('timeslots are available')
+      }
+
     })
 
-    this.setState({ events })
+    this.setState({ events: bookings })
+  }
+
+  setEventBubble = (count, bookingSessions) => {
+
+    if (count === bookingSessions) return [ 'Available',  'rgba(72, 133, 237, 1)' ] 
+    else 
+    if (count <= 0) return [ 'Fully Booked',  'rgba(0, 0, 0, 0.5)' ] 
+    else
+    if (count === 1 ) return [ 'One Remaining',  'rgba(219, 50, 54, 1)' ] 
+    else
+    if ( count <= (bookingSessions/2) ) return [ 'Filling Fast',  'rgba(244, 194, 13, 1)' ] 
+    else 
+    return [ 'Available',  'rgba(72, 133, 237, 1)' ] 
+
   }
 
 
   onEventClick = (e) => {
     console.log(e)
+
+    this.myRef.current.scrollIntoView({behavior: 'smooth'})
   }
 
   onHeaderSelect = (s) => {
@@ -97,8 +174,10 @@ class Booking extends Component {
 
 
   render(){
-
+    const { pluginOptions } = this.props
+    
     return (
+      <>
       <StyledBookingCalendar>
         <BigCalendar
           selectable
@@ -109,13 +188,19 @@ class Booking extends Component {
           events={this.state.events}
           views={{ month: true }}
           eventPropGetter={this.eventStyleGetter}
-          
         />
       </StyledBookingCalendar>
+      <ContactForm booking={true} refProp={this.myRef} pluginOptions={pluginOptions}/>
+      {/* <div ref={this.myRef} ></div> */}
+      </>
   
     )
   }
+
+  
+  
 }
+
 
 const StyledBookingCalendar = styled.div`
     padding: 3% 10%;
