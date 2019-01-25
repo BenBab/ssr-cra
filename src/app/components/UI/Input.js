@@ -21,6 +21,8 @@ const Input = props => {
           disabled={props.disabled || false}
           placeholder={props.placeholder}
           type={props.type || "text"}
+          readOnly={props.readOnly}
+          ref={props.refProp}
         />
       );
       break;
