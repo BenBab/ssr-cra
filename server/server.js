@@ -10,6 +10,7 @@ import cookieParser from "cookie-parser";
 
 //nodemailer for sending contact info
 import serverMailer from "./mailer/serverMailer"
+import bookingMailer from "./mailer/bookingMailer"
 
 // Our loader - this basically acts as the entry point for each page load
 import loader from "./loader";
@@ -46,6 +47,10 @@ app.use(cookieParser());
 
 app.post('/api/mailer', (req, res) => {
   serverMailer(req, res)
+})
+
+app.post('/api/requestbooking', (req, res) => {
+  bookingMailer(req, res)
 })
 
 // Set up homepage, static assets, and capture everything else

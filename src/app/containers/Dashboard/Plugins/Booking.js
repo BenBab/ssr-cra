@@ -22,7 +22,14 @@ class Booking extends Component {
 
   state = {
     setupIncomplete: false,
-    events: []
+    events: [],
+    date: "",
+    time: "",
+    timeSlot: "",
+    start: "",
+    end: "",
+    dailySessionsRemaining: ""
+
   }
 
   bookings = []
@@ -112,12 +119,8 @@ class Booking extends Component {
             sessionCount: currentSessionCount,
             rgbaColor: eventBubble[1]
           }
-
-          console.log('bookings', bookings)
-                            
-        }
-        
-        
+          console.log('bookings', bookings)                
+        }  
       }
 
       else{
@@ -146,9 +149,25 @@ class Booking extends Component {
 
   onEventClick = (e) => {
     console.log(e)
+    //TO DO: add toast for booked out 
+    if (e.title === "Fully Booked")return
 
     this.myRef.current.scrollIntoView({behavior: 'smooth'})
+    const value = moment(e.start).format('dddd DD-MM-YYYY')
+    
+    this.setState({ 
+      date: value,
+      start : e.start,
+      end: e.end,
+      dailySessionsRemaining: e.sessionCount
+    })
+
   }
+
+  handlechange = event => {
+    this.setState({ [event.target.name]: event.target.value, disableButton: false });
+  };
+
 
   onHeaderSelect = (s) => {
     console.log(s)
@@ -174,6 +193,7 @@ class Booking extends Component {
 
 
   render(){
+    const { date, time, timeSlot, start, end, dailySessionsRemaining } = this.state
     const { pluginOptions } = this.props
     
     return (
@@ -190,7 +210,7 @@ class Booking extends Component {
           eventPropGetter={this.eventStyleGetter}
         />
       </StyledBookingCalendar>
-      <ContactForm booking={true} refProp={this.myRef} pluginOptions={pluginOptions}/>
+      <ContactForm booking={{ date, time, timeSlot, start, end, dailySessionsRemaining }} handlechange={this.handlechange} refProp={this.myRef} pluginOptions={pluginOptions} />
       {/* <div ref={this.myRef} ></div> */}
       </>
   
