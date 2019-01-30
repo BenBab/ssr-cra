@@ -23,6 +23,13 @@ class ContactUs extends Component {
 
   // handleSubmit = this.handleSubmit.bind(this);
 
+  componentDidUpdate(prevProps){
+    if (this.props.booking && this.props.booking.date !== prevProps.booking.date){
+      const { requiredErrors } = this.state
+      this.setState({ requiredErrors: {...requiredErrors, date : false } })
+    }
+  }
+
   handlechange = event => {
     this.setState({ [event.target.name]: event.target.value, disableButton: false });
   };
@@ -106,9 +113,9 @@ class ContactUs extends Component {
       
       this.setState({
         requiredErrors: validationFails,
-        validationErrors: 'Required fields are empty, please fill in the required Highlighted fields'
+        validationErrors: 'Required fields are empty, please fill in the required highlighted fields'
       }, () => {
-         this.props.enqueueSnackbar(this.state.validationErrors, { variant : 'warning' })    
+         this.props.enqueueSnackbar(this.state.validationErrors, { variant : 'error' })    
       })  
     }
     
