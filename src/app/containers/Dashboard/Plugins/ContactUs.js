@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 import axios from "axios";
-
+import { withSnackbar } from 'notistack';
 import Input from "../../../components/UI/Input";
 import Button from "../../../components/UI/Buttons/Button";
-import Toast from "../../../components/UI/Toast";
 import Spinner from "../../../components/UI/Spinner";
 import Flex from "../../../components/UI/Wrappers/Flex";
 
@@ -17,7 +16,9 @@ class ContactUs extends Component {
     successEmail: "",
     errorEmail: "",
     disableButton: false,
-    spinner: false
+    spinner: false,
+    validationErrors: false,
+    requiredErrors: {}
   };
 
   // handleSubmit = this.handleSubmit.bind(this);
@@ -26,11 +27,11 @@ class ContactUs extends Component {
     this.setState({ [event.target.name]: event.target.value, disableButton: false });
   };
 
-  async handleSubmit(e) {
-    e.preventDefault();
-    const { name, email, message } = this.state;
-    const { pluginOptions, booking } = this.props;
 
+  async handleSubmit() {
+    const { name, email, message } = this.state;
+    const { pluginOptions, booking, enqueueSnackbar } = this.props;
+    
     const postUrl = booking 
       ? "/api/requestbooking"
       : "/api/mailer"
@@ -65,13 +66,13 @@ class ContactUs extends Component {
           successEmail: "Your message was sent successfully",
           disableButton: true,
           spinner: false
-        });
+        },() => enqueueSnackbar(this.state.successEmail));
       } else {
         this.setState({
           errorEmail: "There was an issue sending your email try again later",
           disableButton: false,
           spinner: false
-        });
+        },() => enqueueSnackbar(this.state.errorEmail));
       }
     } catch (error) {
       console.log(error);
@@ -79,19 +80,51 @@ class ContactUs extends Component {
         errorEmail: "There was an issue sending your email",
         disableButton: false,
         spinner: false
-      });
+      },() => enqueueSnackbar(this.state.errorEmail));
     }
   }
 
+
+  validateInputs = (event) => {
+    event.preventDefault()
+    const { name, email} = this.state
+    const {booking} = this.props
+
+    let required = {name, email}
+    if (booking) required = { ...required, date : booking.date}
+    let validationFails = {}
+
+    Object.keys(required).map( key => {
+      const item = required[key];
+
+      if (item === ''){
+        validationFails = { ...validationFails, [key]: true }
+      }
+    })
+
+    if (Object.keys(validationFails).length !== 0 && validationFails.constructor === Object ){
+      
+      this.setState({
+        requiredErrors: validationFails,
+        validationErrors: 'Required fields are empty, please fill in the required Highlighted fields'
+      }, () => {
+         this.props.enqueueSnackbar(this.state.validationErrors, { variant : 'warning' })    
+      })  
+    }
+    
+    else { this.handleSubmit()  } 
+  }
+
+
   render() {
-    const { successEmail, errorEmail, spinner, disableButton } = this.state;
+    const { spinner, disableButton, requiredErrors } = this.state;
     const { booking, refProp, pluginOptions, handlechange } = this.props
 
     return (
       <ContactForm>
         <h1>{booking ? 'Booking Form' : 'Contact Us'}</h1>
 
-        <form onSubmit={this.handleSubmit.bind(this)}>
+        <form onSubmit={this.validateInputs}>
           {booking &&
             <Input
               inputtype="input"
@@ -101,12 +134,13 @@ class ContactUs extends Component {
               name="date"
               value={booking.date}
               placeholder={'Select and available date on the booking calendar'}
+              validation={requiredErrors.date}
             />
           }
           {booking && !pluginOptions.bookingTimeSlotsAvailable &&
             <Input
               inputtype="input"
-              label="Time request"
+              label="Start time request"
               name="time"
               type="time"
               value={booking.time}
@@ -122,15 +156,13 @@ class ContactUs extends Component {
             />
           }
           
-
-
-
-
           <Input
             inputtype="input"
             label="Name"
             name="name"
             onChange={this.handlechange}
+            validation={requiredErrors.name}
+            onFocus={(e) => this.setState({ requiredErrors: {...requiredErrors, [e.target.name] : false } })}
           />
           <Input
             inputtype="input"
@@ -138,6 +170,8 @@ class ContactUs extends Component {
             label="Email"
             name="email"
             onChange={this.handlechange}
+            validation={requiredErrors.email}
+            onFocus={(e) => this.setState({ requiredErrors: {...requiredErrors, [e.target.name] : false } })}
           />
           <Input
             inputtype="textarea"
@@ -152,8 +186,6 @@ class ContactUs extends Component {
             {spinner && <Spinner />}
           </Flex>
         </form>
-        {successEmail && <Toast message={successEmail} success={true} />}
-        {errorEmail && <Toast message={errorEmail} error={true} />}
       </ContactForm>
     );
   }
@@ -163,4 +195,4 @@ const ContactForm = styled.div`
   padding: 40px 10%;
 `;
 
-export default ContactUs;
+export default withSnackbar(ContactUs);

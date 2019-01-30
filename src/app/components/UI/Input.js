@@ -23,6 +23,7 @@ const Input = props => {
           type={props.type || "text"}
           readOnly={props.readOnly}
           ref={props.refProp}
+          onFocus={props.onFocus}
         />
       );
       break;
@@ -117,7 +118,7 @@ const Input = props => {
   }
 
   return (
-    <StyledElement>
+    <StyledElement errorGlow={props.validation}>
       <label>{props.label}</label>
       <Flex>{inputElement}</Flex>
     </StyledElement>
@@ -150,6 +151,7 @@ const StyledElement = styled.div`
     display: block;
     box-sizing: border-box;
     border-radius: 5px;
+    box-shadow: ${props => props.errorGlow ? '0 0 10px #b71c1c' : 'none'};
 
     :focus {
       outline: none;
