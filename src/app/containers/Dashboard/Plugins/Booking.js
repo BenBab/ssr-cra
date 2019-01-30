@@ -136,7 +136,7 @@ class Booking extends Component {
 
     if (count === bookingSessions) return [ 'Available',  'rgba(72, 133, 237, 1)' ] 
     else 
-    if (count <= 0) return [ 'Fully Booked',  'rgba(0, 0, 0, 0.5)' ] 
+    if (count <= 0) return [ 'Fully Booked',  'rgba(0, 0, 0, 0.3)' ] 
     else
     if (count === 1 ) return [ 'One Remaining',  'rgba(219, 50, 54, 1)' ] 
     else
