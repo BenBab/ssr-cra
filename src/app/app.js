@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import { withRouter } from "react-router";
 import { ThemeProvider } from "styled-components";
 import { mainTheme } from "./styles/theme";
+import { SnackbarProvider } from 'notistack';
 
 // Action creators and helpers
 //import { establishCurrentUser } from "../modules/auth";
@@ -65,13 +66,15 @@ class App extends Component {
             isAuthenticated={this.props.isAuthenticated}
             current={this.props.location.pathname}
           /> */}
-        <Layout template={this.props.template}>
-          <Routes
-            data={this.props}
-            current={this.props.location.pathname}
-            storeRoutes={this.props.onStoreRoutes}
-          />
-        </Layout>
+        <SnackbarProvider maxSnack={3}>
+          <Layout template={this.props.template}>
+            <Routes
+              data={this.props}
+              current={this.props.location.pathname}
+              storeRoutes={this.props.onStoreRoutes}
+              />
+          </Layout>
+        </SnackbarProvider>
       </ThemeProvider>
     );
   }
