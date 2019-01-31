@@ -5,12 +5,15 @@ function bookingMailer(req, res){
 
     const { name, email, message, emailTo, date, time, timeSlot, start, end } = req.body
     let title = 'Booking%20' + name.split(' ').shift() || 'New Booking'
-    const formatStart = start.replace(/-/g,'')
-    const formatEnd = end.replace(/-/g,'')
+    const startDate = start.replace(/-/g,'')
+    const endDate = end.replace(/-/g,'')
+
+    let startTime = 000000
+    let endTime = 000000
 
     console.log(name, email)
 
-
+    
     var smtpTransport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -29,7 +32,7 @@ function bookingMailer(req, res){
             <h5>Message:</h5>
             <p>${message}</p>
             <h5>Add the booking to Calendar</h5>
-            <p>http://www.google.com/calendar/event?action=TEMPLATE&dates=${formatStart}T000000Z%2F${formatEnd}T000000Z&text=${title}&location=&details=</p>
+            <p>http://www.google.com/calendar/event?action=TEMPLATE&dates=${startDate}T${startTime}Z%2F${endDate}T${endTime}Z&text=${title}&location=&details=</p>
 
             `
     };
