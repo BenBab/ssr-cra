@@ -73,13 +73,13 @@ class ContactUs extends Component {
           successEmail: "Your message was sent successfully",
           disableButton: true,
           spinner: false
-        },() => enqueueSnackbar(this.state.successEmail));
+        },() => enqueueSnackbar(this.state.successEmail), { variant : 'success' });
       } else {
         this.setState({
           errorEmail: "There was an issue sending your email try again later",
           disableButton: false,
           spinner: false
-        },() => enqueueSnackbar(this.state.errorEmail));
+        },() => enqueueSnackbar(this.state.errorEmail), { variant : 'error' });
       }
     } catch (error) {
       console.log(error);
@@ -87,7 +87,7 @@ class ContactUs extends Component {
         errorEmail: "There was an issue sending your email",
         disableButton: false,
         spinner: false
-      },() => enqueueSnackbar(this.state.errorEmail));
+      },() => enqueueSnackbar(this.state.errorEmail), { variant : 'error' });
     }
   }
 
