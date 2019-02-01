@@ -8,7 +8,7 @@ import MultiSelect from "../../../../components/UI/MultiSelect";
 const BookingPlugin = props => {
     if (!props.plugin) return <div />;
 
-    const { bookingActive, bookingPages, bookingEmail, bookingForm, bookingCalendarID, bookingApiKey, bookingTimeSlotsAvailable, bookingTimeSlots, bookingSessions } = props.plugin;
+    const { bookingActive, bookingPages, bookingEmail, bookingForm, bookingCalendarID, bookingApiKey, bookingTimeSlotsAvailable, bookingTimeSlots, bookingGetCalandarAdvance, bookingSessions } = props.plugin;
     console.log("booking settings props", props);
     return (
         <div>
@@ -45,14 +45,6 @@ const BookingPlugin = props => {
                             onChange={props.handleChange}
                         />
                         <Input
-                            inputtype="checkbox"
-                            sideLabel="Include Contact form with booking calendar"
-                            parentObj={props.parentObj}
-                            name="bookingForm"
-                            checked={bookingForm}
-                            handleChange={props.handleCheckbox}
-                        />
-                        <Input
                             inputtype="input"
                             label="Google Calendar Id"
                             parentObj={props.parentObj}
@@ -68,7 +60,16 @@ const BookingPlugin = props => {
                             value={bookingApiKey}
                             onChange={props.handleChange}
                         />
+                        <Input
+                            inputtype="checkbox"
+                            sideLabel="Include Contact form with booking calendar"
+                            parentObj={props.parentObj}
+                            name="bookingForm"
+                            checked={bookingForm}
+                            handleChange={props.handleCheckbox}
+                        />
                         <br/>
+                        <h2>Booking Calandar options</h2>
                         <Input
                             inputtype="checkbox"
                             sideLabel="Timeslots available (leave unticked if booking times do not repeat)"
@@ -88,7 +89,21 @@ const BookingPlugin = props => {
                             onChange={props.handleChange}
                         />
                         }
-
+                        <Input
+                            inputtype="select"
+                            label="Select how far in the future customers can book" 
+                            value={bookingGetCalandarAdvance}
+                            name="bookingGetCalandarAdvance"
+                            items={[
+                                {value : "1 month"},
+                                {value : "2 months"},
+                                {value : "3 months"},
+                                {value : "6 months"},
+                                {value : "9 months"},
+                                {value : "12 months"},                           
+                            ]}
+                            onSelectChange={props.handleChange}
+                        />
                         <Input
                             inputtype="input"
                             type="number"

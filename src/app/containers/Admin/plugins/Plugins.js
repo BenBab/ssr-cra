@@ -78,6 +78,7 @@ class Plugins extends Component {
             availableRoutes={availableRoutes}
             accordianClick={this.accordianClick}
             handleCheckbox={this.handleCheckbox}
+            onSelectChange={this.onSelectChange}
             handleChange={e => this.handleChange(e, "booking")}
           />
         </StyledPlugins>
