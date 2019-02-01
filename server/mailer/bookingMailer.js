@@ -3,15 +3,23 @@ const nodemailer = require('nodemailer')
 function bookingMailer(req, res){
     console.log('booking mailer', req.body)
 
-    const { name, email, message, emailTo, date, time, timeSlot, start, end } = req.body
+    const { name, email, phone, message, emailTo, date, time, am_Pm, timeSlot, start, end } = req.body
     let title = 'Booking%20' + name.split(' ').shift() || 'New Booking'
     const startDate = start.replace(/-/g,'')
     const endDate = end.replace(/-/g,'')
 
-    let startTime = 000000
-    let endTime = 000000
+    const nzTimeZone = 130000
+    let startTime = 0 + nzTimeZone
 
+    if (!time === ''){
+        const formatTime = time.replace(':','')+'00'
+        startTime = Number(formatTime) + nzTimeZone
+    }
+
+    let endTime = startTime + 10000
+    
     console.log(name, email)
+    console.log('startTime', startTime, 'endTime', endTime )
 
     
     var smtpTransport = nodemailer.createTransport({
@@ -27,8 +35,8 @@ function bookingMailer(req, res){
         from: email,
         subject: `Booking request on ${date} from ${name}`, 
         html: `
-            <h2>Booking Request at ${time} on ${date}</h2>
-            <h5>You have a booking request from ${name} at ${email}</h5>
+            <h2>Booking Request for ${time === '' ? 'a flexable time' : time }${am_Pm} on ${date}</h2>
+            <h5>You have the following booking request <br /> from: ${name} <br /> email: ${email} <br/> constact number: ${phone}</h5>
             <h5>Message:</h5>
             <p>${message}</p>
             <h5>Add the booking to Calendar</h5>
