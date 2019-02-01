@@ -7,11 +7,13 @@ import Input from "../../../components/UI/Input";
 import Button from "../../../components/UI/Buttons/Button";
 import Spinner from "../../../components/UI/Spinner";
 import Flex from "../../../components/UI/Wrappers/Flex";
+import Box from "../../../components/UI/Wrappers/Box";
 
 class ContactUs extends Component {
   state = {
     name: "",
     email: "",
+    phone: "",
     message: "",
     successEmail: "",
     errorEmail: "",
@@ -36,7 +38,7 @@ class ContactUs extends Component {
 
 
   async handleSubmit() {
-    const { name, email, message } = this.state;
+    const { name, email, phone, message } = this.state;
     const { pluginOptions, booking, enqueueSnackbar } = this.props;
     
     const postUrl = booking 
@@ -46,6 +48,7 @@ class ContactUs extends Component {
     let objectProperties = {
       name,
       email,
+      phone,
       message,
       emailTo: booking ? pluginOptions.bookingEmail : pluginOptions.contactUsEmail
     }
@@ -54,9 +57,11 @@ class ContactUs extends Component {
       ...objectProperties,
          date: booking.date,
          time: booking.time,
+         am_Pm: booking.am_Pm,
          timeSlot: booking.timeSlot,
          start: booking.start,
          end: booking.end,
+         dailySessionsRemaining: booking.dailySessionsRemaining
 
       }
 
@@ -94,10 +99,10 @@ class ContactUs extends Component {
 
   validateInputs = (event) => {
     event.preventDefault()
-    const { name, email} = this.state
+    const { name, email, phone} = this.state
     const {booking} = this.props
 
-    let required = {name, email}
+    let required = {name, email, phone}
     if (booking) required = { ...required, date : booking.date}
     let validationFails = {}
 
@@ -145,14 +150,20 @@ class ContactUs extends Component {
             />
           }
           {booking && !pluginOptions.bookingTimeSlotsAvailable &&
-            <Input
-              inputtype="input"
-              label="Start time request"
-              name="time"
-              type="time"
-              value={booking.time}
-              onChange={handlechange}
-            />
+            <Flex >
+              
+                <Input
+                  inputtype="input"
+                  label="Start time request"
+                  name="time"
+                  type="time"
+                  value={booking.time}
+                  onChange={handlechange}
+                />
+                <Box margin={'6px 6px 6px 70px'} position={'absolute'} >{booking.am_Pm}</Box>    
+                
+            </Flex>
+
           }
           {booking && pluginOptions.bookingTimeSlotsAvailable &&
             <Input
@@ -178,6 +189,15 @@ class ContactUs extends Component {
             name="email"
             onChange={this.handlechange}
             validation={requiredErrors.email}
+            onFocus={(e) => this.setState({ requiredErrors: {...requiredErrors, [e.target.name] : false } })}
+          />
+          <Input
+            inputtype="input"
+            type="tel"
+            label="Contact phone number"
+            name="phone"
+            onChange={this.handlechange}
+            validation={requiredErrors.phone}
             onFocus={(e) => this.setState({ requiredErrors: {...requiredErrors, [e.target.name] : false } })}
           />
           <Input
