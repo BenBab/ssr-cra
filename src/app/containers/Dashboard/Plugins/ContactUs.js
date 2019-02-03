@@ -61,7 +61,8 @@ class ContactUs extends Component {
          timeSlot: booking.timeSlot,
          start: booking.start,
          end: booking.end,
-         dailySessionsRemaining: booking.dailySessionsRemaining
+         dailySessionsRemaining: booking.dailySessionsRemaining,
+         initialSessions:booking.initialSessions
 
       }
 

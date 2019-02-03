@@ -1,23 +1,50 @@
 const nodemailer = require('nodemailer')
+var moment = require('moment-timezone');
 
 function bookingMailer(req, res){
     console.log('booking mailer', req.body)
 
-    const { name, email, phone, message, emailTo, date, time, am_Pm, timeSlot, start, end } = req.body
+    const { name, email, phone, message, emailTo, date, time, am_Pm, timeSlot, start, end, dailySessionsRemaining, initialSessions } = req.body
     let title = 'Booking%20' + name.split(' ').shift() || 'New Booking'
-    const startDate = start.replace(/-/g,'')
-    const endDate = end.replace(/-/g,'')
+    const eventDate = start.replace(/-/g,'')
 
-    const nzTimeZone = 130000
-    let startTime = 0 + nzTimeZone
+    let nzTimeZone = ''
+    let nzZone = ''
+    let gmtStartDate = 'undefined'
+    let gmtEndDate = 'undefined'
+    let gmtTimeStart = '000000'
+    let gmtTimeEnd = '000000'
 
-    if (!time === ''){
+    let startTime = '000000'
+    let endTime = '000000'
+    //  + nzTimeZone
+
+    
+    if (time){
+        
         const formatTime = time.replace(':','')+'00'
-        startTime = Number(formatTime) + nzTimeZone
+        console.log('format time', formatTime)
+        startTime = Number(formatTime) 
+        // + nzTimeZone
+        endTime = startTime + 10000
+
+        nzTimeZone = moment.tz(`${start} ${time}`, 'pacific/Auckland');
+        console.log('nzTimeZone', nzTimeZone)
+        nzZone = nzTimeZone.valueOf();
+        console.log('nzZone', nzZone)
+        gmtStartDate = moment(nzZone).tz('Europe/London').format('YYYYMMDD');
+        console.log('gmtStartDate', gmtStartDate)
+        gmtEndDate = moment(nzZone).tz('Europe/London').add(1, 'h').format('YYYYMMDD');
+        console.log('gmtEndDate', gmtEndDate)
+        gmtTimeStart = moment(nzZone).tz('Europe/London').format('HHmmss');
+        console.log('gmtTimeStart', gmtTimeStart)
+        gmtTimeEnd = moment(nzZone).tz('Europe/London').add(1, 'h').format('HHmmss');
+        console.log('gmtTimeEnd', gmtTimeEnd)
+
+    
     }
 
-    let endTime = startTime + 10000
-    
+
     console.log(name, email)
     console.log('startTime', startTime, 'endTime', endTime )
 
@@ -35,13 +62,16 @@ function bookingMailer(req, res){
         from: email,
         subject: `Booking request on ${date} from ${name}`, 
         html: `
-            <h2>Booking Request for ${time === '' ? 'a flexable time' : time }${am_Pm} on ${date}</h2>
-            <h5>You have the following booking request <br /> from: ${name} <br /> email: ${email} <br/> constact number: ${phone}</h5>
+            <h2>Booking Request for ${time === '' ? 'a flexable time' : time } on ${date}</h2>
+            <h4>Add the booking to Calendar..</h4>
+            <p>http://www.google.com/calendar/event?action=TEMPLATE&dates=${gmtStartDate}T${gmtTimeStart}Z%2F${gmtEndDate}T${gmtTimeEnd}Z&text=${title}&location=&details=</p>
+            <h5>${!timeSlot ? 'This day began with ' : 'This timeslot began with '}${initialSessions} bookings available, currently ${dailySessionsRemaining} bookings remain</h5>
+            <h4>You have the following booking request..</h4>
+            <h5>From: ${name}</h5>
+            <h5>Email: ${email}</h5>
+            <h5>Contact number: ${phone}</h5>
             <h5>Message:</h5>
-            <p>${message}</p>
-            <h5>Add the booking to Calendar</h5>
-            <p>http://www.google.com/calendar/event?action=TEMPLATE&dates=${startDate}T${startTime}Z%2F${endDate}T${endTime}Z&text=${title}&location=&details=</p>
-
+            <h5><b>${message}</b></h5>
             `
     };
 
