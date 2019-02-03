@@ -30,7 +30,8 @@ class Booking extends Component {
     timeSlot: "",
     start: "",
     end: "",
-    dailySessionsRemaining: ""
+    dailySessionsRemaining: "",
+    initialSessions: ""
 
   }
 
@@ -43,10 +44,10 @@ class Booking extends Component {
     
     const d = new Date();
     d.setHours(0,0,0,0);
-    const timeMin = d.toISOString()
-    const timeMax = moment(d).add(monthsToGet, 'M').toISOString();
-    // const timeMin = (new Date(Date.parse("2019-02-09"))).toISOString()
-    // const timeMax = (new Date(Date.parse("2019-02-12"))).toISOString()
+    // const timeMin = d.toISOString()
+    // const timeMax = moment(d).add(monthsToGet, 'M').toISOString();
+    const timeMin = (new Date(Date.parse("2019-02-05"))).toISOString()
+    const timeMax = (new Date(Date.parse("2019-02-07"))).toISOString()
 
     if ( !bookingApiKey || !bookingCalendarID) {
       return this.setState({ setupIncomplete: true })
@@ -89,12 +90,13 @@ class Booking extends Component {
       let reduceAvailability = 0
       let increaseSlots = 0
       let availableBookings = bookingSessions
+      let mainSlotChange = false
       
       if (isMain) {
-        availableBookings = event.summary.toUpperCase().includes('SLOTS=')
+        mainSlotChange = event.summary.toUpperCase().includes('SLOTS=')
+        availableBookings = mainSlotChange
           ? Number(event.summary.toUpperCase().split('SLOTS=').pop()) 
           : availableBookings
-          
       }else {
 
         reduceAvailability = event.summary.toUpperCase().includes('REDUCE_SLOTS=')
@@ -133,16 +135,17 @@ class Booking extends Component {
         }else {
 
           let currentSessionCount = bookings[bookingIndex].sessionCount - reduceAvailability + increaseSlots
-          if (isBookedOut) currentSessionCount = 0
           if (isMain){
-            currentSessionCount = availableBookings - currentSessionCount
-
+            if (mainSlotChange) currentSessionCount = (Number(availableBookings) - Number(bookingSessions)) + Number(currentSessionCount)
+            
             bookings[bookingIndex] = {
               initialSessions: Number(availableBookings),
             }
           }
-
+          if (isBookedOut) currentSessionCount = 0
+          
           const eventBubble = this.setEventBubble(currentSessionCount, Number(availableBookings))
+          console.log('eventBubble', eventBubble)
           
           bookings[bookingIndex] = {
             ...bookings[bookingIndex],
@@ -165,17 +168,18 @@ class Booking extends Component {
     this.setState({ events: bookings })
   }
 
-  setEventBubble = (count, bookingSessions) => {
+  setEventBubble = (count, availableBookings) => {
+    const bookingSessions = Number(availableBookings)
 
-    if (count === bookingSessions) return [ 'Available',  'rgba(72, 133, 237, 1)' ] 
+    if (count === bookingSessions) return [ 'Available',  'rgba(72, 133, 237, 1)' ];
     else 
-    if (count <= 0) return [ 'Fully Booked',  'rgba(0, 0, 0, 0.3)' ] 
+    if (count <= 0) return [ 'Fully Booked',  'rgba(0, 0, 0, 0.3)' ];
     else
-    if (count === 1 ) return [ 'One Remaining',  'rgba(219, 50, 54, 1)' ] 
+    if (count === 1 ) return [ 'One Remaining',  'rgba(219, 50, 54, 1)' ]; 
     else
-    if ( count <= (bookingSessions/2) ) return [ 'Filling Fast',  'rgba(244, 194, 13, 1)' ] 
+    if ( count <= (bookingSessions/2) ) return [ 'Filling Fast',  'rgba(244, 194, 13, 1)' ];
     else 
-    return [ 'Available',  'rgba(72, 133, 237, 1)' ] 
+    return [ 'Available',  'rgba(72, 133, 237, 1)' ];
 
   }
 
@@ -192,7 +196,8 @@ class Booking extends Component {
       date: value,
       start : e.start,
       end: e.end,
-      dailySessionsRemaining: e.sessionCount
+      dailySessionsRemaining: e.sessionCount,
+      initialSessions: e.initialSessions
     })
 
   }
@@ -238,7 +243,7 @@ class Booking extends Component {
 
 
   render(){
-    const { date, time, am_Pm, timeSlot, start, end, dailySessionsRemaining } = this.state
+    const { date, time, am_Pm, timeSlot, start, end, dailySessionsRemaining, initialSessions } = this.state
     const { pluginOptions } = this.props
     
     return (
@@ -256,7 +261,7 @@ class Booking extends Component {
         />
       </StyledBookingCalendar>
       <ContactForm 
-        booking={{ date, time, am_Pm, timeSlot, start, end, dailySessionsRemaining }} 
+        booking={{ date, time, am_Pm, timeSlot, start, end, dailySessionsRemaining, initialSessions }} 
         handlechange={this.handlechange} 
         refProp={this.myRef} 
         pluginOptions={pluginOptions} />
