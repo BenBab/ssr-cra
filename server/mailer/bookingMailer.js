@@ -5,7 +5,7 @@ function bookingMailer(req, res){
     console.log('booking mailer', req.body)
 
     const { name, email, phone, message, emailTo, date, time, am_Pm, timeSlot, start, end, dailySessionsRemaining, initialSessions } = req.body
-    let title = 'Booking%20' + name.split(' ').shift() || 'New Booking'
+    let title = 'Booking%20for%20' + name.split(' ').shift() || 'New Booking'
     const eventDate = start.replace(/-/g,'')
 
     let nzTimeZone = ''
@@ -64,7 +64,7 @@ function bookingMailer(req, res){
         html: `
             <h2>Booking Request for ${time === '' ? 'a flexable time' : time } on ${date}</h2>
             <h4>Add the booking to Calendar..</h4>
-            <p>http://www.google.com/calendar/event?action=TEMPLATE&dates=${gmtStartDate}T${gmtTimeStart}Z%2F${gmtEndDate}T${gmtTimeEnd}Z&text=${title}&location=&details=</p>
+            <p>http://www.google.com/calendar/event?action=TEMPLATE&dates=${gmtStartDate}T${gmtTimeStart}Z%2F${gmtEndDate}T${gmtTimeEnd}Z&text=${title}&location=&details=${title}%20from%20${email}</p>
             <h5>${!timeSlot ? 'This day began with ' : 'This timeslot began with '}${initialSessions} bookings available, currently ${dailySessionsRemaining} bookings remain</h5>
             <h4>You have the following booking request..</h4>
             <h5>From: ${name}</h5>
