@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import BigCalendar from 'react-big-calendar'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import axios from "axios";
 
 import styled from 'styled-components'
@@ -44,10 +44,10 @@ class Booking extends Component {
     
     const d = new Date();
     d.setHours(0,0,0,0);
-    // const timeMin = d.toISOString()
-    // const timeMax = moment(d).add(monthsToGet, 'M').toISOString();
-    const timeMin = (new Date(Date.parse("2019-02-05"))).toISOString()
-    const timeMax = (new Date(Date.parse("2019-02-07"))).toISOString()
+    const timeMin = d.toISOString()
+    const timeMax = moment(d).add(monthsToGet, 'M').toISOString();
+    // const timeMin = (new Date(Date.parse("2019-02-05"))).toISOString()
+    // const timeMax = (new Date(Date.parse("2019-02-07"))).toISOString()
 
     if ( !bookingApiKey || !bookingCalendarID) {
       return this.setState({ setupIncomplete: true })
@@ -78,10 +78,10 @@ class Booking extends Component {
     data.items.map( event => {
       console.log(event)
 
-      const start = event.start.date || moment(event.start.dateTime).format('YYYY-MM-DD');
-      const startTime = event.start.dateTime ? moment(event.start.dateTime).format('HH:mm:ss') : 'allDay';
-      const end = event.end.date || moment(event.end.dateTime).format('YYYY-MM-DD');
-      const endtime = event.end.dateTime ? moment(event.end.dateTime).format('HH:mm:ss') : 'allDay';
+      const start = event.start.date || moment(event.start.dateTime).tz('Pacific/Auckland').format('YYYY-MM-DD');
+      const startTime = event.start.dateTime ? moment(event.start.dateTime).tz('Pacific/Auckland').format('HH:mm:ss') : 'allDay';
+      const end = event.end.date || moment(event.end.dateTime).tz('Pacific/Auckland').format('YYYY-MM-DD');
+      const endtime = event.end.dateTime ? moment(event.end.dateTime).tz('Pacific/Auckland').format('HH:mm:ss') : 'allDay';
 
       let booking = {}
       let bookingIndex = 0
