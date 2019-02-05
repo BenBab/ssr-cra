@@ -6,11 +6,11 @@ import logo from "../../assets/logo.jpg";
 const SITE_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : "https://staging-infinity.herokuapp.com/";
+    : "https://infinity-djs.herokuapp.com/";
 
 const FACEBOOK_APP_ID = "XXXXXXXXX";
 
-const defaultTitle = "My Website";
+const defaultTitle = process.env.REACT_APP_SITENAME;
 const defaultDescription =
   "This is a really awesome website where we can render on the server. Supa cool.";
 const defaultImage = `${SITE_URL}${logo}`;
