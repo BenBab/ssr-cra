@@ -63,7 +63,7 @@ const Profile = Loadable({
 export default class Routes extends Component {
 
   state ={
-    dynamicRoutes: []
+    dynamicRoutes: null,
   }
 
   componentDidUpdate(prevProps){
@@ -81,18 +81,22 @@ export default class Routes extends Component {
     const { navigationItems } = this.props.data;
 
     if (navigationItems) {
-      dynamicRoutes = Object.keys(navigationItems).map((key, i) => {
+      dynamicRoutes = {'/': this.props.data.home};
+
+      Object.keys(navigationItems).map((key, i) => {
         const item = navigationItems[key];
 
         if (!item.dropdownPages) {
           routesState = [...routesState, { value: "/" + item.route }];
-          return (
-            <Route
-              key={i}
-              path={"/" + item.route}
-              render={() => <Homepage pageInfo={item} />}
-            />
-          );
+          // return (
+          //   <Route
+          //     key={i}
+          //     path={"/" + item.route}
+          //     render={() => <Homepage pageInfo={item} />}
+          //   />
+          // );
+          let pageRoute = '/'+item.route;
+          return dynamicRoutes = {...dynamicRoutes, [pageRoute] : item } 
         } else {
           return Object.keys(item.dropdownPages).map((key, i) => {
             const dropDownItem = item.dropdownPages[key];
@@ -100,13 +104,15 @@ export default class Routes extends Component {
               ...routesState,
               { value: "/pages/" + dropDownItem.route }
             ];
-            return (
-              <Route
-                key={i}
-                path={"/pages/" + dropDownItem.route}
-                render={() => <Homepage pageInfo={dropDownItem} />}
-              />
-            );
+            // return (
+            //   <Route
+            //     key={i}
+            //     path={"/pages/" + dropDownItem.route}
+            //     render={() => <Homepage pageInfo={dropDownItem} />}
+            //   />
+            // );
+            let pageRoute = '/pages/'+dropDownItem.route;
+            return dynamicRoutes = {...dynamicRoutes, [pageRoute] : dropDownItem } 
           });
         }
     });
@@ -124,13 +130,16 @@ export default class Routes extends Component {
         <Route
           exact
           path="/"
-          render={() => <Homepage pageInfo={this.props.data.home} />}
+          render={() => <Homepage pageInfo={this.state.dynamicRoutes} currentPage={this.props.current}/>}
         />
         <Route exact path="/authenticate-admin" component={Auth_Admin} />
         <Route exact path="/admin" component={Admin_TEST} />
-        <Route exact path="/about" component={About} />
+        {/* <Route exact path="/about" component={About} /> */}
+        
+        <Route exact path="/:pageRoute" render={() => <Homepage pageInfo={this.state.dynamicRoutes} currentPage={this.props.current} />} />
+        <Route exact path="/pages/:pageRoute" render={() => <Homepage pageInfo={this.state.dynamicRoutes} currentPage={this.props.current} />} />
 
-        {this.state.dynamicRoutes}
+        {/* {this.state.dynamicRoutes} */}
 
         <Route exact path="/profile/:id" component={Profile} />
 

@@ -104,7 +104,7 @@ class ContactUs extends Component {
     const {booking} = this.props
 
     let required = {name, email, phone}
-    if (booking) required = { ...required, date : booking.date}
+    if (booking) required = { ...required, date: booking.date, time: booking.time}
     let validationFails = {}
 
     Object.keys(required).map( key => {
@@ -160,6 +160,8 @@ class ContactUs extends Component {
                   type="time"
                   value={booking.time}
                   onChange={handlechange}
+                  validation={requiredErrors.time}
+                  onFocus={(e) => this.setState({ requiredErrors: {...requiredErrors, [e.target.name] : false } })}
                 />
                 <Box margin={'6px 6px 6px 70px'} position={'absolute'} >{booking.am_Pm}</Box>    
                 
@@ -172,6 +174,7 @@ class ContactUs extends Component {
               label="Time request"
               name="timeSlot"
               onChange={handlechange}
+              
             />
           }
           

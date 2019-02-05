@@ -19,6 +19,9 @@ import manifest from '../build/asset-manifest.json';
 // Some optional Redux functions related to user authentication
 import { setCurrentUser, logoutUser } from '../src/modules/auth';
 
+//server stylesheet
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
+
 // LOADER
 export default (req, res) => {
   /*
@@ -55,6 +58,8 @@ export default (req, res) => {
 
       // Create a store (with a memory history) from our current url
       const { store } = createStore(req.url);
+      
+      const sheet = new ServerStyleSheet()
 
       // If the user has a cookie (i.e. they're signed in) - set them as the current user
       // Otherwise, we want to set the current state to be logged out, just in case this isn't the default
@@ -87,7 +92,9 @@ export default (req, res) => {
             <Provider store={store}>
               <StaticRouter location={req.url} context={context}>
                 <Frontload isServer={true}>
-                  <App />
+                  <StyleSheetManager sheet={sheet.instance}>
+                    <App />
+                  </StyleSheetManager>
                 </Frontload>
               </StaticRouter>
             </Provider>
