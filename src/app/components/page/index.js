@@ -10,10 +10,9 @@ const SITE_URL =
 
 const FACEBOOK_APP_ID = "XXXXXXXXX";
 
-const defaultTitle = process.env.REACT_APP_SITENAME;
-const defaultDescription =
-  "This is a really awesome website where we can render on the server. Supa cool.";
-const defaultImage = `${SITE_URL}${logo}`;
+const defaultTitle = process.env.REACT_APP_SITENAME || '';
+const defaultDescription = process.env.REACT_APP_DESCRIPTION || '';
+const defaultImage = process.env.REACT_APP_IMAGE || '';
 const defaultTwitter = "";
 const defaultSep = " | ";
 
