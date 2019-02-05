@@ -35,13 +35,13 @@ const fireBaseConfig = {
 firebase.initializeApp(fireBaseConfig);
 
 class App extends Component {
-  componentWillMount() {
-    if (!isServer) {
-      // this.props.onEstablishCurrentUser();
-    }
-  }
+  // componentWillMount() {
+  //   if (!isServer) {
+  //     // this.props.onEstablishCurrentUser();
+  //   }
+  // }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.onInitWebsiteState();
   }
 

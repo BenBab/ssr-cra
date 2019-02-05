@@ -24,10 +24,13 @@ const Homepage = props => {
   //   }
   // })
 
-  if(!props.pageInfo) return <Spinner/>
+  if(!props.pageInfo) return (
+    <Page id={'preload'} title={'loading'}>
+      <Spinner/>
+    </Page>
+  )
 
   const currentPage = props.pageInfo[props.currentPage]
-
   const { route, title } = currentPage
   
   return (
@@ -36,7 +39,6 @@ const Homepage = props => {
     </Page>
   );
 };
-
 
 
 export default Homepage;
