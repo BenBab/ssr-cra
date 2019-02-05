@@ -11,6 +11,7 @@ import MainBanner from "../../components/UI/Banners/Main_Banner";
 import ContactUs from "./Plugins/ContactUs";
 import Booking from './Plugins/Booking';
 
+import Spinner from '../../components/UI/Spinner'
 
 class Dashboard extends Component {
   render() {
@@ -18,7 +19,7 @@ class Dashboard extends Component {
 
     const { pageInfo, plugins, overlayBlocker } = this.props;
     if (!pageInfo) {
-      return <div> loading...</div>;
+      return <Spinner/>;
     }
     if (!pageInfo.content) {
       return <div>No page content available</div>;
