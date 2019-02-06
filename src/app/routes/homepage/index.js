@@ -1,7 +1,9 @@
 import React from "react";
-import Page from "../../components/page";
+import { withRouter, Redirect } from "react-router";
 
+import Page from "../../components/page";
 import Dashboard from "../../containers/Dashboard/Dashboard";
+
 import Spinner from '../../components/UI/Spinner'
 
 // const Homepage = props => {
@@ -24,21 +26,37 @@ const Homepage = props => {
   //   }
   // })
 
+  const str = props.currentPage === '/' ? 'Home' : props.currentPage
+  const cleanStr = str.replace(/\/pages\/|\//, '').replace(/[^\w\s]/gi, ' ')
+
+  const title = cleanStr
+    .split(' ')
+    .map(i => {
+      let cap = i.charAt(0).toUpperCase()
+      return cap+i.substring(1)
+    })
+    .join(' ');
+
+
   if(!props.pageInfo) return (
-    <Page id={'preload'} title={'loading'}>
+    <Page id={props.currentPage} title={title}>
       <Spinner/>
     </Page>
   )
 
-  const currentPage = props.pageInfo[props.currentPage]
-  const { route, title } = currentPage
+  const pageInfo = props.pageInfo[props.currentPage]
+  
+  if (pageInfo === undefined){
+    return <Redirect to={ {pathname : '/not-found'} } />
+  }
+
   
   return (
-    <Page id={route} title={title}>
-      <Dashboard pageInfo={currentPage} />
+    <Page id={props.currentPage} title={title}>
+      <Dashboard pageInfo={pageInfo} />
     </Page>
   );
 };
 
 
-export default Homepage;
+export default withRouter(Homepage);

@@ -1,7 +1,11 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 import Page from '../../components/page';
 
 import styled from 'styled-components';
+
+import dino from "../../assets/dino.jpg";
+import Button from '../../components/UI/Buttons/Button'
 
 export default () => (
   <Page
@@ -10,9 +14,25 @@ export default () => (
     description="This is embarrassing."
     noCrawl
   > 
-    <PageNotFound>
-      <div>
-        <p>Super embarrassing.</p>
+    <PageNotFound style={{ textAlign: 'center' }}>
+      <h1 >404 not found</h1>
+      <h1>Well we weren't expecting that...</h1>
+      
+      <div style={{
+        backgroundImage: `url(${dino})`,
+        height: '600px',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'auto',
+        position: 'relative'
+      }}>
+      
+      <Button>
+        <NavLink to={"/"}>
+          Back To HomePage
+        </NavLink>
+      </Button>
+        
       </div>
     </PageNotFound>
   </Page>
@@ -20,10 +40,12 @@ export default () => (
 
 const PageNotFound = styled.div`
   min-height: 600px;
-  padding-top:  10%;
+  padding-top:  5%;
   margin-bottom: -30px;
 
-  div {
-    text-align: center;
+  a {
+    text-decoration: none;
+    color: inherit;
   }
+
 `;

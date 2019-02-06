@@ -134,6 +134,7 @@ export default class Routes extends Component {
         />
         <Route exact path="/authenticate-admin" component={Auth_Admin} />
         <Route exact path="/admin" component={Admin_TEST} />
+        <Route exact path="/not-found" component={NotFound} />
         {/* <Route exact path="/about" component={About} /> */}
         
         <Route exact path="/:pageRoute" render={() => <Homepage pageInfo={this.state.dynamicRoutes} currentPage={this.props.current} />} />
@@ -147,7 +148,7 @@ export default class Routes extends Component {
 
         <UnauthenticatedRoute exact path="/login" component={Login} />
         <AuthenticatedRoute exact path="/logout" component={Logout} />
-
+        
         <Route component={NotFound} />
       </Switch>
     );
