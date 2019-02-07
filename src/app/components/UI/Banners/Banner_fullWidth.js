@@ -73,8 +73,10 @@ class BannerFullWidth extends Component {
     }
 
     const isTextBackground = BannerTextBkgrnd ? textBackgroundColor : 'transparent';
-    const skewFwd = BannerTextBkgrndAngled ? `skewX(${BannerTextBkgrndAngled}deg)` : 'none';   
-    const skewBack = BannerTextBkgrndAngled ? `skewX(-${BannerTextBkgrndAngled}deg)` : 'none'; 
+    // const Anglefwd = Number(BannerTextBkgrndAngled) >= 0 ? BannerTextBkgrndAngled : ;
+    const AngleBack = Number(BannerTextBkgrndAngled) >= 0 ? '-'+BannerTextBkgrndAngled : BannerTextBkgrndAngled.replace('-','');
+    const skewFwd = BannerTextBkgrndAngled ? `skewX(${BannerTextBkgrndAngled}deg)` : `skewX(0deg)`;   
+    const skewBack = BannerTextBkgrndAngled ? `skewX(${AngleBack}deg)` : `skewX(0deg)`; 
     const roundedEdges = BannerTextBkgrndRounded ? `${BannerTextBkgrndRounded}%` : '0';
 
     console.log("full_bannerProps", this.props);
@@ -123,24 +125,22 @@ class BannerFullWidth extends Component {
   }
 }
 
-const fadeIn = keyframes`
+const fadeIn = (props) => keyframes`
   0% {
     opacity: 0;
-    transform: translateY(40%);
+    transform: skewX(${props.BannerTextBkgrndAngled}) translateY(40%);
   }
   50% {
-    opacity: 1;
+    opacity: 0.5;
     transform: translateY(-20%);
-    
-  }
+  } 
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: skewX(${props.BannerTextBkgrndAngled}) translateY(0);
   }
 `;
 
-const animation = props =>
-  css`
+const animation = props => css`
     1s ${fadeIn} ease-out
   `;
 
@@ -168,23 +168,30 @@ const StyledBanner = styled.div`
         ? props.theme.bannerTextLight
         : props.theme.bannerTextDark};
 
-    .content-wrapper{
+    .content-wrapper {
       background-color: ${props => props.isTextBackground};
       padding: 20px;
-      width: 40%;
+      width: 50%;
       transform: ${props => props.skewFwd};
-      border-radius: ${props => props.roundedEdges}
+      border-radius: ${props => props.roundedEdges};
+      animation: ${props => props.bannerData.Bannerfade ? animation : "none"};
+
+      @media (max-width: 768px) {
+          width: 68%;
+      }
+
+      @media (max-width: 500px) {
+          width: 85%;
+      }
     }
     
-    .content-inner{
+    .content-inner {
       transform: ${props => props.skewBack};
       padding: 0 30px;
     }
 
     .banner-content {
       margin: 0 20px;
-      animation: ${props =>
-        props.bannerData.Bannerfade ? animation : "none"};
     }
   }
 `;
