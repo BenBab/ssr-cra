@@ -24,6 +24,8 @@ const Input = props => {
           readOnly={props.readOnly}
           ref={props.refProp}
           onFocus={props.onFocus}
+          min={props.min}
+          max={props.max}
         />
       );
       break;
