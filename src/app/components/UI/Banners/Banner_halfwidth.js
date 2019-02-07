@@ -19,7 +19,7 @@ class BannerHalfWidth extends Component {
   // }
 
   componentDidMount() {
-    if (this.props.bannerData.isLogo) {
+    if (this.props.bannerData.BannerLogo) {
       setTimeout(() => {
         this.setState({ showLogo: true });
       }, 500);
@@ -34,9 +34,9 @@ class BannerHalfWidth extends Component {
   componentDidUpdate(prevProps) {
     if (
       this.props.bannerData &&
-      this.props.bannerData.isLogo !== prevProps.bannerData.isLogo
+      this.props.bannerData.BannerLogo !== prevProps.bannerData.BannerLogo
     ) {
-      this.setState({ showLogo: this.props.bannerData.isLogo });
+      this.setState({ showLogo: this.props.bannerData.BannerLogo });
     }
   }
 
@@ -46,18 +46,19 @@ class BannerHalfWidth extends Component {
 
   render() {
     const {
-      img,
+      Banner: img,
       position,
-      hwBannerBackGroundImg,
-      backGroundColour,
-      textRightSide,
-      fadeContent,
-      title,
-      subTitle,
-      description,
-      btnText,
-      btnLink
+      BannerHWbackImg: hwBannerBackGroundImg,
+      BannerHWBackColour: backGroundColour,
+      BannerTxtRightSide: textRightSide,
+      Bannerfade: fadeContent,
+      BannerTitle: title,
+      BannerSubtitle: subTitle,
+      BannerDescription: description,
+      BannerBtnText: btnText,
+      BannerLink: btnLink
     } = this.props.bannerData;
+
     const banner_image_url = img;
     const backgroundImg = hwBannerBackGroundImg;
     //'https://i.imgur.com/jCi5m2s.png'
@@ -147,11 +148,11 @@ const BannerContent = styled.div`
     /* text-align: ${props =>
       props.bannerData.textRightSide ? "right" : "left"}; */
     color: ${props =>
-      props.bannerData.lightTheme
+      props.bannerData.BannerTxtLightTheme
         ? props.theme.bannerTextLight
         : props.theme.bannerTextDark};
     margin: 0 50px;
-    animation: ${props => (props.bannerData.fadeContent ? animation : "none")};
+    animation: ${props => (props.bannerData.Bannerfade ? animation : "none")};
     position: relative;
     /* top: ${props => (props.bannerData.isLogo ? 0 : "-65px")}; */
 

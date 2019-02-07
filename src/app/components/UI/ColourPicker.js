@@ -16,16 +16,16 @@ class ColourPicker extends React.Component {
 
   componentDidMount() {
     if (this.props.value) {
-      const hex = this.props.value.replace("#", "");
-      const r = parseInt(hex.substring(0, 2), 16);
-      const g = parseInt(hex.substring(2, 4), 16);
-      const b = parseInt(hex.substring(4, 6), 16);
-
+      // const hex = this.props.value.replace("#", "");
+      // const r = parseInt(hex.substring(0, 2), 16);
+      // const g = parseInt(hex.substring(2, 4), 16);
+      // const b = parseInt(hex.substring(4, 6), 16);
+      const { r, g , b , a } = this.props.value
       const rgb = {
         r,
         g,
         b,
-        a: 1
+        a
       };
       this.setState({ color: rgb });
     }
@@ -47,7 +47,7 @@ class ColourPicker extends React.Component {
       const newevent = {
         target: {
           name: this.props.name,
-          value: color.hex
+          value: color.rgb
         }
       };
       this.props.changeColour(newevent, id, parent);
@@ -102,7 +102,7 @@ class ColourPicker extends React.Component {
             <SketchPicker
               color={this.state.color}
               onChange={this.handleChange}
-              disableAlpha={true}
+              // disableAlpha={true}
             />
           </div>
         ) : null}
