@@ -40,7 +40,7 @@ const Homepage = props => {
 
   if(!props.pageInfo) return (
     <Page id={props.currentPage} title={title}>
-      <Spinner/>
+      <Spinner large={true}/>
     </Page>
   )
 

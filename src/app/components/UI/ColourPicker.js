@@ -55,7 +55,7 @@ class ColourPicker extends React.Component {
   };
 
   render() {
-    console.log("hex", this.state.hex);
+    console.log("hex", this.state.color);
 
     const styles = reactCSS({
       default: {
