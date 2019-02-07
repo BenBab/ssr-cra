@@ -98,17 +98,23 @@ class BannerControls extends Component {
                     <Flex>
                       <Input
                         inputtype="input"
-                        label="Text Background angled (0-100)"
+                        type={'number'}
+                        label="Text Background angled (-50 to 50)"
                         name={pos+"BannerTextBkgrndAngled"}
                         value={BannerTextBkgrndAngled}
                         onChange={handleChange}
+                        min={'-50'}
+                        max={'50'}
                       />
                       <Input
                         inputtype="input"
-                        label="Text Background round edges (0-100)"
+                        type={'number'}
+                        label="Text Background round edges (0-50)"
                         name={pos+"BannerTextBkgrndRounded"}
                         value={BannerTextBkgrndRounded}
                         onChange={handleChange}
+                        min={'0'}
+                        max={'50'}
                       />
                     </Flex>
                     <Input

@@ -34,7 +34,7 @@ class Dashboard extends Component {
 
     const { pageInfo, plugins, overlayBlocker } = this.props;
     if (!pageInfo) {
-      return <Spinner/>;
+      return <Spinner large={true}/>;
     }
     if (!pageInfo.content) {
       return <div>No page content available</div>;
