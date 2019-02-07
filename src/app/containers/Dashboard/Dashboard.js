@@ -14,6 +14,21 @@ import Booking from './Plugins/Booking';
 import Spinner from '../../components/UI/Spinner'
 
 class Dashboard extends Component {
+
+  createContentObject(pos, name, data){
+    let content = {}
+    
+    Object.keys(data)
+        .filter(fc => fc.includes(name))
+        .map(c => {
+          const key = c.replace(pos, '')
+          return content = {...content, [key]: data[c] }
+      });
+    
+    return content;
+  }
+
+
   render() {
     console.log("dashboard props", this.props);
 
@@ -25,90 +40,19 @@ class Dashboard extends Component {
       return <div>No page content available</div>;
     }
 
+    const topBannerObj = this.createContentObject('top', 'topBanner', this.props.pageInfo.content)
+    const midBannerObj = this.createContentObject('mid', 'midBanner', this.props.pageInfo.content)
+    // const bottomBannerObj = this.createContentObject('bottom', 'midBanner', this.props.pageInfo.content)
+    const mainTextBannerObj = this.createContentObject(null, 'mainText', this.props.pageInfo.content)
+
     const {
       topBanner,
       topBannerHalfwidth,
-      topBannerImgSize,
-      topBannerHWbackImg,
-      topBannerHWBackColour,
-      topBannerTxtRightSide,
-      topBannerTxtLightTheme,
-      topBannerLogo,
-      topBannerfade,
-      topBannerTitle,
-      topBannerSubtitle,
-      topBannerDescription,
-      topBannerBtnText,
-      topBannerLink,
       midBanner,
       midBannerHalfwidth,
-      midBannerImgSize,
-      midBannerHWbackImg,
-      midBannerHWBackColour,
-      midBannerTxtRightSide,
-      midBannerTxtLightTheme,
-      midBannerLogo,
-      midBannerfade,
-      midBannerTitle,
-      midBannerSubtitle,
-      midBannerDescription,
-      midBannerBtnText,
-      midBannerLink,
-      mainText,
       mainTextPosition,
-      mainTextCenterTitle,
-      mainTextRightSide,
-      mainTextBackColour,
-      mainTextImg,
-      mainTextImgAlign,
-      mainTextImgWidth,
-      mainTextImgHeight
     } = this.props.pageInfo.content;
 
-    const topBannerObj = {
-      img: topBanner,
-      halfwidth: topBannerHalfwidth,
-      hwBannerImgSize: topBannerImgSize,
-      hwBannerBackGroundImg: topBannerHWbackImg,
-      backGroundColour: topBannerHWBackColour,
-      textRightSide: topBannerTxtRightSide,
-      lightTheme: topBannerTxtLightTheme,
-      isLogo: topBannerLogo,
-      fadeContent: topBannerfade,
-      title: topBannerTitle,
-      subTitle: topBannerSubtitle,
-      description: topBannerDescription,
-      btnText: topBannerBtnText,
-      btnLink: topBannerLink
-    };
-    const midBannerObj = {
-      img: midBanner,
-      halfwidth: midBannerHalfwidth,
-      hwBannerImgSize: midBannerImgSize,
-      hwBannerBackGroundImg: midBannerHWbackImg,
-      backGroundColour: midBannerHWBackColour,
-      textRightSide: midBannerTxtRightSide,
-      lightTheme: midBannerTxtLightTheme,
-      isLogo: midBannerLogo,
-      fadeContent: midBannerfade,
-      title: midBannerTitle,
-      subTitle: midBannerSubtitle,
-      description: midBannerDescription,
-      btnText: midBannerBtnText,
-      btnLink: midBannerLink
-    };
-
-    const mainTextBannerObj = {
-      mainText,
-      position: mainTextPosition,
-      centerTitle: mainTextCenterTitle,
-      alignTextRight: mainTextRightSide,
-      backgroundColour: mainTextBackColour,
-      img: mainTextImg,
-      imgAlign: mainTextImgAlign,
-      imgWidth: mainTextImgWidth,
-      imgHeight: mainTextImgHeight
-    };
     const mainPosition =
       mainTextPosition === undefined ? "Top" : mainTextPosition;
 

@@ -19,7 +19,7 @@ class BannerFullWidth extends Component {
   // }
 
   componentDidMount() {
-    if (this.props.bannerData.isLogo) {
+    if (this.props.bannerData.BannerLogo) {
       setTimeout(() => {
         this.setState({ showLogo: true });
       }, 500);
@@ -34,9 +34,9 @@ class BannerFullWidth extends Component {
   componentDidUpdate(prevProps) {
     if (
       this.props.bannerData &&
-      this.props.bannerData.isLogo !== prevProps.bannerData.isLogo
+      this.props.bannerData.BannerLogo !== prevProps.bannerData.BannerLogo
     ) {
-      this.setState({ showLogo: this.props.bannerData.isLogo });
+      this.setState({ showLogo: this.props.bannerData.BannerLogo });
     }
   }
 
@@ -46,14 +46,15 @@ class BannerFullWidth extends Component {
 
   render() {
     const {
-      img,
-      fadeContent,
-      title,
-      subTitle,
-      description,
-      btnText,
-      btnLink
+      Banner: img,
+      Bannerfade: fadeContent,
+      BannerTitle: title,
+      BannerSubtitle: subTitle,
+      BannerDescription: description,
+      BannerBtnText: btnText,
+      BannerLink: btnLink
     } = this.props.bannerData;
+
     const banner_image_url = img;
     //'https://i.imgur.com/jCi5m2s.png'
     const { history, template } = this.props;
@@ -135,16 +136,16 @@ const StyledBanner = styled.div`
 
   > div {
     padding: 80px 10vw 0 10vw;
-    text-align: ${props => (props.bannerData.textRightSide ? "right" : "left")};
+    text-align: ${props => (props.bannerData.BannerTxtRightSide ? "right" : "left")};
     color: ${props =>
-      props.bannerData.lightTheme
+      props.bannerData.BannerTxtLightTheme
         ? props.theme.bannerTextLight
         : props.theme.bannerTextDark};
 
     .banner-content {
       margin: 0 20px;
       animation: ${props =>
-        props.bannerData.fadeContent ? animation : "none"};
+        props.bannerData.Bannerfade ? animation : "none"};
     }
   }
 `;

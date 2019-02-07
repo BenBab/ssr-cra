@@ -11,6 +11,9 @@ import Minimizer from "../../../components/UI/Wrappers/Minimizer";
 
 import Dashboard from "../../Dashboard/Dashboard";
 
+import BannerControls from '../../../components/admin-controls/BannerControls';
+import MainTextControls from '../../../components/admin-controls/MainTextControls';
+
 class Homepage extends Component {
   state = {
     previewOpen: false
@@ -54,52 +57,14 @@ class Homepage extends Component {
 
   render() {
     if (!this.props.homePage) return <div />;
-    const positionArray = [
-      { value: "Top" },
-      { value: "Middle" },
-      { value: "Bottom" }
-    ];
-    const floatArray = [{ value: "left" }, { value: "right" }];
 
     const {
       topBanner,
       topBannerHalfwidth,
-      topBannerImgSize,
-      topBannerHWbackImg,
-      topBannerHWBackColour,
-      topBannerTxtRightSide,
-      topBannerTxtLightTheme,
-      topBannerLogo,
-      topBannerfade,
-      topBannerTitle,
-      topBannerSubtitle,
-      topBannerDescription,
-      topBannerBtnText,
-      topBannerLink,
       midBanner,
       midBannerHalfwidth,
-      midBannerImgSize,
-      midBannerHWbackImg,
-      midBannerHWBackColour,
-      midBannerTxtRightSide,
-      midBannerTxtLightTheme,
-      midBannerLogo,
-      midBannerfade,
-      midBannerTitle,
-      midBannerSubtitle,
-      midBannerDescription,
-      midBannerBtnText,
-      midBannerLink,
       bottomBanner,
       mainText,
-      mainTextPosition,
-      mainTextCenterTitle,
-      mainTextRightSide,
-      mainTextBackColour,
-      mainTextImg,
-      mainTextImgAlign,
-      mainTextImgWidth,
-      mainTextImgHeight
     } = this.props.homePage.content;
     console.log("Homepage Props", this.props);
 
@@ -121,120 +86,16 @@ class Homepage extends Component {
               clearInput={this.clearInput}
             />
             {topBanner && (
-              <Minimizer>
-                <Box>
-                  <Flex>
-                    <Input
-                      inputtype="checkbox"
-                      sideLabel="Use the Top Banner image inside the Banner "
-                      name="topBannerHalfwidth"
-                      checked={topBannerHalfwidth}
-                      handleChange={this.handleCheckbox}
-                    />
-                  </Flex>
-                  {topBannerHalfwidth && (
-                    <>
-                      <Input
-                        inputtype="inputSelector"
-                        label="Banner Background Image"
-                        name="topBannerHWbackImg"
-                        value={topBannerHWbackImg}
-                        onChange={this.handleChange}
-                        onClick={this.handleMediaModal}
-                        clearInput={this.clearInput}
-                      />
-                      <Flex>
-                        <Input
-                          inputtype="input"
-                          type="number"
-                          label="Banner Image Size"
-                          name="topBannerImgSize"
-                          value={topBannerImgSize}
-                          onChange={this.handleChange}
-                        />
-                        <Input
-                          inputtype="inputColourPicker"
-                          label="Banner Background Colour"
-                          name="topBannerHWBackColour"
-                          value={topBannerHWBackColour}
-                          changeColour={this.handleColourPicker}
-                          pageId={"home"}
-                        />
-                      </Flex>
-                    </>
-                  )}
-                  <Flex>
-                    <Input
-                      inputtype="checkbox"
-                      sideLabel="Banner Text Right Side"
-                      name="topBannerTxtRightSide"
-                      checked={topBannerTxtRightSide}
-                      handleChange={this.handleCheckbox}
-                    />
-                    <Input
-                      inputtype="checkbox"
-                      sideLabel="Banner Light Text Color"
-                      name="topBannerTxtLightTheme"
-                      checked={topBannerTxtLightTheme}
-                      handleChange={this.handleCheckbox}
-                    />
-                  </Flex>
-                  <Flex>
-                    <Input
-                      inputtype="checkbox"
-                      sideLabel="Use Logo in banner"
-                      name="topBannerLogo"
-                      checked={topBannerLogo}
-                      handleChange={this.handleCheckbox}
-                    />
-                    <Input
-                      inputtype="checkbox"
-                      sideLabel="Banner content fade in effect"
-                      name="topBannerfade"
-                      checked={topBannerfade}
-                      handleChange={this.handleCheckbox}
-                    />
-                  </Flex>
-                  <Input
-                    inputtype="input"
-                    label="Banner Title"
-                    name="topBannerTitle"
-                    value={topBannerTitle}
-                    onChange={this.handleChange}
-                  />
-                  <Input
-                    inputtype="input"
-                    label="Banner Subtitle"
-                    name="topBannerSubtitle"
-                    value={topBannerSubtitle}
-                    onChange={this.handleChange}
-                  />
-                  <Input
-                    inputtype="input"
-                    label="Banner Description"
-                    name="topBannerDescription"
-                    value={topBannerDescription}
-                    onChange={this.handleChange}
-                  />
-                  <Flex>
-                    <Input
-                      inputtype="input"
-                      label="Banner Button Text"
-                      name="topBannerBtnText"
-                      value={topBannerBtnText}
-                      onChange={this.handleChange}
-                    />
-                    <Input
-                      inputtype="select"
-                      label="Banner Link"
-                      name="topBannerLink"
-                      value={topBannerLink}
-                      items={this.props.availableRoutes}
-                      onSelectChange={this.handleChange}
-                    />
-                  </Flex>
-                </Box>
-              </Minimizer>
+              <BannerControls 
+                pos={'top'} 
+                data={this.props.homePage.content} 
+                handleCheckbox={this.handleCheckbox}
+                handleChange={this.handleChange}
+                handleMediaModal={this.handleMediaModal}
+                clearInput={this.clearInput}
+                handleColourPicker={this.handleColourPicker}
+                availableRoutes={this.props.availableRoutes}
+              />
             )}
             <Input
               inputtype="inputSelector"
@@ -250,120 +111,16 @@ class Homepage extends Component {
               clearInput={this.clearInput}
             />
             {midBanner && (
-              <Minimizer>
-                <Box>
-                  <Flex>
-                    <Input
-                      inputtype="checkbox"
-                      sideLabel="Use the Middle Banner image inside the Banner"
-                      name="midBannerHalfwidth"
-                      checked={midBannerHalfwidth}
-                      handleChange={this.handleCheckbox}
-                    />
-                  </Flex>
-                  {midBannerHalfwidth && (
-                    <>
-                      <Input
-                        inputtype="inputSelector"
-                        label="Banner Background Image"
-                        name="midBannerHWbackImg"
-                        value={midBannerHWbackImg}
-                        onChange={this.handleChange}
-                        onClick={this.handleMediaModal}
-                        clearInput={this.clearInput}
-                      />
-                      <Flex>
-                        <Input
-                          inputtype="input"
-                          type="number"
-                          label="Banner Image Size"
-                          name="midBannerImgSize"
-                          value={midBannerImgSize}
-                          onChange={this.handleChange}
-                        />
-                        <Input
-                          inputtype="inputColourPicker"
-                          label="Banner Background Colour"
-                          name="midBannerHWBackColour"
-                          value={midBannerHWBackColour}
-                          changeColour={this.handleColourPicker}
-                          pageId={"home"}
-                        />
-                      </Flex>
-                    </>
-                  )}
-                  <Flex>
-                    <Input
-                      inputtype="checkbox"
-                      sideLabel="Banner Text Right Side"
-                      name="midBannerTxtRightSide"
-                      checked={midBannerTxtRightSide}
-                      handleChange={this.handleCheckbox}
-                    />
-                    <Input
-                      inputtype="checkbox"
-                      sideLabel="Banner Light Text Color"
-                      name="midBannerTxtLightTheme"
-                      checked={midBannerTxtLightTheme}
-                      handleChange={this.handleCheckbox}
-                    />
-                  </Flex>
-                  <Flex>
-                    <Input
-                      inputtype="checkbox"
-                      sideLabel="Use Logo in banner"
-                      name="midBannerLogo"
-                      checked={midBannerLogo}
-                      handleChange={this.handleCheckbox}
-                    />
-                    <Input
-                      inputtype="checkbox"
-                      sideLabel="Banner content fade in effect"
-                      name="midBannerfade"
-                      checked={midBannerfade}
-                      handleChange={this.handleCheckbox}
-                    />
-                  </Flex>
-                  <Input
-                    inputtype="input"
-                    label="Banner Title"
-                    name="midBannerTitle"
-                    value={midBannerTitle}
-                    onChange={this.handleChange}
-                  />
-                  <Input
-                    inputtype="input"
-                    label="Banner Subtitle"
-                    name="midBannerSubtitle"
-                    value={midBannerSubtitle}
-                    onChange={this.handleChange}
-                  />
-                  <Input
-                    inputtype="input"
-                    label="Banner Description"
-                    name="midBannerDescription"
-                    value={midBannerDescription}
-                    onChange={this.handleChange}
-                  />
-                  <Flex>
-                    <Input
-                      inputtype="input"
-                      label="Banner Button Text"
-                      name="midBannerBtnText"
-                      value={midBannerBtnText}
-                      onChange={this.handleChange}
-                    />
-                    <Input
-                      inputtype="select"
-                      label="Banner Link"
-                      name="midBannerLink"
-                      value={midBannerLink}
-                      items={this.props.availableRoutes}
-                      onSelectChange={this.handleChange}
-                    />
-                  </Flex>
-                </Box>
-              </Minimizer>
+              <BannerControls 
+                pos={'mid'} 
+                data={this.props.homePage.content} 
+                handleCheckbox={this.handleCheckbox}
+                handleChange={this.handleChange}
+                handleMediaModal={this.handleMediaModal}
+                clearInput={this.clearInput}
+                handleColourPicker={this.handleColourPicker}
+                availableRoutes={this.props.availableRoutes}
+              />
             )}
             <Input
               inputtype="textarea"
@@ -372,77 +129,17 @@ class Homepage extends Component {
               value={mainText}
               onChange={this.handleChange}
             />
-            <Minimizer>
-              <Box>
-                <Flex>
-                  <Input
-                    inputtype="checkbox"
-                    sideLabel="Center Header text"
-                    name="mainTextCenterTitle"
-                    checked={mainTextCenterTitle}
-                    handleChange={this.handleCheckbox}
-                  />
-                  <Input
-                    inputtype="checkbox"
-                    sideLabel="Align Text Right Side"
-                    name="mainTextRightSide"
-                    checked={mainTextRightSide}
-                    handleChange={this.handleCheckbox}
-                  />
-                </Flex>
-                <Input
-                  inputtype="select"
-                  label="Main Text Page Position"
-                  name="mainTextPosition"
-                  value={mainTextPosition}
-                  items={positionArray}
-                  onSelectChange={this.handleChange}
-                />
-                <Input
-                  inputtype="inputSelector"
-                  label="Add a Small Image"
-                  name="mainTextImg"
-                  value={mainTextImg}
-                  onChange={this.handleChange}
-                  onClick={this.handleMediaModal}
-                  clearInput={this.clearInput}
-                />
-                <Grid cols={"33% 33% 33%"} margin={"0 15px 0 0"}>
-                  <Input
-                    inputtype="select"
-                    label="Image align position"
-                    name="mainTextImgAlign"
-                    value={mainTextImgAlign}
-                    items={floatArray}
-                    onSelectChange={this.handleChange}
-                  />
-                  <Input
-                    inputtype="input"
-                    type="number"
-                    label="Banner Image Width"
-                    name="mainTextImgWidth"
-                    value={mainTextImgWidth || 200}
-                    onChange={this.handleChange}
-                  />
-                  <Input
-                    inputtype="input"
-                    type="number"
-                    label="Banner Image Height"
-                    name="mainTextImgHeight"
-                    value={mainTextImgHeight || 135}
-                    onChange={this.handleChange}
-                  />
-                </Grid>
-                <Input
-                  inputtype="inputColourPicker"
-                  label="Banner Background Colour"
-                  name="mainTextBackColour"
-                  value={mainTextBackColour}
-                  changeColour={this.handleColourPicker}
-                  pageId={"home"}
-                />
-              </Box>
-            </Minimizer>
+            <MainTextControls 
+                data={this.props.homePage.content} 
+                pageID={'home'}
+                handleCheckbox={this.handleCheckbox}
+                handleChange={this.handleChange}
+                handleMediaModal={this.handleMediaModal}
+                clearInput={this.clearInput}
+                handleColourPicker={this.handleColourPicker}
+                availableRoutes={this.props.availableRoutes}
+            />
+
           </div>
           <Preview>
             <Dashboard

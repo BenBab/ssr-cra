@@ -27,26 +27,32 @@ export class Main_Banner extends Component {
     console.log("main text banner props", this.props);
     const {
       mainText,
-      centerTitle,
+      mainTextCenterTitle,
       position,
-      alignTextRight,
-      backgroundColour,
-      img,
-      imgAlign,
-      imgWidth,
-      imgHeight
+      mainTextRightSide,
+      mainTextBackColour: backgroundColour,
+      mainTextImg: img,
+      mainTextImgAlign: imgAlign,
+      mainTextImgWidth: imgWidth,
+      mainTextImgHeight: imgHeight
     } = this.props.bannerData;
-    const textAlignment = alignTextRight ? "right" : "left";
+    const textAlignment = mainTextRightSide ? "right" : "left";
     const image = img;
     const imageWidth = imgWidth ? `${imgWidth}px` : null;
     const imageHeight = imgHeight ? `${imgHeight}px` : null;
     const text = this.convertToHtml(mainText, image);
+    let backColour = "#FFFFFF"
+
+    if (backgroundColour){
+      const { r, g , b , a} = backgroundColour
+      backColour = `rgba(${r}, ${g}, ${b}, ${a})`
+    }
 
     return (
       <StyledMainBanner
-        centerTitle={centerTitle}
+        centerTitle={mainTextCenterTitle}
         textAlignment={textAlignment}
-        backgroundColour={backgroundColour}
+        backgroundColour={backColour}
         imgAlign={imgAlign}
         imgWidth={imageWidth}
         imgHeight={imageHeight}
@@ -59,7 +65,7 @@ export class Main_Banner extends Component {
 
 const StyledMainBanner = styled.div`
   padding: 8% 10%;
-  background-color: ${props => props.backgroundColour || "#FFFFFF"};
+  background-color: ${props => props.backgroundColour};
 
   .mainText {
     text-align: ${props => props.textAlignment};
