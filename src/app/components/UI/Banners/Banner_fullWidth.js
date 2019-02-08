@@ -1,34 +1,19 @@
 import React, { Component } from "react";
 import styled, { css, keyframes } from "styled-components";
-
+import posed from 'react-pose';
 import Logo from "../../../components/Logo/Logo";
 import Button from "../../UI/Buttons/Button";
 
 class BannerFullWidth extends Component {
   state = {
     loading: true,
-    showLogo: false,
-    showBannerContent: false
+    showLogo: true,
+    showBannerContent: true,
+    isVisible: false
   };
 
-  // componentWillMount(){
-  //     if (this.props.bannerData.isLogo){
-  //         const img = new Image()
-  //         img.src = this.props.template.siteLogo
-  //     }
-  // }
-
   componentDidMount() {
-    if (this.props.bannerData.BannerLogo) {
-      setTimeout(() => {
-        this.setState({ showLogo: true });
-      }, 500);
-      setTimeout(() => {
-        this.setState({ showBannerContent: true });
-      }, 700);
-    } else {
-      this.setState({ showBannerContent: true });
-    }
+    this.setState({isVisible: true})
   }
 
   componentDidUpdate(prevProps) {
@@ -41,7 +26,7 @@ class BannerFullWidth extends Component {
   }
 
   handleLogoLoaded = () => {
-    this.setState({ loading: false });
+    // this.setState({ loading: false });
   };
 
   render() {
@@ -87,16 +72,22 @@ class BannerFullWidth extends Component {
       <StyledBanner
         style={{ backgroundImage: `url(${banner_image_url})` }}
         {...this.props}
-        isTextBackground={isTextBackground}
-        skewFwd={skewFwd}
-        skewBack={skewBack}
-        roundedEdges={roundedEdges}
+        
       >
         <div>
-          <div className={'content-wrapper'}>
-            <div className={'content-inner'}>
+          <SkewOuter skewFwd={skewFwd} >
+          {this.state.isVisible && [
+         
+          
+        ]}
+          <ContentWrapper
+            isTextBackground={isTextBackground}
+            roundedEdges={roundedEdges}
+            pose={this.state.isVisible ? 'enter' : 'exit'}
+          >
+            <SkewInner skewBack={skewBack} >
               {this.state.showLogo && (
-                <BannerLogo fadeContent={fadeContent}>
+                <BannerLogo >
                   <Logo
                     siteLogo={logo}
                     onLoad={this.handleLogoLoaded}
@@ -120,36 +111,62 @@ class BannerFullWidth extends Component {
                   )}
                 </div>
               )}
-            </div>
-          </div>
+            </SkewInner>
+          </ContentWrapper>
+          </SkewOuter>
         </div>
       </StyledBanner>
     );
   }
 }
 
-const fadeIn = (props) => keyframes`
-  0% {
-    opacity: 0;
-    transform: skewX(${props.BannerTextBkgrndAngled}) translateY(40%);
-  }
-  50% {
-    opacity: 0.5;
-    transform: translateY(-20%);
-  } 
-  100% {
-    opacity: 1;
-    transform: skewX(${props.BannerTextBkgrndAngled}) translateY(0);
-  }
-`;
-
-const animation = props => css`
-    1s ${fadeIn} ease-out
-  `;
-
 const BannerLogo = styled.div`
-  animation: ${props => (props.fadeContent ? animation : "none")};
+ 
 `;
+
+const ContentWrapper = styled(posed.div({
+  enter: {
+    y: 0,
+    opacity: 1,
+    delay: 1000,
+    transition: {
+      y: { type: 'spring', stiffness: 100 },
+      default: { duration: 500 }
+    }
+  },
+  exit: {
+    y: 50,
+    opacity: 0,
+    transition: { duration: 150 }
+  }
+}))`
+  padding: 20px;
+  width: 50%;
+  
+  ${props => `
+    background-color: ${props.isTextBackground};
+    border-radius: ${props.roundedEdges};
+  `}
+
+  @media (max-width: 768px) {
+      width: 68%;
+  }
+
+  @media (max-width: 500px) {
+      width: 85%;
+  }
+`;
+
+const SkewOuter = styled.div`
+  transform: ${props => props.skewFwd};
+`;
+
+const SkewInner = styled.div`
+  ${props => `
+    transform: ${props.skewBack};
+  `}
+  padding: 0 30px;
+`
 
 const StyledBanner = styled.div`
   height: 460px;
@@ -163,7 +180,6 @@ const StyledBanner = styled.div`
   position: relative;
 
   > div {
-    
     padding: 80px 10vw 0 10vw;
     text-align: ${props => (props.bannerData.BannerTxtRightSide ? "right" : "left")};
     color: ${props =>
@@ -171,27 +187,6 @@ const StyledBanner = styled.div`
         ? props.theme.bannerTextLight
         : props.theme.bannerTextDark};
 
-    .content-wrapper {
-      background-color: ${props => props.isTextBackground};
-      padding: 20px;
-      width: 50%;
-      transform: ${props => props.skewFwd};
-      border-radius: ${props => props.roundedEdges};
-      animation: ${props => props.bannerData.Bannerfade ? animation : "none"};
-
-      @media (max-width: 768px) {
-          width: 68%;
-      }
-
-      @media (max-width: 500px) {
-          width: 85%;
-      }
-    }
-    
-    .content-inner {
-      transform: ${props => props.skewBack};
-      padding: 0 30px;
-    }
 
     .banner-content {
       margin: 0 20px;
