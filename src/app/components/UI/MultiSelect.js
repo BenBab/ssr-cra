@@ -89,8 +89,13 @@ const StyledSelect = styled.div`
         }
 
       }
-
+      
+      @media(max-width: 500px){
+        width: ${props => props.mobile || '175px'};
+      }
     }
+
+   
 
 `;
 

@@ -332,7 +332,7 @@ class Media extends Component {
       mediaTemplate = (
         <IsMediaModal>
           {noMediaMessage}
-          <Flex>
+          <Flex mobile>
             <Box opacity={customURL}>
               <Button
                 onClick={() => {
@@ -386,7 +386,7 @@ class Media extends Component {
           {/* </Fade> */}
           <Divider />
           <br />
-          <Flex>
+          <Flex mobile>
             <Button onClick={this.props.handleClose}>Cancel</Button>
             <Button onClick={this.confirmImage}>Confirm Image</Button>
           </Flex>

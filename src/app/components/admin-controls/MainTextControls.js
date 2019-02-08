@@ -41,7 +41,7 @@ const MainTextContols = (props) => {
     return (
         <Minimizer>
           <Box>
-            <Flex>
+            <Flex mobile>
                 <Input
                 inputtype="checkbox"
                 sideLabel="Center Header text"
@@ -74,7 +74,7 @@ const MainTextContols = (props) => {
                 onClick={props.handleMediaModal}
                 clearInput={props.clearInput}
             />
-            <Grid cols={"33% 33% 33%"} margin={"0 15px 0 0"}>
+            <Grid cols={"33% 33% 33%"} margin={"0 15px 0 0"} colsSmall={'100%'}>
                 <Input
                 inputtype="select"
                 label="Image align position"
