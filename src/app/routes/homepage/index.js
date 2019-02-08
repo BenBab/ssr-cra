@@ -53,7 +53,7 @@ const Homepage = props => {
   
   return (
     <Page id={props.currentPage} title={title}>
-      <Dashboard pageInfo={pageInfo} />
+      <Dashboard pageInfo={pageInfo} name={title}/>
     </Page>
   );
 };

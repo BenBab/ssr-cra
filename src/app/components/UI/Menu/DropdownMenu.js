@@ -36,8 +36,15 @@ class SimpleMenu extends React.Component {
   };
 
   redirect = route => {
+    this.checkIfMobile()
     this.props.history.push("/pages/" + route);
   };
+
+  checkIfMobile(){
+    if (this.props.mobile){
+      this.props.closeDrawer()
+    }
+  }
 
   render() {
     const { open, anchorEl } = this.state;

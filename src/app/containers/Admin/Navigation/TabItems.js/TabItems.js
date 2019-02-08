@@ -167,6 +167,7 @@ const TabItems = props => {
             template={props.template}
             plugins={props.plugins}
             overlayBlocker={true}
+            name={props.pageId}
           />
         </Preview>
       </StyledTabItems>
@@ -199,6 +200,11 @@ const StyledTabItems = styled.div`
   display: grid;
   grid-template-columns: 65% 35%;
   grid-gap: 8px;
+
+  @media (max-width: 500px) {
+    grid-template-columns: 100%;
+  }
+
 `;
 
 const Preview = styled.div`
@@ -207,9 +213,6 @@ const Preview = styled.div`
   padding-top: 56px;
   box-shadow: 2px 2px 2px;
 
-  @media (max-width: 500px) {
-    display: none;
-  }
 `;
 
 const DeletePageIcon = styled.div`

@@ -64,7 +64,7 @@ class BannerControls extends Component {
                       onClick={handleMediaModal}
                       clearInput={clearInput}
                     />
-                    <Flex>
+                    <Flex mobile>
                       <Input
                         inputtype="input"
                         type="number"
@@ -95,7 +95,7 @@ class BannerControls extends Component {
 
                   {BannerTextBkgrnd &&
                     <>
-                    <Flex>
+                    <Flex mobile>
                       <Input
                         inputtype="input"
                         type={'number'}
@@ -128,7 +128,7 @@ class BannerControls extends Component {
                     </>
                   }
 
-                <Flex>
+                <Flex mobile>
                   <Input
                     inputtype="checkbox"
                     sideLabel="Banner Text Right Side"
@@ -144,7 +144,8 @@ class BannerControls extends Component {
                     handleChange={handleCheckbox}
                   />
                 </Flex>
-                <Flex>
+
+                <Flex mobile>
                   <Input
                     inputtype="checkbox"
                     sideLabel="Use Logo in banner"
@@ -181,7 +182,7 @@ class BannerControls extends Component {
                   value={BannerDescription}
                   onChange={handleChange}
                 />
-                <Flex>
+                <Flex mobile>
                   <Input
                     inputtype="input"
                     label="Banner Button Text"

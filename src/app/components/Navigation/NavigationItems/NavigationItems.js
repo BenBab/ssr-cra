@@ -45,6 +45,8 @@ class NavigationItems extends Component {
       selected = "/";
     }
 
+    this.checkIfMobile()
+
     const navigationItems = Object.keys(this.state.navigationItems).map(key => {
       const item = this.state.navigationItems[key];
       if (item.title.toUpperCase() === selected.toUpperCase()) {
@@ -66,6 +68,12 @@ class NavigationItems extends Component {
       this.setState({ navigationItems, homeActive: false });
     }
   };
+
+  checkIfMobile(){
+    if (this.props.mobile){
+      this.props.closeDrawer()
+    }
+  }
 
   render() {
     let navigationItems = null;
@@ -102,6 +110,8 @@ class NavigationItems extends Component {
               nav={true}
               margin={this.props.margin}
               placement={this.props.placement}
+              mobile={this.props.mobile}
+              closeDrawer={this.props.closeDrawer}
             />
           );
 

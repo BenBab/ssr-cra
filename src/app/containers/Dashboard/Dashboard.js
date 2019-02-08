@@ -15,6 +15,39 @@ import Spinner from '../../components/UI/Spinner'
 
 class Dashboard extends Component {
 
+  state={
+    previewHeight: 0
+  }
+
+  componentDidMount(){
+    const {overlayBlocker, name} = this.props
+    if(overlayBlocker) {
+      this.updateBlockerDimensions();
+      document.getElementById(name).addEventListener('resize', this.updateBlockerDimensions);
+    }
+  }
+
+  componentWillUnmount(){
+    const {overlayBlocker, name} = this.props
+    if (overlayBlocker){
+      document.getElementById(name).removeEventListener('resize', this.updateBlockerDimensions);
+    }
+  }
+
+  componentDidUpdate(prevProps){
+    if (this.props.pageInfo !== prevProps.pageInfo){
+      this.updateBlockerDimensions()
+    }
+  }
+  
+  updateBlockerDimensions = () => {
+    const el = document.getElementById(this.props.name).clientHeight
+    if (el !== this.state.previewHeight){
+      this.setState({ previewHeight: el+'px'})
+    }
+  }
+  
+
   createContentObject(pos, name, data){
     let content = {}
     
@@ -31,8 +64,8 @@ class Dashboard extends Component {
 
   render() {
     console.log("dashboard props", this.props);
-
-    const { pageInfo, plugins, overlayBlocker } = this.props;
+    const { pageInfo, plugins, overlayBlocker, name } = this.props;
+       
     if (!pageInfo) {
       return <Spinner large={true}/>;
     }
@@ -80,10 +113,11 @@ class Dashboard extends Component {
 
     return (
       <>
-        {overlayBlocker && <OverlayBlocker />}
+        {overlayBlocker && <OverlayBlocker previewHeight={this.state.previewHeight} />}
         <StyledDashboard
           transparentHeader={this.props.template.transparentHeader}
           topBanner={topBanner ? true : false}
+          id={name}
         >
           {topBanner && (
             <>
@@ -152,9 +186,13 @@ const StyledDashboard = styled.div`
 const OverlayBlocker = styled.div`
   position: absolute;
   width: 30%;
-  height: 55%;
+  height: ${props => props.previewHeight};
   z-index: 10;
   background-color: transparent;
+
+  @media (max-width: 500px) {
+    width: 80%;
+  }
 `;
 
 const mapStateToProps = state => ({
