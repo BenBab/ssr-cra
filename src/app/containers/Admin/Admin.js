@@ -486,12 +486,16 @@ class Admin extends Component {
 
 const StyledAdminPage = styled.div`
   background-color: #424242;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   padding: 100px 50px;
   margin-top: -75px;
 
   .admin-title {
     color: #f5f5f5;
+  }
+
+  @media(max-width: 500px){
+    padding: 100px 10px;
   }
 `;
 

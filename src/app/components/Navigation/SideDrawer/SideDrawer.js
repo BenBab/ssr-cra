@@ -20,7 +20,7 @@ const sideDrawer = props => {
           <Logo siteLogo={siteLogo} />
         </div>
         <nav>
-          <NavigationItems margin="0 2px 10px 10px" placement="right-start" />
+          <NavigationItems margin="0 2px 10px 10px" placement="right-start" mobile={true} closeDrawer={props.closed}/>
         </nav>
       </StyledSideDrawer>
     </>

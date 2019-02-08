@@ -56,7 +56,7 @@ class Template extends Component {
 
     return (
       <StyledTemplate>
-        <Flex>
+        <Flex mobile>
           <Input
             inputtype="checkbox"
             sideLabel="Is the header toolbar transparent"
@@ -82,7 +82,7 @@ class Template extends Component {
           clearInput={this.clearInput}
         />
         <br />
-        <Grid cols="25% 25%" colsLarge={"35% 35%"} colsMed={"50% 50%"}>
+        <Grid cols="25% 25%" colsLarge={"35% 35%"} colsMed={"50% 50%"} colsSmall={'100%'}>
           <Input
             inputtype="select"
             label="Header Navigation button style"

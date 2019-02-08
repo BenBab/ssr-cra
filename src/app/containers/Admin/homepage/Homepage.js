@@ -147,11 +147,16 @@ class Homepage extends Component {
               {...this.props}
               template={this.props.template}
               overlayBlocker={true}
+              name={'Home'}
             />
           </Preview>
         </StyledHomePage>
-        <Flex justifyContent="flex-start">
-          <Button margin="2px 5px 15px 20px" onClick={this.handlesubmit}>
+        <Flex justifyContent="flex-start" mobile>
+          <Button 
+            margin="2px 5px 15px 20px" 
+            onClick={this.handlesubmit} 
+            mobileMargin={'15px'}
+          >
             Update
           </Button>
           {this.props.isUpdating && <Spinner />}
@@ -159,6 +164,7 @@ class Homepage extends Component {
             <Button
               margin="2px 20px 15px 20px"
               onClick={this.props.cancelUpdate}
+              mobileMargin={'0'}
             >
               Undo Changes
             </Button>
@@ -174,10 +180,6 @@ const Preview = styled.div`
   zoom: 30%;
   padding-top: 56px;
   box-shadow: 2px 2px 2px;
-
-  @media (max-width: 500px) {
-    display: none;
-  }
 `;
 
 const StyledHomePage = styled.div`
@@ -185,6 +187,12 @@ const StyledHomePage = styled.div`
   display: grid;
   grid-gap: 8px;
   grid-template-columns: 65% 35%;
+
+  @media (max-width: 500px) {
+    grid-template-columns: 100%;
+    padding: 0;
+  }
+
 `;
 
 export default Homepage;

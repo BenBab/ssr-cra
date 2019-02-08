@@ -74,7 +74,10 @@ class BannerFullWidth extends Component {
 
     const isTextBackground = BannerTextBkgrnd ? textBackgroundColor : 'transparent';
     // const Anglefwd = Number(BannerTextBkgrndAngled) >= 0 ? BannerTextBkgrndAngled : ;
-    const AngleBack = Number(BannerTextBkgrndAngled) >= 0 ? '-'+BannerTextBkgrndAngled : BannerTextBkgrndAngled.replace('-','');
+    let AngleBack = 0;
+    if (BannerTextBkgrndAngled){
+      AngleBack = (Number(BannerTextBkgrndAngled) >= 0) ? '-'+BannerTextBkgrndAngled : BannerTextBkgrndAngled.replace('-','');
+    }
     const skewFwd = BannerTextBkgrndAngled ? `skewX(${BannerTextBkgrndAngled}deg)` : `skewX(0deg)`;   
     const skewBack = BannerTextBkgrndAngled ? `skewX(${AngleBack}deg)` : `skewX(0deg)`; 
     const roundedEdges = BannerTextBkgrndRounded ? `${BannerTextBkgrndRounded}%` : '0';

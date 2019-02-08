@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import styled, { withTheme } from "styled-components";
 
 const button = props => {
-  const { disabled = false } = props;
+  const { disabled = false, mobileMargin } = props;
   let background = props.theme.primaryBackGroundColour;
   let txtColor = props.theme.primaryTxtColour;
   let borderColor = props.theme.primaryBackGroundColour;
@@ -28,6 +28,7 @@ const button = props => {
       background={background}
       txtColor={txtColor}
       borderColor={borderColor}
+      mobileMargin={mobileMargin}
     >
       <label htmlFor="contained-button-file">
         <Button
@@ -55,6 +56,10 @@ const StyledButton = styled.div`
       background-color: ${props => props.theme.buttonHoverBackground};
       color: ${props => props.theme.buttonhovertext};
     }
+  }
+
+  @media(max-width: 500px){
+    margin: ${props => props.mobileMargin}
   }
 `;
 
