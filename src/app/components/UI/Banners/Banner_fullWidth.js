@@ -76,10 +76,6 @@ class BannerFullWidth extends Component {
       >
         <div>
           <SkewOuter skewFwd={skewFwd} >
-          {this.state.isVisible && [
-         
-          
-        ]}
           <ContentWrapper
             isTextBackground={isTextBackground}
             roundedEdges={roundedEdges}
