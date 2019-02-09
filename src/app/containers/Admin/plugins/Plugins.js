@@ -8,7 +8,7 @@ import Button from "../../../components/UI/Buttons/Button";
 
 import ContactUsPlugin from "./contactUsPlugin/ContactUsPlugin";
 import BookingPlugin from "./bookingPlugin/BookingPlugin";
-
+import TesimonialsPlugin from './testimonialPlugin/TestimonialPlugin';
 class Plugins extends Component {
   state = {
     contactUsPlugin: false
@@ -80,6 +80,16 @@ class Plugins extends Component {
             handleCheckbox={this.handleCheckbox}
             onSelectChange={this.onSelectChange}
             handleChange={e => this.handleChange(e, "booking")}
+          />
+          <TesimonialsPlugin
+            plugin={this.props.plugins.testimonials}
+            name={"testimonialsPlugin"}
+            parentObj="testimonials"
+            availableRoutes={availableRoutes}
+            accordianClick={this.accordianClick}
+            handleCheckbox={this.handleCheckbox}
+            onSelectChange={this.onSelectChange}
+            handleChange={e => this.handleChange(e, "testimonials")}
           />
         </StyledPlugins>
         <Flex justifyContent="flex-start">
