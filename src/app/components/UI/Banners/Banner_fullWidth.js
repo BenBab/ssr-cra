@@ -1,28 +1,30 @@
 import React, { Component } from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled from "styled-components";
 import posed from 'react-pose';
 import Logo from "../../../components/Logo/Logo";
 import Button from "../../UI/Buttons/Button";
 
 class BannerFullWidth extends Component {
   state = {
-    loading: true,
-    showLogo: true,
     showBannerContent: true,
     isVisible: false
   };
 
   componentDidMount() {
-    this.setState({isVisible: true})
+    this.setState({ isVisible: true })
   }
 
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.bannerData &&
-      this.props.bannerData.BannerLogo !== prevProps.bannerData.BannerLogo
-    ) {
-      this.setState({ showLogo: this.props.bannerData.BannerLogo });
+  componentDidUpdate(prevProps){
+    if (this.props.bannerData && this.props.bannerData.Bannerfade !== prevProps.bannerData.Bannerfade){
+      this.setState({ isVisible: false },
+        () => this.adminShowFadeEffect())
     }
+  }
+
+  adminShowFadeEffect = () => {
+    setTimeout(() => {
+      this.setState({ isVisible: true })
+    }, 300);
   }
 
   handleLogoLoaded = () => {
@@ -32,7 +34,9 @@ class BannerFullWidth extends Component {
   render() {
     const {
       Banner: img,
+      Banner3D,
       Bannerfade: fadeContent,
+      BannerTxtRightSide,
       BannerTitle: title,
       BannerSubtitle: subTitle,
       BannerDescription: description,
@@ -41,8 +45,8 @@ class BannerFullWidth extends Component {
       BannerTextBkgrnd,
       BannerTextBkgrndRounded,
       BannerTextBkgrndAngled,
-      
       BannerTextBkgrndColor,
+      BannerLogo,
     } = this.props.bannerData;
 
     const banner_image_url = img;
@@ -50,15 +54,16 @@ class BannerFullWidth extends Component {
     const { history, template } = this.props;
     const logo = template.siteLogo;
 
+    // TEXT Background colour 
     let textBackgroundColor = 'rgba(255,255,255,1)';
     
     if (BannerTextBkgrndColor){
       const { r, g, b, a} = BannerTextBkgrndColor
       textBackgroundColor= `rgba(${r}, ${g}, ${b}, ${a})`
     }
-
     const isTextBackground = BannerTextBkgrnd ? textBackgroundColor : 'transparent';
-    // const Anglefwd = Number(BannerTextBkgrndAngled) >= 0 ? BannerTextBkgrndAngled : ;
+    
+    //Angle and rounded edges
     let AngleBack = 0;
     if (BannerTextBkgrndAngled){
       AngleBack = (Number(BannerTextBkgrndAngled) >= 0) ? '-'+BannerTextBkgrndAngled : BannerTextBkgrndAngled.replace('-','');
@@ -67,12 +72,16 @@ class BannerFullWidth extends Component {
     const skewBack = BannerTextBkgrndAngled ? `skewX(${AngleBack}deg)` : `skewX(0deg)`; 
     const roundedEdges = BannerTextBkgrndRounded ? `${BannerTextBkgrndRounded}%` : '0';
 
+    //set fading values
+    const yLocation = fadeContent ? 50 : 0;
+    const opacity = fadeContent ? 0 : 1;
+
     console.log("full_bannerProps", this.props);
     return (
       <StyledBanner
         style={{ backgroundImage: `url(${banner_image_url})` }}
         {...this.props}
-        
+        Banner3D={Banner3D}
       >
         <div>
           <SkewOuter skewFwd={skewFwd} >
@@ -80,18 +89,21 @@ class BannerFullWidth extends Component {
             isTextBackground={isTextBackground}
             roundedEdges={roundedEdges}
             pose={this.state.isVisible ? 'enter' : 'exit'}
+            BannerTxtRightSide={BannerTxtRightSide}
+            yLocation={yLocation}
+            opacity={opacity}
           >
-            <SkewInner skewBack={skewBack} >
-              {this.state.showLogo && (
-                <BannerLogo >
+            <SkewInner
+             skewBack={skewBack}
+            >
+              {BannerLogo && (
                   <Logo
                     siteLogo={logo}
                     onLoad={this.handleLogoLoaded}
                     width="50%"
                   />
-                </BannerLogo>
               )}
-              {this.state.showBannerContent && (
+            
                 <div className="banner-content">
                   <h1>{title}</h1>
                   <h3>{subTitle}</h3>
@@ -106,7 +118,7 @@ class BannerFullWidth extends Component {
                     </Button>
                   )}
                 </div>
-              )}
+             
             </SkewInner>
           </ContentWrapper>
           </SkewOuter>
@@ -115,10 +127,6 @@ class BannerFullWidth extends Component {
     );
   }
 }
-
-const BannerLogo = styled.div`
- 
-`;
 
 const ContentWrapper = styled(posed.div({
   enter: {
@@ -131,17 +139,20 @@ const ContentWrapper = styled(posed.div({
     }
   },
   exit: {
-    y: 50,
-    opacity: 0,
+    y: ({yLocation}) => yLocation,
+    opacity: ({opacity}) => opacity,
     transition: { duration: 150 }
-  }
+  },
 }))`
   padding: 20px;
   width: 50%;
+  position: relative;
   
   ${props => `
     background-color: ${props.isTextBackground};
     border-radius: ${props.roundedEdges};
+    float: ${props.BannerTxtRightSide ? 'right' : 'left'};
+    text-align: ${props.BannerTxtRightSide ? 'right' : 'left'};
   `}
 
   @media (max-width: 768px) {
@@ -166,6 +177,7 @@ const SkewInner = styled.div`
 
 const StyledBanner = styled.div`
   height: 460px;
+  box-shadow: ${props => props.Banner3D ? '5px 5px 15px #424242' : 'none'};
   margin-top: ${props =>
     props.template.transparentHeader && props.position === "top" ? "-56px" : 0};
 
@@ -177,7 +189,7 @@ const StyledBanner = styled.div`
 
   > div {
     padding: 80px 10vw 0 10vw;
-    text-align: ${props => (props.bannerData.BannerTxtRightSide ? "right" : "left")};
+    
     color: ${props =>
       props.bannerData.BannerTxtLightTheme
         ? props.theme.bannerTextLight

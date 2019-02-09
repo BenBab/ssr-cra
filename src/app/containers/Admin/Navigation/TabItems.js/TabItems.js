@@ -83,6 +83,8 @@ const TabItems = props => {
     topBannerHalfwidth,
     midBanner,
     midBannerHalfwidth,
+    bottomBanner,
+    bottomBannerHalfwidth,
     mainText
   } = props.itemProps.content;
 
@@ -104,7 +106,6 @@ const TabItems = props => {
             onClick={handleMediaModal}
             clearInput={clearInput}
           />
-
           {topBanner && 
             <BannerControls 
               pos={'top'} 
@@ -143,6 +144,33 @@ const TabItems = props => {
               availableRoutes={props.availableRoutes}
             />
           )}
+
+          <Input
+            inputtype="inputSelector"
+            label={`${
+              bottomBannerHalfwidth
+                ? "Bottom Banner Image (Inside Banner)"
+                : "Bottom Banner Image"
+            }`}
+            name="bottomBanner"
+            value={bottomBanner}
+            onChange={handleChange}
+            onClick={handleMediaModal}
+            clearInput={clearInput}
+          />
+          {bottomBanner && (
+            <BannerControls 
+              pos={'bottom'} 
+              data={props.itemProps.content} 
+              handleCheckbox={handleCheckbox}
+              handleChange={handleChange}
+              handleMediaModal={handleMediaModal}
+              clearInput={clearInput}
+              handleColourPicker={handleColourPicker}
+              availableRoutes={props.availableRoutes}
+            />
+          )}
+
           <Input
             inputtype="textarea"
             label="Main Body Text"

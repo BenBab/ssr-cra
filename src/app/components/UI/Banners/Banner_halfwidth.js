@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled from "styled-components";
+import posed from "react-pose";
 
 import Logo from "../../../components/Logo/Logo";
 import Button from "../../UI/Buttons/Button";
@@ -8,55 +9,55 @@ class BannerHalfWidth extends Component {
   state = {
     loading: true,
     showLogo: false,
-    showBannerContent: false
+    showBannerContent: false,
+    isVisible: false,
   };
 
-  // componentWillMount(){
-  //     if (this.props.bannerData.isLogo){
-  //         const img = new Image()
-  //         img.src = this.props.template.siteLogo
-  //     }
-  // }
-
   componentDidMount() {
-    if (this.props.bannerData.BannerLogo) {
-      setTimeout(() => {
-        this.setState({ showLogo: true });
-      }, 500);
-      setTimeout(() => {
-        this.setState({ showBannerContent: true });
-      }, 700);
-    } else {
-      this.setState({ showBannerContent: true });
-    }
+    this.setState({ isVisible: true });
   }
 
   componentDidUpdate(prevProps) {
     if (
       this.props.bannerData &&
-      this.props.bannerData.BannerLogo !== prevProps.bannerData.BannerLogo
+      this.props.bannerData.Bannerfade !== prevProps.bannerData.Bannerfade
     ) {
-      this.setState({ showLogo: this.props.bannerData.BannerLogo });
+      this.setState({ isVisible: false }, () => this.adminShowFadeEffect());
     }
   }
 
+  adminShowFadeEffect = () => {
+    setTimeout(() => {
+      this.setState({ isVisible: true });
+    }, 300);
+  };
+
   handleLogoLoaded = () => {
-    this.setState({ loading: false });
+    // this.setState({ loading: false });
   };
 
   render() {
     const {
       Banner: img,
+      Banner3D,
       position,
       BannerHWbackImg: hwBannerBackGroundImg,
-      BannerHWBackColour: backGroundColour,
+      BannerHWBackColour,
+      BannerImgSize,
+      BannerImgRoundHW,
+      BannerImg3dHW,
       BannerTxtRightSide: textRightSide,
       Bannerfade: fadeContent,
       BannerTitle: title,
       BannerSubtitle: subTitle,
       BannerDescription: description,
       BannerBtnText: btnText,
-      BannerLink: btnLink
+      BannerLink: btnLink,
+      BannerTextBkgrnd,
+      BannerTextBkgrndRounded,
+      BannerTextBkgrndAngled,
+      BannerTextBkgrndColor,
+      BannerLogo
     } = this.props.bannerData;
 
     const banner_image_url = img;
@@ -65,27 +66,91 @@ class BannerHalfWidth extends Component {
     const { history, template } = this.props;
     const logo = template.siteLogo;
 
+    //Background colour
+    let backGroundColour = "#FFFFFF";
+    if (BannerHWBackColour) {
+      const { r, g, b, a } = BannerHWBackColour;
+      backGroundColour = `rgba(${r}, ${g}, ${b}, ${a})`;
+    }
+
+    // TEXT Background colour
+    let textBackgroundColor = "rgba(255,255,255,1)";
+    if (BannerTextBkgrndColor) {
+      const { r, g, b, a } = BannerTextBkgrndColor;
+      textBackgroundColor = `rgba(${r}, ${g}, ${b}, ${a})`;
+    }
+    const isTextBackground = BannerTextBkgrnd
+      ? textBackgroundColor
+      : "transparent";
+
+    //Angle and rounded edges
+    let AngleBack = 0;
+    if (BannerTextBkgrndAngled) {
+      AngleBack =
+        Number(BannerTextBkgrndAngled) >= 0
+          ? "-" + BannerTextBkgrndAngled
+          : BannerTextBkgrndAngled.replace("-", "");
+    }
+    const skewFwd = BannerTextBkgrndAngled
+      ? `skewX(${BannerTextBkgrndAngled}deg)`
+      : `skewX(0deg)`;
+    const skewBack = BannerTextBkgrndAngled
+      ? `skewX(${AngleBack}deg)`
+      : `skewX(0deg)`;
+    const roundedEdges = BannerTextBkgrndRounded
+      ? `${BannerTextBkgrndRounded}%`
+      : "0";
+
+    //set fading values
+    const yLocation = fadeContent ? 50 : 0;
+    const opacity = fadeContent ? 0 : 1;
+
+    //image manipulation
+    const imgWidth = BannerImgSize
+      ? 390 + Number(BannerImgSize) + "px"
+      : "390px";
+    
+    const imgRounded = BannerImgRoundHW
+      ? BannerImgRoundHW + '%'
+      : '0';
+
     let bannerContent = (
       <div>
-        {this.state.showLogo && (
-          <BannerLogo fadeContent={fadeContent}>
-            <Logo siteLogo={logo} onLoad={this.handleLogoLoaded} width="50%" />
-          </BannerLogo>
-        )}
-        <BannerContent {...this.props}>
-          <h1>{title}</h1>
-          <h3>{subTitle}</h3>
-          <p>{description}</p>
-          {btnText && (
-            <Button
-              onClick={() => {
-                history.push(btnLink);
-              }}
-            >
-              {btnText}
-            </Button>
-          )}
-        </BannerContent>
+        <SkewOuter skewFwd={skewFwd}>
+          <ContentWrapper
+            isTextBackground={isTextBackground}
+            roundedEdges={roundedEdges}
+            pose={this.state.isVisible ? "enter" : "exit"}
+            yLocation={yLocation}
+            opacity={opacity}
+          >
+            <SkewInner skewBack={skewBack}>
+              {BannerLogo && (
+                <div fadeContent={fadeContent}>
+                  <Logo
+                    siteLogo={logo}
+                    onLoad={this.handleLogoLoaded}
+                    width="50%"
+                  />
+                </div>
+              )}
+              <BannerContent {...this.props}>
+                <h1>{title}</h1>
+                <h3>{subTitle}</h3>
+                <p>{description}</p>
+                {btnText && (
+                  <Button
+                    onClick={() => {
+                      history.push(btnLink);
+                    }}
+                  >
+                    {btnText}
+                  </Button>
+                )}
+              </BannerContent>
+            </SkewInner>
+          </ContentWrapper>
+        </SkewOuter>
       </div>
     );
 
@@ -96,22 +161,28 @@ class BannerHalfWidth extends Component {
         background={backGroundColour}
         transparentHeader={this.props.template.transparentHeader}
         position={this.props.position}
+        Banner3D={Banner3D}
       >
         <Grid
-          colGap="0"
+          colGap="10px"
           margin={"0 5% 0 0"}
           marginMed={"0"}
           cols={"1fr 40% 40% 1fr"}
           height={"100%"}
           colsLarge={"0% 50% 50% 0%"}
           colsMed={"100%"}
+          width={'100%'}
         >
           <div />
-          {this.state.showBannerContent && !textRightSide && bannerContent}
-          <StyledBanner {...this.props}>
+          {!textRightSide && 
+            bannerContent
+          }
+          <StyledImage imgWidth={imgWidth} imgRounded={imgRounded} BannerImg3dHW={BannerImg3dHW}>
             <img src={banner_image_url} alt={`${position}-banner`} />
-          </StyledBanner>
-          {this.state.showBannerContent && textRightSide && bannerContent}
+          </StyledImage>
+          {textRightSide && 
+            bannerContent
+          }
           <div />
         </Grid>
       </BannerWrapper>
@@ -119,64 +190,75 @@ class BannerHalfWidth extends Component {
   }
 }
 
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(40%);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(-20%);
-    
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+const ContentWrapper = styled(
+  posed.div({
+    enter: {
+      y: 0,
+      opacity: 1,
+      delay: 1000,
+      transition: {
+        y: { type: "spring", stiffness: 100 },
+        default: { duration: 500 }
+      }
+    },
+    exit: {
+      y: ({ yLocation }) => yLocation,
+      opacity: ({ opacity }) => opacity,
+      transition: { duration: 150 }
+    }
+  })
+)`
+  
+
+  ${props => `
+    background-color: ${props.isTextBackground};
+    border-radius: ${props.roundedEdges};
+  `}
 `;
 
-const animation = props =>
-  css`
-    1s ${fadeIn} ease-out
-  `;
+const SkewOuter = styled.div`
+  transform: ${props => props.skewFwd};
+`;
 
-const BannerLogo = styled.div`
-  animation: ${props => (props.fadeContent ? animation : "none")};
+const SkewInner = styled.div`
+  ${props => `
+    transform: ${props.skewBack};
+  `} 
+  
 `;
 
 const BannerContent = styled.div`
-    /* text-align: ${props =>
-      props.bannerData.textRightSide ? "right" : "left"}; */
-    color: ${props =>
-      props.bannerData.BannerTxtLightTheme
-        ? props.theme.bannerTextLight
-        : props.theme.bannerTextDark};
-    margin: 0 50px;
-    animation: ${props => (props.bannerData.Bannerfade ? animation : "none")};
-    position: relative;
-    /* top: ${props => (props.bannerData.isLogo ? 0 : "-65px")}; */
+  color: ${props =>
+    props.bannerData.BannerTxtLightTheme
+      ? props.theme.bannerTextLight
+      : props.theme.bannerTextDark};
 
+  padding: 30px;
+  position: relative;
 `;
 
-const StyledBanner = styled.div`
-    /* margin-top: ${props =>
-      props.template.transparentHeader && props.position === "top"
-        ? "-56px"
-        : 0}; */
-    text-align: center;
+const StyledImage = styled.div`
+  text-align: center;
 
-    > img{
-        width: auto;
-        max-width:100%;
+  > img {
+    width: ${props => props.imgWidth};
+    border-radius: ${props => props.imgRounded};
+    box-shadow: ${props => props.BannerImg3dHW ? '5px 5px 10px black' : 'none'};
+    /* max-width:100%; */
 
-        @media (max-width: 768px) {
-            max-width:90%;
-        }
+    @media (max-width: 1024px) {
+      max-width: 80%;
     }
+
+    @media (max-width: 768px) {
+      max-width: 90%;
+    }
+  }
 `;
 
 const BannerWrapper = styled.div`
-  background-color: ${props => props.background || "initial"};
+  background-color: ${props => props.background};
+  box-shadow: ${props => props.Banner3D ? '5px 5px 15px #424242' : 'none'};
   height: ${props =>
     props.transparentHeader && props.position === "top" ? "475px" : "400px"};
 
@@ -188,6 +270,7 @@ const BannerWrapper = styled.div`
 
   @media (max-width: 768px) {
     height: 610px;
+    text-align: center;
   }
 `;
 

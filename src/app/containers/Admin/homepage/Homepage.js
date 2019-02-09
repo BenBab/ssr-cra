@@ -64,6 +64,7 @@ class Homepage extends Component {
       midBanner,
       midBannerHalfwidth,
       bottomBanner,
+      bottomBannerHalfwidth,
       mainText,
     } = this.props.homePage.content;
     console.log("Homepage Props", this.props);
@@ -97,6 +98,7 @@ class Homepage extends Component {
                 availableRoutes={this.props.availableRoutes}
               />
             )}
+
             <Input
               inputtype="inputSelector"
               label={`${
@@ -122,6 +124,33 @@ class Homepage extends Component {
                 availableRoutes={this.props.availableRoutes}
               />
             )}
+
+            <Input
+              inputtype="inputSelector"
+              label={`${
+                bottomBannerHalfwidth
+                  ? "Bottom Banner Image (Inside Banner)"
+                  : "Bottom Banner Image"
+              }`}
+              name="bottomBanner"
+              value={bottomBanner}
+              onChange={this.handleChange}
+              onClick={this.handleMediaModal}
+              clearInput={this.clearInput}
+            />
+            {bottomBanner && (
+              <BannerControls 
+                pos={'bottom'} 
+                data={this.props.homePage.content} 
+                handleCheckbox={this.handleCheckbox}
+                handleChange={this.handleChange}
+                handleMediaModal={this.handleMediaModal}
+                clearInput={this.clearInput}
+                handleColourPicker={this.handleColourPicker}
+                availableRoutes={this.props.availableRoutes}
+              />
+            )}
+
             <Input
               inputtype="textarea"
               label="Main Body Text"
