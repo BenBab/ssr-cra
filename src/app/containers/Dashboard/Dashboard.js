@@ -10,6 +10,7 @@ import MainBanner from "../../components/UI/Banners/Main_Banner";
 
 import ContactUs from "./Plugins/ContactUs";
 import Booking from './Plugins/Booking';
+import Testimonials from './Plugins/Testimonials'
 
 import Spinner from '../../components/UI/Spinner'
 
@@ -77,7 +78,8 @@ class Dashboard extends Component {
     const midBannerObj = this.createContentObject('mid', 'midBanner', this.props.pageInfo.content)
     const bottomBannerObj = this.createContentObject('bottom', 'bottomBanner', this.props.pageInfo.content)
     const mainTextBannerObj = this.createContentObject(null, 'mainText', this.props.pageInfo.content)
-
+    const testimonialsObj = this.createContentObject(null, 'testimonials', this.props.pageInfo.content)
+    
     const {
       topBanner,
       topBannerHalfwidth,
@@ -86,14 +88,19 @@ class Dashboard extends Component {
       bottomBanner,
       bottomBannerHalfwidth,
       mainTextPosition,
+      testimonialsPosition,
     } = this.props.pageInfo.content;
 
     const mainPosition =
       mainTextPosition === undefined ? "Top" : mainTextPosition;
+    
+    const testimonialsPos =
+      testimonialsPosition === undefined ? "Top" : testimonialsPosition;
 
     //PLUGINS
     let contactUs = null;
     let booking = null;
+    let testimonials = null;
 
     if (plugins && plugins.contactUs && plugins.contactUs.contactUsPages) {
       contactUs = plugins.contactUs.contactUsPages.find(p => {
@@ -106,6 +113,15 @@ class Dashboard extends Component {
 
     if (plugins && plugins.booking && plugins.booking.bookingPages) {
       booking = plugins.booking.bookingPages.find(p => {
+        if (p === "All Pages") return true;
+        const page = p === "home" ? "/" : p;
+
+        return pageInfo.route === page;
+      });
+    }
+
+    if (plugins && plugins.testimonials && plugins.testimonials.testimonialsPages) {
+      testimonials = plugins.testimonials.testimonialsPages.find(p => {
         if (p === "All Pages") return true;
         const page = p === "home" ? "/" : p;
 
@@ -149,7 +165,9 @@ class Dashboard extends Component {
           
           {contactUs && <ContactUs pluginOptions={plugins.contactUs} />}
 
-
+          {testimonials && testimonialsPos === 'Top' &&
+            <Testimonials bannerData={testimonialsObj}/>
+          }
 
           {midBanner && (
             <>
@@ -175,6 +193,10 @@ class Dashboard extends Component {
             <MainBanner bannerData={mainTextBannerObj} />
           )}
 
+          {testimonials && testimonialsPos === 'Middle' &&
+            <Testimonials bannerData={testimonialsObj}/>
+          } 
+
           {bottomBanner && (
             <>
               {bottomBannerHalfwidth === true ? (
@@ -198,6 +220,11 @@ class Dashboard extends Component {
           {mainPosition === "Bottom" && (
             <MainBanner bannerData={mainTextBannerObj} />
           )}
+
+          {testimonials && testimonialsPos === 'Bottom' &&
+            <Testimonials bannerData={testimonialsObj}/>
+          } 
+
         </StyledDashboard>
       </>
     );

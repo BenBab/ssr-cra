@@ -13,7 +13,7 @@ import Dashboard from "../../Dashboard/Dashboard";
 
 import BannerControls from '../../../components/admin-controls/BannerControls';
 import MainTextControls from '../../../components/admin-controls/MainTextControls';
-
+import TestimonialsControls from '../../../components/admin-controls/TestimonialsControls';
 class Homepage extends Component {
   state = {
     previewOpen: false
@@ -66,8 +66,15 @@ class Homepage extends Component {
       bottomBanner,
       bottomBannerHalfwidth,
       mainText,
+      testimonialsPosition
     } = this.props.homePage.content;
     console.log("Homepage Props", this.props);
+
+    const positionArray = [
+      { value: "Top" },
+      { value: "Middle" },
+      { value: "Bottom" }
+    ];
 
     return (
       <div className="fullwidth">
@@ -159,6 +166,26 @@ class Homepage extends Component {
               onChange={this.handleChange}
             />
             <MainTextControls 
+                data={this.props.homePage.content} 
+                pageID={'home'}
+                handleCheckbox={this.handleCheckbox}
+                handleChange={this.handleChange}
+                handleMediaModal={this.handleMediaModal}
+                clearInput={this.clearInput}
+                handleColourPicker={this.handleColourPicker}
+                availableRoutes={this.props.availableRoutes}
+                positionArray={positionArray}
+            />
+
+            <Input
+              inputtype="select"
+              label="Testimonials Plugin Position"
+              name="testimonialsPosition"
+              value={testimonialsPosition}
+              onSelectChange={this.handleChange}
+              items={positionArray}
+            />
+            <TestimonialsControls 
                 data={this.props.homePage.content} 
                 pageID={'home'}
                 handleCheckbox={this.handleCheckbox}
