@@ -75,7 +75,7 @@ class Dashboard extends Component {
 
     const topBannerObj = this.createContentObject('top', 'topBanner', this.props.pageInfo.content)
     const midBannerObj = this.createContentObject('mid', 'midBanner', this.props.pageInfo.content)
-    // const bottomBannerObj = this.createContentObject('bottom', 'midBanner', this.props.pageInfo.content)
+    const bottomBannerObj = this.createContentObject('bottom', 'bottomBanner', this.props.pageInfo.content)
     const mainTextBannerObj = this.createContentObject(null, 'mainText', this.props.pageInfo.content)
 
     const {
@@ -83,6 +83,8 @@ class Dashboard extends Component {
       topBannerHalfwidth,
       midBanner,
       midBannerHalfwidth,
+      bottomBanner,
+      bottomBannerHalfwidth,
       mainTextPosition,
     } = this.props.pageInfo.content;
 
@@ -170,6 +172,30 @@ class Dashboard extends Component {
           )}
 
           {mainPosition === "Middle" && (
+            <MainBanner bannerData={mainTextBannerObj} />
+          )}
+
+          {bottomBanner && (
+            <>
+              {bottomBannerHalfwidth === true ? (
+                <BannerHalfwidth
+                  bannerData={bottomBannerObj}
+                  history={this.props.history}
+                  template={this.props.template}
+                  position="bottom"
+                />
+              ) : (
+                <BannerFullwidth
+                  bannerData={bottomBannerObj}
+                  history={this.props.history}
+                  template={this.props.template}
+                  position="bottom"
+                />
+              )}
+            </>
+          )}
+
+          {mainPosition === "Bottom" && (
             <MainBanner bannerData={mainTextBannerObj} />
           )}
         </StyledDashboard>
