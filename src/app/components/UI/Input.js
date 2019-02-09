@@ -26,6 +26,7 @@ const Input = props => {
           onFocus={props.onFocus}
           min={props.min}
           max={props.max}
+          margin={props.margin}
         />
       );
       break;
@@ -120,7 +121,7 @@ const Input = props => {
   }
 
   return (
-    <StyledElement errorGlow={props.validation}>
+    <StyledElement errorGlow={props.validation} margin={props.margin}>
       <label>{props.label}</label>
       <Flex>{inputElement}</Flex>
     </StyledElement>
@@ -154,17 +155,23 @@ const StyledElement = styled.div`
     box-sizing: border-box;
     border-radius: 5px;
     box-shadow: ${props => props.errorGlow ? '0 0 10px #b71c1c' : 'none'};
+    margin: ${props => props.margin || 'auto'};
 
     :focus {
       outline: none;
       border-color: #9ecaed;
       box-shadow: 0 0 10px #9ecaed;
     }
+
+    @media(max-width: 500px){
+      margin: auto;
+    }
   }
 
   > div button {
     opacity: 0.7;
   }
+
 `;
 
 export default Input;

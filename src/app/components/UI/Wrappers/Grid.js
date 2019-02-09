@@ -23,6 +23,7 @@ const Grid = props => {
       colGap={props.colGap}
       rowGap={props.rowGap}
       height={props.height}
+      width={props.width}
     >
       {props.children}
     </StyledGrid>
@@ -31,6 +32,7 @@ const Grid = props => {
 
 const StyledGrid = styled.div`
   display: grid;
+  width: ${props => props.width || 'auto'};
   margin: ${props => props.margin || "20px"};
   grid-template-columns: ${props => props.cols};
   grid-column-gap: ${props => props.colGap || "20px"};

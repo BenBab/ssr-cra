@@ -19,12 +19,14 @@ class BannerControls extends Component {
             return content = {...content, [key]: data[c] }
         });
 
-
         const {
+          Banner3D,
           BannerHalfwidth,
           BannerImgSize,
           BannerHWbackImg,
           BannerHWBackColour,
+          BannerImgRoundHW,
+          BannerImg3dHW,
           BannerTxtRightSide,
           BannerTxtLightTheme,
           BannerLogo,
@@ -44,17 +46,31 @@ class BannerControls extends Component {
         return (
             <Minimizer>
               <Box>
-                <Flex>
-                  <Input
-                    inputtype="checkbox"
-                    sideLabel={`Use the ${pos} banner image inside the banner`}
-                    name={pos+"BannerHalfwidth"}
-                    checked={BannerHalfwidth}
-                    handleChange={handleCheckbox}
-                  />
-                </Flex>
+                <Input
+                  inputtype="checkbox"
+                  sideLabel={`Use the ${pos} banner image inside the banner`}
+                  name={pos+"BannerHalfwidth"}
+                  checked={BannerHalfwidth}
+                  handleChange={handleCheckbox}
+                />
+
+                <Input
+                  inputtype="checkbox"
+                  sideLabel={`3d Shadow around the banner`}
+                  name={pos+"Banner3D"}
+                  checked={Banner3D}
+                  handleChange={handleCheckbox}
+                />
+                
                 {BannerHalfwidth && (
                   <>
+                    <Input
+                      inputtype="checkbox"
+                      sideLabel={`Inner Banner image 3d shadow`}
+                      name={pos+"BannerImg3dHW"}
+                      checked={BannerImg3dHW}
+                      handleChange={handleCheckbox}
+                    />
                     <Input
                       inputtype="inputSelector"
                       label="Banner Background Image"
@@ -68,20 +84,34 @@ class BannerControls extends Component {
                       <Input
                         inputtype="input"
                         type="number"
-                        label="Banner Image Size"
+                        label="Inner Image Size (-100 to 100)"
                         name={pos+"BannerImgSize"}
                         value={BannerImgSize}
                         onChange={handleChange}
+                        min={'-100'}
+                        max={'100'}
+                        
                       />
                       <Input
+                        inputtype="input"
+                        type="number"
+                        label="Inner Image rounded (0 to 50)"
+                        name={pos+"BannerImgRoundHW"}
+                        value={BannerImgRoundHW}
+                        onChange={handleChange}
+                        min={'0'}
+                        max={'50'}
+                        margin={'0 0 0 15px'}
+                      />
+                      
+                    </Flex>
+                    <Input
                         inputtype="inputColourPicker"
                         label="Banner Background Colour"
                         name={pos+"BannerHWBackColour"}
                         value={BannerHWBackColour}
                         changeColour={handleColourPicker}
-                        
-                      />
-                    </Flex>
+                    />
                   </>
                 )}
 
