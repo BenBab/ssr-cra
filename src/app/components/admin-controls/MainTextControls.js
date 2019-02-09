@@ -29,12 +29,6 @@ const MainTextContols = (props) => {
       mainTextImgWidth,
       mainTextImgHeight
     } = content;
-
-    const positionArray = [
-        { value: "Top" },
-        { value: "Middle" },
-        { value: "Bottom" }
-      ];
     
     const floatArray = [{ value: "left" }, { value: "right" }];
 
@@ -62,7 +56,7 @@ const MainTextContols = (props) => {
                 label="Main Text Page Position"
                 name="mainTextPosition"
                 value={mainTextPosition}
-                items={positionArray}
+                items={props.positionArray}
                 onSelectChange={props.handleChange}
             />
             <Input
