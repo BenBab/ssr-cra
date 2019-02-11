@@ -8,6 +8,7 @@ body {
 
 main {
   padding-top: 75px;
+  overflow: hidden;
 }
 
 .fullwidth {
