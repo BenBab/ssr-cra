@@ -4,38 +4,38 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import styled from "styled-components";
 
-class Testimonials extends Component {
-  render() {
-    // {this.props.bannerData.testimonialsOne}
-    // {this.props.bannerData.testimonialsTwo}
+const Testimonials = (props) =>  {
+    if (Object.keys(props.testimonials).length === 0) return <div/>
 
-    // autoPlay infiniteLoop
-    return (
-      <TestimonialWrapper>
-        <Carousel  showThumbs={false} showStatus={false}>
-          <StyledTestimonial>
+    let testimonialsArray = null
+    
+    testimonialsArray = Object.keys(props.testimonials)
+      .filter(key => key.includes('_'))
+      .map(key => {
+        const t = props.testimonials[key]
+        return (
+            <StyledTestimonial key={key}>
               <blockquote className='testimonial-container'>
                 <h1 className='vert_Line'>|</h1>
                 <h1 className='quote'>“</h1>
-                <p>{this.props.bannerData.testimonialsOne}</p>
+                <p>{t}</p>
               </blockquote>
-          </StyledTestimonial>
-          <StyledTestimonial>
-            <blockquote className='testimonial-container'>
-              <h1 className='vert_Line'>|</h1>
-              <h1 className='quote'>“</h1>
-              <p>{this.props.bannerData.testimonialsTwo}</p>
-            </blockquote>
-          </StyledTestimonial>
+            </StyledTestimonial>
+        )
+      });
+
+    return (
+      <TestimonialWrapper>
+        <Carousel autoPlay infiniteLoop showThumbs={false} showStatus={false} interval={4000}>
+          {testimonialsArray}
         </Carousel>
       </TestimonialWrapper>
     );
   }
-}
 
 const TestimonialWrapper = styled.div`
   .slide {
-    background-color: #212121 !important;
+    background-image: radial-gradient(#212121, #000) !important;
     
     .testimonial-container{
       display: inline-flex;

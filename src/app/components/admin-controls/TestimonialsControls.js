@@ -20,11 +20,11 @@ const TestimonialsContols = (props) => {
     console.log('content', content)
     
     const {
-        testimonialsOne,
-        testimonialsTwo,
-        testimonialsThree,
-        testimonialsFour,
-        testimonialsFive
+        testimonials_A,
+        testimonials_B,
+        testimonials_C,
+        testimonials_D,
+        testimonials_E
     } = content;
 
     return (
@@ -33,36 +33,36 @@ const TestimonialsContols = (props) => {
             <Input
                 inputtype="input"
                 label="Testimonial One"
-                name="testimonialsOne"
-                value={testimonialsOne}
+                name="testimonials_A"
+                value={testimonials_A}
                 onChange={props.handleChange}
             />
             <Input
                 inputtype="input"
                 label="Testimonial Two"
-                name="testimonialsTwo"
-                value={testimonialsTwo}
+                name="testimonials_B"
+                value={testimonials_B}
                 onChange={props.handleChange}
             />
             <Input
                 inputtype="input"
                 label="Testimonial Three"
-                name="testimonialsThree"
-                value={testimonialsThree}
+                name="testimonials_C"
+                value={testimonials_C}
                 onChange={props.handleChange}
             />
             <Input
                 inputtype="input"
                 label="Testimonial Four"
-                name="testimonialsFour"
-                value={testimonialsFour}
+                name="testimonials_D"
+                value={testimonials_D}
                 onChange={props.handleChange}
             />
             <Input
                 inputtype="input"
                 label="Testimonial Five"
-                name="testimonialsFive"
-                value={testimonialsFive}
+                name="testimonials_E"
+                value={testimonials_E}
                 onChange={props.handleChange}
             />
             {/* <Input

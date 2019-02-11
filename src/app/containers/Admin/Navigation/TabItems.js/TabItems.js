@@ -14,6 +14,7 @@ import Dashboard from "../../../Dashboard/Dashboard";
 
 import BannerControls from '../../../../components/admin-controls/BannerControls'
 import MainTextControls from '../../../../components/admin-controls/MainTextControls'
+import TestimonialsControls from '../../../../components/admin-controls/TestimonialsControls';
 
 const TabItems = props => {
   console.log("tabItems props", props);
@@ -85,8 +86,15 @@ const TabItems = props => {
     midBannerHalfwidth,
     bottomBanner,
     bottomBannerHalfwidth,
-    mainText
+    mainText,
+    testimonialsPosition,
   } = props.itemProps.content;
+
+  const positionArray = [
+    { value: "Top" },
+    { value: "Middle" },
+    { value: "Bottom" }
+  ];
 
   return (
     <Paper elevation={20}>
@@ -180,6 +188,25 @@ const TabItems = props => {
           />
           <MainTextControls 
             data={props.itemProps.content} 
+            handleCheckbox={handleCheckbox}
+            handleChange={handleChange}
+            handleMediaModal={handleMediaModal}
+            clearInput={clearInput}
+            handleColourPicker={handleColourPicker}
+            availableRoutes={props.availableRoutes}
+          />
+
+          <Input
+            inputtype="select"
+            label="Testimonials Plugin Position"
+            name="testimonialsPosition"
+            value={testimonialsPosition}
+            onSelectChange={handleChange}
+            items={positionArray}
+          />
+          <TestimonialsControls 
+            data={props.itemProps.content} 
+            pageID={props.pageId}
             handleCheckbox={handleCheckbox}
             handleChange={handleChange}
             handleMediaModal={handleMediaModal}
