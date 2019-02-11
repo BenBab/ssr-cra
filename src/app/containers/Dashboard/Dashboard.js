@@ -166,7 +166,7 @@ class Dashboard extends Component {
           {contactUs && <ContactUs pluginOptions={plugins.contactUs} />}
 
           {testimonials && testimonialsPos === 'Top' &&
-            <Testimonials bannerData={testimonialsObj}/>
+            <Testimonials testimonials={testimonialsObj}/>
           }
 
           {midBanner && (
@@ -194,7 +194,7 @@ class Dashboard extends Component {
           )}
 
           {testimonials && testimonialsPos === 'Middle' &&
-            <Testimonials bannerData={testimonialsObj}/>
+            <Testimonials testimonials={testimonialsObj}/>
           } 
 
           {bottomBanner && (
@@ -222,7 +222,7 @@ class Dashboard extends Component {
           )}
 
           {testimonials && testimonialsPos === 'Bottom' &&
-            <Testimonials bannerData={testimonialsObj}/>
+            <Testimonials testimonials={testimonialsObj}/>
           } 
 
         </StyledDashboard>
