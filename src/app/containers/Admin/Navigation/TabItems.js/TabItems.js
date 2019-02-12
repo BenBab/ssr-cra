@@ -194,6 +194,7 @@ const TabItems = props => {
             clearInput={clearInput}
             handleColourPicker={handleColourPicker}
             availableRoutes={props.availableRoutes}
+            positionArray={positionArray}
           />
 
           <Input
