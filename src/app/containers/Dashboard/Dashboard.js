@@ -39,6 +39,10 @@ class Dashboard extends Component {
     if (this.props.pageInfo !== prevProps.pageInfo){
       this.updateBlockerDimensions()
     }
+
+    if (this.props.location !== prevProps.location) {
+      window.scrollTo(0, 0)
+    }
   }
   
   updateBlockerDimensions = () => {

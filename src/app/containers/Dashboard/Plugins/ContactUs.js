@@ -11,6 +11,7 @@ import Box from "../../../components/UI/Wrappers/Box";
 
 class ContactUs extends Component {
   state = {
+    subject: '',
     name: "",
     email: "",
     phone: "",
@@ -38,7 +39,7 @@ class ContactUs extends Component {
 
 
   async handleSubmit() {
-    const { name, email, phone, message } = this.state;
+    const { subject, name, email, phone, message } = this.state;
     const { pluginOptions, booking, enqueueSnackbar } = this.props;
     
     const postUrl = booking 
@@ -46,6 +47,7 @@ class ContactUs extends Component {
       : "/api/mailer"
 
     let objectProperties = {
+      subject,
       name,
       email,
       phone,
@@ -100,10 +102,10 @@ class ContactUs extends Component {
 
   validateInputs = (event) => {
     event.preventDefault()
-    const { name, email, phone} = this.state
+    const { subject, name, email, phone} = this.state
     const {booking} = this.props
 
-    let required = {name, email, phone}
+    let required = {subject, name, email, phone}
     if (booking) required = { ...required, date: booking.date, time: booking.time}
     let validationFails = {}
 
@@ -130,8 +132,21 @@ class ContactUs extends Component {
 
 
   render() {
-    const { spinner, disableButton, requiredErrors } = this.state;
+    const { spinner, disableButton, requiredErrors, subject } = this.state;
     const { booking, refProp, pluginOptions, handlechange } = this.props
+    let subjectItems = []
+
+    function selectionArray(str){
+      subjectItems = str
+      .split(',')
+      .map(i => { return { value: i.trim() } })
+
+      subjectItems.unshift({ value: '' })
+    }
+
+    if (booking && pluginOptions.bookingSubjectStrict) selectionArray(pluginOptions.bookingSubjectSelections)
+    if (!booking && pluginOptions.contactUsSubjectStrict) selectionArray(pluginOptions.contactUsSubjectSelections)
+    
 
     return (
       <ContactForm>
@@ -177,6 +192,21 @@ class ContactUs extends Component {
               
             />
           }
+
+          <Input
+            inputtype={ 
+              booking && pluginOptions.bookingSubjectStrict || !booking && pluginOptions.contactUsSubjectStrict
+              ? 'select' 
+              : 'input'
+            }
+            label="Subject"
+            name="subject"
+            value={this.state.subject}
+            items={subjectItems}
+            onChange={this.handlechange}
+            validation={requiredErrors.subject}
+            onFocus={(e) => this.setState({ requiredErrors: {...requiredErrors, [e.target.subject] : false } })}
+          />
           
           <Input
             inputtype="input"

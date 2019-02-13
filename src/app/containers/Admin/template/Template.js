@@ -89,7 +89,7 @@ class Template extends Component {
             name="navButtons"
             value={navButtons}
             items={buttonStyle}
-            onSelectChange={this.handleChange}
+            onChange={this.handleChange}
           />
           <Input
             inputtype="select"
@@ -97,7 +97,7 @@ class Template extends Component {
             name="siteButtons"
             value={siteButtons}
             items={buttonStyle}
-            onSelectChange={this.handleChange}
+            onChange={this.handleChange}
           />
           <Button variant={navButtons}>
             {navButtons === "contained" ? "Contained Style" : "Outlined Style"}

@@ -202,7 +202,7 @@ const TabItems = props => {
             label="Testimonials Plugin Position"
             name="testimonialsPosition"
             value={testimonialsPosition}
-            onSelectChange={handleChange}
+            onChange={handleChange}
             items={positionArray}
           />
           <TestimonialsControls 

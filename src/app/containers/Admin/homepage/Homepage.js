@@ -182,7 +182,7 @@ class Homepage extends Component {
               label="Testimonials Plugin Position"
               name="testimonialsPosition"
               value={testimonialsPosition}
-              onSelectChange={this.handleChange}
+              onChange={this.handleChange}
               items={positionArray}
             />
             <TestimonialsControls 

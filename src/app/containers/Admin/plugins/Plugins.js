@@ -78,7 +78,7 @@ class Plugins extends Component {
             availableRoutes={availableRoutes}
             accordianClick={this.accordianClick}
             handleCheckbox={this.handleCheckbox}
-            onSelectChange={this.onSelectChange}
+            onChange={this.onChange}
             handleChange={e => this.handleChange(e, "booking")}
           />
           <TesimonialsPlugin
@@ -88,7 +88,7 @@ class Plugins extends Component {
             availableRoutes={availableRoutes}
             accordianClick={this.accordianClick}
             handleCheckbox={this.handleCheckbox}
-            onSelectChange={this.onSelectChange}
+            onChange={this.onChange}
             handleChange={e => this.handleChange(e, "testimonials")}
           />
         </StyledPlugins>

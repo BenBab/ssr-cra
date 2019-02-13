@@ -8,8 +8,23 @@ import MultiSelect from "../../../../components/UI/MultiSelect";
 const BookingPlugin = props => {
     if (!props.plugin) return <div />;
 
-    const { bookingActive, bookingPages, bookingEmail, bookingForm, bookingCalendarID, bookingApiKey, bookingTimeSlotsAvailable, bookingTimeSlots, bookingGetCalandarAdvance, bookingSessions } = props.plugin;
+    const { 
+        bookingActive,
+        bookingPages, 
+        bookingEmail, 
+        bookingForm, 
+        bookingCalendarID, 
+        bookingApiKey, 
+        bookingTimeSlotsAvailable, 
+        bookingTimeSlots, 
+        bookingGetCalandarAdvance, 
+        bookingSessions, 
+        bookingSubjectStrict,
+        bookingSubjectSelections
+      } = props.plugin;
+
     console.log("booking settings props", props);
+
     return (
         <div>
             <Flex>
@@ -102,7 +117,7 @@ const BookingPlugin = props => {
                                 {value : "9 months"},
                                 {value : "12 months"},                           
                             ]}
-                            onSelectChange={props.handleChange}
+                            onChange={props.handleChange}
                         />
                         <Input
                             inputtype="input"
@@ -114,8 +129,25 @@ const BookingPlugin = props => {
                             placeholder={bookingTimeSlotsAvailable ? 'eg. Entering "6" will allow 6 bookings per timeslot' : 'eg. Entering "6" will allow 6 bookings per day'}
                             onChange={props.handleChange}
                         />
-
-
+                        <h2>Booking Email Options</h2>
+                        <Input
+                            inputtype="checkbox"
+                            sideLabel="Give email subject options"
+                            parentObj={props.parentObj}
+                            name="bookingSubjectStrict"
+                            checked={bookingSubjectStrict}
+                            handleChange={props.handleCheckbox}
+                        />
+                        {bookingSubjectStrict &&
+                            <Input
+                                inputtype="input"
+                                label="Enter subject selections seperated by a comma"
+                                parentObj={props.parentObj}
+                                name="bookingSubjectSelections"
+                                value={bookingSubjectSelections}
+                                onChange={props.handleChange}
+                            />
+                        }
                     </div>
                 </Minimizer>
             )}

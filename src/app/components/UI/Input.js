@@ -94,7 +94,7 @@ const Input = props => {
       inputElement = (
         <select
           value={props.value || props.items[0]}
-          onChange={props.onSelectChange}
+          onChange={props.onChange}
           name={props.name}
         >
           {selectItems}

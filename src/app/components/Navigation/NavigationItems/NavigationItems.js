@@ -14,28 +14,43 @@ class NavigationItems extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.navigationItems !== prevProps.navigationItems &&
-      this.props.navigationItems !== null
-    ) {
-      const currentRoute = this.props.location.pathname.replace("/", "");
-      const navigationItems = Object.keys(this.props.navigationItems).map(
-        key => {
-          const item = this.props.navigationItems[key];
-          if (item.route === currentRoute) {
-            item.selected = true;
-          } else {
-            item.selected = false;
-          }
-          return item;
-        }
-      );
+    
+    if (this.props.navigationItems !== null && (this.props.navigationItems !== prevProps.navigationItems || this.props.location !== prevProps.location)) {
+      this.setSelectedNav()
+    }
+  }
 
-      if (this.props.location.pathname === "/") {
-        this.setState({ navigationItems, homeActive: true });
-      } else {
-        this.setState({ navigationItems });
+  setSelectedNav = () => {
+
+    const currentRoute = this.props.history.location.pathname.replace("/", "");
+    const navigationItems = Object.keys(this.props.navigationItems).map(
+      key => {
+        const item = this.props.navigationItems[key];
+
+        if (item.route === currentRoute) {
+          item.selected = true;
+        }
+
+        else if (item.dropdownPages) {
+          let trimmedRoute = currentRoute.replace('pages/', '');
+          let selectedDropDown = Object.keys(item.dropdownPages).find(key => {
+            return item.dropdownPages[key].route === trimmedRoute
+          })
+
+          item.selected = selectedDropDown !== undefined
+        }
+        else {
+          item.selected = false;
+        }
+        
+        return item;
       }
+    );
+
+    if (this.props.location.pathname === "/") {
+      this.setState({ navigationItems, homeActive: true });
+    } else {
+      this.setState({ navigationItems, homeActive: false });
     }
   }
 
@@ -112,6 +127,8 @@ class NavigationItems extends Component {
               placement={this.props.placement}
               mobile={this.props.mobile}
               closeDrawer={this.props.closeDrawer}
+              active={navItem.selected}
+              setSelectedNav={this.setSelectedNav}
             />
           );
 
@@ -134,6 +151,7 @@ class NavigationItems extends Component {
               onClick={this.handleNavSelection}
               nav={true}
               margin={this.props.margin}
+              active={this.state.homeActive}
             >
               Home
             </Button>

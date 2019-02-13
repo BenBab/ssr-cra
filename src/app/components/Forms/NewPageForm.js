@@ -28,7 +28,7 @@ export class NewPageForm extends Component {
     this.setState({ [name]: event.target.checked });
   };
 
-  onSelectChange = event => {
+  onChange = event => {
     this.setState({ selectVal: event.target.value });
   };
 
@@ -66,7 +66,7 @@ export class NewPageForm extends Component {
                   value={this.state.selectVal}
                   label="Choose the parent page for this Subpage"
                   items={this.props.navigationItems}
-                  onSelectChange={this.onSelectChange}
+                  onChange={this.onChange}
                 />
               )}
             </div>
