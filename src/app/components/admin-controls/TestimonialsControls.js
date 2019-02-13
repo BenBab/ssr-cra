@@ -71,7 +71,7 @@ const TestimonialsContols = (props) => {
                 name="testimonialsPosition"
                 value={testimonialsPosition}
                 items={props.positionArray}
-                onSelectChange={props.handleChange}
+                onChange={props.handleChange}
             />
             <Input
                 inputtype="inputSelector"
@@ -89,7 +89,7 @@ const TestimonialsContols = (props) => {
                 name="testimonialsImgAlign"
                 value={testimonialsImgAlign}
                 items={floatArray}
-                onSelectChange={props.handleChange}
+                onChange={props.handleChange}
                 />
                 <Input
                 inputtype="input"

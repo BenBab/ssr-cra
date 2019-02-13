@@ -8,7 +8,7 @@ import MultiSelect from "../../../../components/UI/MultiSelect";
 const ContactUsPlugin = props => {
   if (!props.plugin) return <div />;
 
-  const { contactUsActive, contactUsPages, contactUsEmail } = props.plugin;
+  const { contactUsActive, contactUsPages, contactUsEmail, contactUsSubjectStrict, contactUsSubjectSelections } = props.plugin;
   console.log("contact us settings props", props);
   return (
     <div>
@@ -44,6 +44,26 @@ const ContactUsPlugin = props => {
               value={contactUsEmail}
               onChange={props.handleChange}
             />
+            
+            <Input
+              inputtype="checkbox"
+              sideLabel="Give email subject options"
+              parentObj={props.parentObj}
+              name="contactUsSubjectStrict"
+              checked={contactUsSubjectStrict}
+              handleChange={props.handleCheckbox}
+            />
+            {contactUsSubjectStrict &&
+              <Input
+                inputtype="input"
+                label="Enter subject selections seperated by a comma"
+                parentObj={props.parentObj}
+                name="contactUsSubjectSelections"
+                value={contactUsSubjectSelections}
+                onChange={props.handleChange}
+              />
+            }
+
           </div>
         </Minimizer>
       )}

@@ -4,15 +4,20 @@ import styled, { withTheme } from "styled-components";
 
 const button = props => {
   const { disabled = false, mobileMargin } = props;
-  let background = props.theme.primaryBackGroundColour;
-  let txtColor = props.theme.primaryTxtColour;
+  let background = props.active 
+    ? props.theme.buttonHoverBackground 
+    : props.theme.primaryBackGroundColour;
+
+  let txtColor = props.active 
+  ? props.theme.buttonhovertext 
+  : props.theme.primaryTxtColour;
   let borderColor = props.theme.primaryBackGroundColour;
 
-  // console.log('button props', props)
+  console.log('button props', props)
 
   if (props.variant === "outlined") {
-    background = "transparent";
-    txtColor = "rgba(0, 0, 0, 0.9)";
+    background = props.active ? props.theme.buttonHoverBackground : "transparent";
+    txtColor = props.active ? props.theme.buttonhovertext : "rgba(0, 0, 0, 0.9)";
     borderColor = "rgba(0, 0, 0, 0.8)";
 
     if (props.nav && props.theme.navLightTheme) {
