@@ -15,7 +15,7 @@ class NavigationItems extends Component {
 
   componentDidUpdate(prevProps) {
     
-    if (this.props.navigationItems !== null && (this.props.navigationItems !== prevProps.navigationItems || this.props.location !== prevProps.location)) {
+    if (this.props.navigationItems !== null && this.props.navigationItems !== prevProps.navigationItems) {
       this.setSelectedNav()
     }
   }
@@ -47,7 +47,7 @@ class NavigationItems extends Component {
       }
     );
 
-    if (this.props.location.pathname === "/") {
+    if (this.props.history.location.pathname === "/") {
       this.setState({ navigationItems, homeActive: true });
     } else {
       this.setState({ navigationItems, homeActive: false });
