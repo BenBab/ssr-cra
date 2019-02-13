@@ -4,8 +4,8 @@ var moment = require('moment-timezone');
 function bookingMailer(req, res){
     console.log('booking mailer', req.body)
 
-    const { name, email, phone, message, emailTo, date, time, am_Pm, timeSlot, start, end, dailySessionsRemaining, initialSessions } = req.body
-    let title = 'Booking%20for%20' + name.split(' ').shift() || 'New Booking'
+    const { subject, name, email, phone, message, emailTo, date, time, am_Pm, timeSlot, start, end, dailySessionsRemaining, initialSessions } = req.body
+    let title = 'Booking%20' + subject +'%20for%20' + name.split(' ').shift() || 'New Booking'
     const eventDate = start.replace(/-/g,'')
 
     let nzTimeZone = ''
@@ -60,9 +60,9 @@ function bookingMailer(req, res){
     var mailOptions = {
         to: emailTo,
         from: email,
-        subject: `Booking request on ${date} from ${name}`, 
+        subject: `Booking ${subject} request on ${date} from ${name}`, 
         html: `
-            <h2>Booking Request for ${time === '' ? 'a flexable time' : time } on ${date}</h2>
+            <h2>Booking ${subject} Request for ${time === '' ? 'a flexable time' : time } on ${date}</h2>
             <h4>Add the booking to Calendar..</h4>
             <p>http://www.google.com/calendar/event?action=TEMPLATE&dates=${gmtStartDate}T${gmtTimeStart}Z%2F${gmtEndDate}T${gmtTimeEnd}Z&text=${title}&location=&details=${title}%20contact%20email%20${email}</p>
             <h5>${!timeSlot ? 'This day began with ' : 'This timeslot began with '}${initialSessions} bookings available, currently ${dailySessionsRemaining} bookings remain</h5>

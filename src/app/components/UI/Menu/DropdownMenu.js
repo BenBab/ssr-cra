@@ -1,4 +1,5 @@
 import React from "react";
+
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "../Buttons/Button";
 
@@ -13,7 +14,7 @@ import styled from "styled-components";
 class SimpleMenu extends React.Component {
   state = {
     open: false,
-    anchorEl: null
+    anchorEl: null,
   };
 
   handleToggle = event => {
@@ -37,7 +38,14 @@ class SimpleMenu extends React.Component {
 
   redirect = route => {
     this.checkIfMobile()
-    this.props.history.push("/pages/" + route);
+
+      this.props.history.push("/pages/" + route);
+
+      setTimeout(() => {
+        this.props.setSelectedNav()
+      }, 100);
+      
+
   };
 
   checkIfMobile(){
@@ -74,6 +82,7 @@ class SimpleMenu extends React.Component {
           variant={this.props.variant}
           onClick={this.handleToggle}
           margin={this.props.margin}
+          active={this.props.active}
         >
           {this.props.title}
         </Button>

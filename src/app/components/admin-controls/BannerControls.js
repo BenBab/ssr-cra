@@ -226,7 +226,7 @@ class BannerControls extends Component {
                     name={pos+"BannerLink"}
                     value={BannerLink}
                     items={this.props.availableRoutes}
-                    onSelectChange={handleChange}
+                    onChange={handleChange}
                   />
                 </Flex>
               </Box>

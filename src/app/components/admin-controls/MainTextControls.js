@@ -57,7 +57,7 @@ const MainTextContols = (props) => {
                 name="mainTextPosition"
                 value={mainTextPosition}
                 items={props.positionArray}
-                onSelectChange={props.handleChange}
+                onChange={props.handleChange}
             />
             <Input
                 inputtype="inputSelector"
@@ -75,7 +75,7 @@ const MainTextContols = (props) => {
                 name="mainTextImgAlign"
                 value={mainTextImgAlign}
                 items={floatArray}
-                onSelectChange={props.handleChange}
+                onChange={props.handleChange}
                 />
                 <Input
                 inputtype="input"

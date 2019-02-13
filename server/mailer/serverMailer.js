@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer')
 function serverMailer(req, res){
     console.log('server mailer', req.body)
 
-    const { name, email, phone, message, emailTo } = req.body
+    const { subject, name, email, phone, message, emailTo } = req.body
 
     console.log(name, email)
 
@@ -18,10 +18,10 @@ function serverMailer(req, res){
     var mailOptions = {
         to: emailTo,
         from: email,
-        subject: `Contact request from ${name}`, 
+        subject: `Contact request: Subject - ${subject} from - ${name}`, 
         html: `
             <h2>Contact Us Request</h2>
-            <h5>You have a contact request; <br/> from: ${name} <br/> email: ${email} <br/> phone: ${phone}</h5>
+            <h5>You have a contact request; <br/> Subject: ${subject} <br/> From: ${name} <br/> Email: ${email} <br/> Phone: ${phone}</h5>
             <h5>Message:</h5>
             <p>${message}</p>
             `
