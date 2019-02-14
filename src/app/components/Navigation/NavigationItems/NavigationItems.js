@@ -15,14 +15,14 @@ class NavigationItems extends Component {
 
   componentDidUpdate(prevProps) {
     
-    if (this.props.navigationItems !== null && this.props.navigationItems !== prevProps.navigationItems) {
+    if (this.props.currentLocation !== prevProps.currentLocation || this.props.navigationItems !== null && (this.props.navigationItems !== prevProps.navigationItems)) {
       this.setSelectedNav()
     }
   }
 
   setSelectedNav = () => {
 
-    const currentRoute = this.props.history.location.pathname.replace("/", "");
+    const currentRoute = this.props.currentLocation.replace("/", "");
     const navigationItems = Object.keys(this.props.navigationItems).map(
       key => {
         const item = this.props.navigationItems[key];
@@ -47,7 +47,7 @@ class NavigationItems extends Component {
       }
     );
 
-    if (this.props.history.location.pathname === "/") {
+    if (this.props.currentLocation === "/") {
       this.setState({ navigationItems, homeActive: true });
     } else {
       this.setState({ navigationItems, homeActive: false });

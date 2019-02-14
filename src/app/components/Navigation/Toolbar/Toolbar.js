@@ -24,7 +24,7 @@ const toolbar = props => {
       <Logo {...props.template} />
       <DrawerToggle clicked={props.drawerToggleClicked} />
       <div className="DesktopOnly">
-        <NavigationItems />
+        <NavigationItems currentLocation={props.currentLocation}/>
       </div>
     </Header>
   );
