@@ -5,7 +5,8 @@ function bookingMailer(req, res){
     console.log('booking mailer', req.body)
 
     const { subject, name, email, phone, message, emailTo, date, time, am_Pm, timeSlot, start, end, dailySessionsRemaining, initialSessions } = req.body
-    let title = 'Booking%20' + subject +'%20for%20' + name.split(' ').shift() || 'New Booking'
+    let formatSubject = formatSubject ? subject.replace(' ', '%20') : '';
+    let title = 'Booking%20' + formatSubject +'%20for%20' + name.split(' ').shift() || 'New Booking'
     const eventDate = start.replace(/-/g,'')
 
     let nzTimeZone = ''
