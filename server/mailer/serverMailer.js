@@ -4,7 +4,6 @@ function serverMailer(req, res){
     console.log('server mailer', req.body)
 
     const { subject, name, email, phone, message, emailTo } = req.body
-
     console.log(name, email)
 
     var smtpTransport = nodemailer.createTransport({
