@@ -164,6 +164,7 @@ class Homepage extends Component {
               name="mainText"
               value={mainText}
               onChange={this.handleChange}
+              helpKey={'mainText_help'}
             />
             <MainTextControls 
                 data={this.props.homePage.content} 

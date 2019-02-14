@@ -6,6 +6,8 @@ import IconButton from "@material-ui/core/IconButton";
 import CancelIcon from "@material-ui/icons/Cancel";
 import ColourPicker from "./ColourPicker";
 
+import HelpButton from './Buttons/HelpButton'
+
 const Input = props => {
   let inputElement = null;
   let selectItems = null;
@@ -122,7 +124,12 @@ const Input = props => {
 
   return (
     <StyledElement errorGlow={props.validation} margin={props.margin}>
-      <label>{props.label}</label>
+      <Flex>
+        <label className={'label'}>{props.label}</label>
+        {props.helpKey && 
+          <HelpButton helpKey={props.helpKey}/>
+        }
+      </Flex>
       <Flex>{inputElement}</Flex>
     </StyledElement>
   );
@@ -131,10 +138,10 @@ const Input = props => {
 const StyledElement = styled.div`
   margin: 0 10px 15px 0;
 
-  > label {
+  .label {
     font-weight: bold;
     display: block;
-    margin-bottom: 8px;
+    margin: 8px 0;
   }
 
   > div textarea {
