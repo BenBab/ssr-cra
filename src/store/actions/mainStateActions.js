@@ -10,8 +10,9 @@ export const setDataStore = data => {
 
 export const initWebsiteState = () => {
   const siteName = process.env.REACT_APP_SITENAME;
+  const db_URL = process.env.REACT_APP_FIREBASE_DATABASE_URL
 
-  const URL = `https://react-boiler-5ecbd.firebaseio.com/${siteName}/site.json`;
+  const URL = `${db_URL}/${siteName}/site.json`;
 
   return dispatch => {
     axios

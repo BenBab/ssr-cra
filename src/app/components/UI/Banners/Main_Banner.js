@@ -1,24 +1,43 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import ReactHtmlParser from "react-html-parser";
+import sanitizeHtml from 'sanitize-html';
 
 export class Main_Banner extends Component {
   convertToHtml = (mainText, image) => {
     if (!mainText) return null;
-    let htmlText = mainText;
+    let dirty = mainText;
+
+    let cleanHtml = sanitizeHtml(dirty, {
+      allowedTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'img', 'blockquote', 'p', 'a', 'ul', 'ol',
+        'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+        'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre'],
+      allowedAttributes: {
+        a: ['href', 'name', 'target'],
+        // We don't currently allow img itself by default, but this
+        // would make sense if we did
+        img: ['src']
+      },
+      // Lots of these won't come up by default because we don't allow them
+      selfClosing: ['img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta'],
+      // URL schemes we permit
+      allowedSchemes: ['http', 'https', 'ftp', 'mailto'],
+      allowedSchemesByTag: {}
+    });
+
     // let textImage =
     if (image) {
-      htmlText = mainText.replace(
+      cleanHtml = cleanHtml.replace(
         "{image}",
         `<img src=${image} ALIGN="left" alt={${
-          this.props.position
+        this.props.position
         }-maintext-image}>`
       );
     }
     // const txtwithBreaks = mainText.replace(/(\r\n|\n|\r)/gm, '<br/>')
     //const text = mainText.replace('{image}','<img src={} onLoad={props.onLoad} alt="Logo" />')
 
-    return ReactHtmlParser(htmlText);
+    return ReactHtmlParser(cleanHtml);
   };
 
   render() {
@@ -43,8 +62,8 @@ export class Main_Banner extends Component {
     const text = this.convertToHtml(mainText, image);
     let backColour = "#FFFFFF"
 
-    if (backgroundColour){
-      const { r, g , b , a} = backgroundColour
+    if (backgroundColour) {
+      const { r, g, b, a } = backgroundColour
       backColour = `rgba(${r}, ${g}, ${b}, ${a})`
     }
 
@@ -81,7 +100,7 @@ const StyledMainBanner = styled.div`
     h2,
     h3 {
       text-align: ${props =>
-        props.centerTitle ? "center" : props.textAlignment};
+    props.centerTitle ? "center" : props.textAlignment};
       margin: 0;
     }
   }
