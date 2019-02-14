@@ -66,6 +66,7 @@ const BookingPlugin = props => {
                             name="bookingCalendarID"
                             value={bookingCalendarID}
                             onChange={props.handleChange}
+                            helpKey={'bookingCalendarID_Help'}
                         />
                         <Input
                             inputtype="input"
@@ -74,14 +75,7 @@ const BookingPlugin = props => {
                             name="bookingApiKey"
                             value={bookingApiKey}
                             onChange={props.handleChange}
-                        />
-                        <Input
-                            inputtype="checkbox"
-                            sideLabel="Include Contact form with booking calendar"
-                            parentObj={props.parentObj}
-                            name="bookingForm"
-                            checked={bookingForm}
-                            handleChange={props.handleCheckbox}
+                            helpKey={'bookingCalendarAPI_Help'}
                         />
                         <br/>
                         <h2>Booking Calandar options</h2>

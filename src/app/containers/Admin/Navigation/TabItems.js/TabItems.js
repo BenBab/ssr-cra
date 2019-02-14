@@ -185,6 +185,7 @@ const TabItems = props => {
             name="mainText"
             value={mainText}
             onChange={handleChange}
+            helpKey={'mainText_help'}
           />
           <MainTextControls 
             data={props.itemProps.content} 

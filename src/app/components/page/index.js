@@ -6,7 +6,7 @@ import Helmet from "react-helmet";
 const SITE_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : "https://infinity-djs.herokuapp.com/";
+    : process.env.REACT_APP_SITEURL;
 
 const FACEBOOK_APP_ID = "XXXXXXXXX";
 
