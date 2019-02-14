@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-
+import { withRouter } from "react-router-dom";
 
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
@@ -37,6 +37,8 @@ class Layout extends Component {
     const footerlogo = this.props.template
         ? this.props.template.siteLogo
         : null
+    
+    
 
     return (
       <SiteWrapper>
@@ -45,17 +47,19 @@ class Layout extends Component {
             drawerToggleClicked={this.sideDrawerToggleHandler}
             template={this.props.template}
             isTop={this.state.isTop}
+            currentLocation={this.props.history.location.pathname}
           />
           <SideDrawer
             open={this.state.showSideDrawer}
             closed={this.sideDrawerClosedHandler}
             template={this.props.template}
+            currentLocation={this.props.history.location.pathname}
           />
           <main>{this.props.children}</main>
           <footer>
             <Flex justifyContent={'space-around'}>
               <Logo siteLogo={footerlogo} width={'50%'}/>
-              <NavigationItems/>
+              <NavigationItems currentLocation={this.props.history.location.pathname}/>
             </Flex>
           </footer>
         </SiteContent>
@@ -96,4 +100,4 @@ const SiteContent = styled.div`
     } */
 `;
 
-export default Layout;
+export default withRouter(Layout);
