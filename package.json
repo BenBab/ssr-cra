@@ -59,7 +59,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "serve": "cross-env NODE_ENV=production node ./server/index.js",
-    "debug": "set DEBUG=express:* & cross-env NODE_ENV=production nodemon --inspect ./server/index.js "
+    "debug": "set DEBUG=express:* & cross-env NODE_ENV=production nodemon --inspect ./server/index.js ",
+    "heroku-postbuild": "npm run build"
   },
   "browserslist": [
     ">0.2%",
